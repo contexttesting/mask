@@ -39,10 +39,20 @@
   },
   "homepage": "https://github.com/contexttesting/mask#readme",
   "devDependencies": {
-    "alamode": "1.7.3",
-    "documentary": "1.21.1",
+    "alamode": "1.8.5",
+    "documentary": "1.22.0",
     "eslint-config-artdeco": "1.0.1",
+    "snapshot-context": "2.0.5",
+    "temp-context": "2.1.0",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.6.6"
+    "zoroaster": "3.8.3"
+  },
+  "dependencies": {
+    "@zoroaster/fork": "1.1.0",
+    "assert-diff": "2.0.3",
+    "assert-throws": "3.1.1",
+    "catchment": "3.2.2",
+    "erte": "1.1.7",
+    "mismatch": "1.0.3"
   }
 }
