@@ -1,9 +1,9 @@
-{ 'custom.js':
+{ custom:
    { 'additional pass': [AsyncFunction],
      'additional fail': [AsyncFunction],
      'json pass': [AsyncFunction],
      'json fail': [AsyncFunction] },
-  'default.js':
+  default:
    { 'expected pass': [AsyncFunction],
      'expected fail': [AsyncFunction],
      'error pass': [AsyncFunction],

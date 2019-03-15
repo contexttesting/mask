@@ -30,13 +30,17 @@ export default function makeTestSuite(path, conf) {
     const content = readdirSync(path)
     const res = content.reduce((acc, node) => {
       const newPath = join(path, node)
+      const nn = replaceFilename(node)
       return {
         ...acc,
-        [node]: makeTestSuite(newPath, conf),
+        [nn]: makeTestSuite(newPath, conf),
       }
     }, {})
     return res
   }
+}
+const replaceFilename = (filename) => {
+  return filename.replace(/\.\w+?$/, '')
 }
 
 // The `expected` property of the mask will be compared against the actual value returned by the `getActual` function. To test for the correct error message, the `error` property will be tested using `assert-throws` configuration returned by `getThrowsConfig` function. Any additional tests can be performed with `customTest` function, which will receive any additional properties extracted from the mask using `customProps` and `jsonProps`. The JSON properties will be parsed into an object.
