@@ -1,5 +1,9 @@
 ## 15 March 2019
 
+### 1.0.2
+
+- [fix] Don't print extensions in filenames in results.
+
 ### 1.0.1
 
 - [deps] Update dependencies.
