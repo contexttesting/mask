@@ -1,35 +1,9 @@
-import { resolve, join } from 'path'
-import { debuglog } from 'util'
-
-const LOG = debuglog('@zoroaster/mask')
-
-const FIXTURE = resolve(__dirname, '../fixture')
+import { join } from 'path'
 
 /**
  * A testing context for the package.
  */
 export default class Context {
-  async _init() {
-    LOG('init context')
-  }
-  /**
-   * Example method.
-   */
-  example() {
-    return 'OK'
-  }
-  /**
-   * Path to the fixture file.
-   */
-  get FIXTURE() {
-    return resolve(FIXTURE, 'test.txt')
-  }
-  get SNAPSHOT_DIR() {
-    return resolve(__dirname, '../snapshot')
-  }
-  async _destroy() {
-    LOG('destroy context')
-  }
   /**
    * Initialise contexts for a test and run it.
    * @param {TestSuite} ts A test suite to run.

@@ -1,0 +1,3 @@
+{ bin: { 'index.md': { 'a test': [AsyncFunction] } },
+  components: { 'get-tag-name.md': { 'a test 2': [AsyncFunction] } },
+  'index.md': { 'a test 3': [AsyncFunction] } }

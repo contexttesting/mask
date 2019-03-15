@@ -164,6 +164,16 @@ const assertResults = {
       .split('\n').map(a => a.trimRight()).join('\n')
     await test('mask-dir.txt', s)
   },
+  async 'can create a test suite from nested directories'({ fixture }, { test }) {
+    const ts = makeTestSuite(fixture`recursive`, {
+      getResults(input) {
+        return input + ' - ok'
+      },
+    })
+    const s = inspect(ts)
+      .split('\n').map(a => a.trimRight()).join('\n')
+    await test('mask-dir-nested.txt', s)
+  },
   async 'asserts on results'({ fixture, runTest }) {
     const t = 'pass'
     let called = 0
