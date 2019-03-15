@@ -159,6 +159,18 @@
     mismatch "1.0.3"
     spawncommand "2.1.0"
 
+"@zoroaster/fork@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@zoroaster/fork/-/fork-1.1.1.tgz#2d61e1ca0d0736e5884e752618a309afab48f7eb"
+  integrity sha512-qw3/K8+7csHQZNiX4xNW04GwGGjWRIlzL88doAs5ayKgbWfQAlX4kbO+sMnZ8m7eyXLXpgGToAOnev/6L0SFqQ==
+  dependencies:
+    assert-diff "2.0.3"
+    catchment "3.2.2"
+    erte "1.1.7"
+    forkfeed "1.0.0"
+    mismatch "1.0.3"
+    spawncommand "2.1.1"
+
 "@zoroaster/reducer@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@zoroaster/reducer/-/reducer-1.1.0.tgz#745eca1403eb6240f83c6d949c46a3f529f9bd1d"

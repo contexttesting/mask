@@ -52,7 +52,7 @@
     "zoroaster": "3.8.3"
   },
   "dependencies": {
-    "@zoroaster/fork": "1.1.0",
+    "@zoroaster/fork": "1.1.1",
     "assert-diff": "2.0.3",
     "assert-throws": "3.1.1",
     "catchment": "3.2.2",
