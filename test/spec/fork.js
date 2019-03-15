@@ -33,7 +33,7 @@ const T = {
     const e = 'TEST'
     const ts = makeTestSuite(fixture`result/fork-options.md`, {
       fork: {
-        module: fixture`fork-options`,
+        module: fixture`fork/options`,
         getArgs(args, { arg }) {
           return [...args, arg]
         },
@@ -54,7 +54,7 @@ const T = {
     const t = '--test'
     const ts = makeTestSuite(fixture`result/fork-options.md`, {
       fork: {
-        module: fixture`fork-options`,
+        module: fixture`fork/options`,
         getArgs(args, { arg }) {
           return [...args, arg]
         },
@@ -107,7 +107,7 @@ export const inputs = {
   async 'passes inputs to stdin'({ runTest, fixture }, result) {
     const ts = makeTestSuite(result, {
       fork: {
-        module: fixture`fork-inputs`,
+        module: fixture`fork/inputs`,
         inputs: [
           [/Answer 1/, 'input1'],
           [/Answer 2/, 'input2'],
@@ -122,7 +122,7 @@ export const inputs = {
   async 'passes inputs to stdin without logging answers'({ runTest, fixture }, result) {
     const ts = makeTestSuite(result, {
       fork: {
-        module: fixture`fork-inputs`,
+        module: fixture`fork/inputs`,
         inputs: [
           [/Answer 1/, 'input1'],
           [/Answer 2/, 'input2'],
@@ -138,7 +138,7 @@ export const inputs = {
   async 'passes inputs to stdin on stderr'({ runTest, fixture }, result) {
     const ts = makeTestSuite(result, {
       fork: {
-        module: fixture`fork-inputs-stderr`,
+        module: fixture`fork/inputs-stderr`,
         stderrInputs: [
           [/Answer 1/, 'input1'],
         ],
@@ -152,7 +152,7 @@ export const inputs = {
   async 'passes inputs from the mask property'({ runTest, fixture }, result) {
     const ts = makeTestSuite(result, {
       fork: {
-        module: fixture`fork-inputs`,
+        module: fixture`fork/inputs`,
       },
       mapActual({ stdout }) {
         return stdout.trim()

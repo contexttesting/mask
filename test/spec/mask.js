@@ -5,7 +5,6 @@ import throws from 'assert-throws'
 import Context from '../context'
 import getTests from '../../src/mask'
 
-
 /** @type {Object.<string, (c: Context, sc: SnapshotContext)>} */
 const T = {
   context: [Context, SnapshotContext],
