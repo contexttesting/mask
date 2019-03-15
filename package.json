@@ -1,0 +1,48 @@
+{
+  "name": "@zoroaster/mask",
+  "version": "0.0.0",
+  "description": "The Code For Zoroaster Mask Testing.",
+  "main": "build/index.js",
+  "module": "src/index.js",
+  "scripts": {
+    "t": "zoroaster -a",
+    "test": "yarn t test/spec test/mask",
+    "spec": "yarn t test/spec",
+    "mask": "yarn t test/mask",
+    "test-build": "ALAMODE_ENV=test-build yarn test",
+    "lint": "eslint .",
+    "doc": "NODE_DEBUG=doc doc documentary -o README.md",
+    "b": "alamode src -o build -s",
+    "d": "yarn-s d1",
+    "d1": "NODE_DEBUG=doc doc src/index.js -g",
+    "build": "yarn-s d b doc",
+    "rec": "NODE_DEBUG=appshot appshot -T 23 -a Terminal -y 150 -f",
+    "e": "node example",
+    "example/": "yarn e example/example.js"
+  },
+  "files": [
+    "build",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/contexttesting/mask.git"
+  },
+  "keywords": [
+    "mask",
+    "zoroaster"
+  ],
+  "author": "Anton <anton@adc.sh>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/contexttesting/mask/issues"
+  },
+  "homepage": "https://github.com/contexttesting/mask#readme",
+  "devDependencies": {
+    "alamode": "1.7.3",
+    "documentary": "1.21.1",
+    "eslint-config-artdeco": "1.0.1",
+    "yarn-s": "1.1.0",
+    "zoroaster": "3.6.6"
+  }
+}
