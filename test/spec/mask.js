@@ -19,7 +19,7 @@ const T = {
   async 'can make a mask with a separator'(
     { fixture }, { test },
   ) {
-    const res = getTests({ path: fixture`mask-split.js`, splitRe: /^\/\/\/ /mg })
+    const res = getTests({ path: fixture`get-tests/split.js`, splitRe: /^\/\/\/ /mg })
     const fr = res.map(({ onError, ...rest }) => {
       ok(onError)
       return rest
@@ -27,7 +27,7 @@ const T = {
     await test('mask-nl.json', fr)
   },
   async 'prints the error lines for custom separators'({ fixture }) {
-    const path = fixture`mask-split.js`
+    const path = fixture`get-tests/split.js`
     const [res] = getTests({ path, splitRe: /^\/\/\/ /mg })
     await throws({
       fn: res.onError,
@@ -47,7 +47,7 @@ const T = {
     })
   },
   async 'can make a mask with a new line'({ fixture }, { test }) {
-    const res = getTests({ path: fixture`mask-nl.js` })
+    const res = getTests({ path: fixture`get-tests/new-line.js` })
     const fr = res.map(({ onError, ...rest }) => {
       ok(onError)
       return rest
