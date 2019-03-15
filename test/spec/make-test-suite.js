@@ -1,5 +1,5 @@
 import throws from 'assert-throws'
-import { equal, deepEqual } from 'assert'
+import { equal, deepEqual, ok } from 'assert'
 import SnapshotContext from 'snapshot-context'
 import { inspect } from 'util'
 import { Readable, Transform } from 'stream'
@@ -166,13 +166,27 @@ const assertResults = {
   },
   async 'can create a test suite from nested directories'({ fixture }, { test }) {
     const ts = makeTestSuite(fixture`recursive`, {
-      getResults(input) {
-        return input + ' - ok'
-      },
+      getResults() {},
     })
     const s = inspect(ts)
       .split('\n').map(a => a.trimRight()).join('\n')
     await test('mask-dir-nested.txt', s)
+  },
+  async 'resolves result file extension'({ fixture }) {
+    const ts = makeTestSuite(fixture`result/index`, {
+      getResults() {},
+    })
+    ok(Object.keys(ts).length)
+  },
+  async 'throws on multiple possible result file extensions'({ fixture }) {
+    const path = fixture`result/multiple`
+    await throws({
+      fn: makeTestSuite,
+      args: [path, {
+        getResults() {},
+      }],
+      message: `Could not resolve the result path ${path}, possible files: multiple.js, multiple.md.`,
+    })
   },
   async 'asserts on results'({ fixture, runTest }) {
     const t = 'pass'
