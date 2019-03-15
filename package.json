@@ -46,10 +46,10 @@
     "alamode": "1.8.5",
     "documentary": "1.22.0",
     "eslint-config-artdeco": "1.0.1",
-    "snapshot-context": "2.0.5",
+    "reloquent": "1.2.4",
     "temp-context": "2.1.0",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.8.3"
+    "zoroaster": "3.8.5"
   },
   "dependencies": {
     "@zoroaster/fork": "1.1.1",

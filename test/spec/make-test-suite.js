@@ -1,6 +1,5 @@
 import throws from 'assert-throws'
 import { equal, deepEqual, ok } from 'assert'
-import SnapshotContext from 'snapshot-context'
 import { inspect } from 'util'
 import { Readable, Transform } from 'stream'
 import Context from '../context'
@@ -151,10 +150,10 @@ const errors = {
   },
 }
 
-/** @type {Object.<string, (c: Context, sc: SnapshotContext)>} */
+/** @type {Object.<string, (c: Context)>} */
 const assertResults = {
-  context: [Context, SnapshotContext],
-  async 'can create a test suite from a directory'({ fixture }, { test }) {
+  context: Context,
+  async 'can create a test suite from a directory'({ fixture }) {
     const ts = makeTestSuite(fixture`test-suite`, {
       getResults(input) {
         return input + ' - ok'
@@ -162,15 +161,15 @@ const assertResults = {
     })
     const s = inspect(ts)
       .split('\n').map(a => a.trimRight()).join('\n')
-    await test('mask-dir.txt', s)
+    return s
   },
-  async 'can create a test suite from nested directories'({ fixture }, { test }) {
+  async 'creates a test suite from nested directories'({ fixture }) {
     const ts = makeTestSuite(fixture`recursive`, {
       getResults() {},
     })
     const s = inspect(ts)
       .split('\n').map(a => a.trimRight()).join('\n')
-    await test('mask-dir-nested.txt', s)
+    return s
   },
   async 'resolves result file extension'({ fixture }) {
     const ts = makeTestSuite(fixture`result/index`, {

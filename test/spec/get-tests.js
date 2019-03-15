@@ -1,5 +1,4 @@
 import { deepEqual } from 'assert-diff'
-import SnapshotContext from 'snapshot-context'
 import { ok, equal } from 'assert'
 import throws from 'assert-throws'
 import Context from '../context'
@@ -7,24 +6,22 @@ import getTests from '../../src/mask'
 
 /** @type {Object.<string, (c: Context, sc: SnapshotContext)>} */
 const T = {
-  context: [Context, SnapshotContext],
-  async 'can make a mask'({ fixture }, { test }) {
+  context: Context,
+  async 'can make a mask'({ fixture }) {
     const res = getTests({ path: fixture`get-tests/mask.js` })
     const fr = res.map(({ onError, ...rest }) => {
       ok(onError)
       return rest
     })
-    await test('mask.json', fr)
+    return fr
   },
-  async 'can make a mask with a separator'(
-    { fixture }, { test },
-  ) {
+  async 'can make a mask with a separator'({ fixture }) {
     const res = getTests({ path: fixture`get-tests/split.js`, splitRe: /^\/\/\/ /mg })
     const fr = res.map(({ onError, ...rest }) => {
       ok(onError)
       return rest
     })
-    await test('mask-nl.json', fr)
+    return fr
   },
   async 'prints the error lines for custom separators'({ fixture }) {
     const path = fixture`get-tests/split.js`
@@ -46,13 +43,13 @@ const T = {
     at a test (${path}:8:1)`,
     })
   },
-  async 'can make a mask with a new line'({ fixture }, { test }) {
+  async 'can make a mask with a new line'({ fixture }) {
     const res = getTests({ path: fixture`get-tests/new-line.js` })
     const fr = res.map(({ onError, ...rest }) => {
       ok(onError)
       return rest
     })
-    await test('mask-nl.json', fr)
+    return fr
   },
   async 'can make a mask with empty expected'({ fixture }) {
     const res = getTests({ path: fixture`get-tests/empty.md` })
