@@ -4,36 +4,7 @@ import SnapshotContext from 'snapshot-context'
 import { inspect } from 'util'
 import { Readable, Transform } from 'stream'
 import Context from '../context'
-import makeTestSuite from '../../src/make-test-suite'
-
-// /**
-//  * Path to a mask fixture.
-//  */
-// MASK_PATH,
-// /**
-//  * Path to a mask fixture with a new line.
-//  */
-// MASK_NL_PATH: resolve(FIXTURE, 'mask-nl.js'),
-// MASK_EMPTY_PATH: 'test/fixture/mask/empty.md',
-// MASK_BLANK_PATH: 'test/fixture/mask/blank.md',
-// /**
-//  * Path to a mask fixture where tests are split with custom separator.
-//  */
-// MASK_SPLIT_PATH: join(FIXTURE, 'mask-split.js'),
-
-// /**
-//  * Path to a mask fixture to test the `makeTestSuite` function.
-//  */
-// TS_MASK_PATH: resolve(FIXTURE, 'mask/test-suite/default.js'),
-// /**
-//  * Path to a mask fixture to test the `makeTestSuite` function with custom properties.
-//  */
-// TS_CUSTOM_MASK_PATH: resolve(FIXTURE, 'mask/test-suite-custom.js'),
-
-// /**
-//  * Path to a directory with masks.
-//  */
-// MASK_DIR_PATH: resolve(FIXTURE, 'mask'),
+import makeTestSuite from '../../src'
 
 /** @type {Object.<string, (c: Context)>} */
 const expectedAndError = {

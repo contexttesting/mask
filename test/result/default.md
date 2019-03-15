@@ -2,5 +2,5 @@
 test
 
 /* expected */
-test
+test ok
 /**/

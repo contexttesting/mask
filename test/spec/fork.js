@@ -1,7 +1,7 @@
 import { throws } from 'zoroaster/assert'
 import TempContext from 'temp-context'
 import Context from '../context'
-import makeTestSuite from '../../src/make-test-suite'
+import makeTestSuite from '../../src'
 
 /** @type {Object.<string, (c: Context)>} */
 const T = {

@@ -2,7 +2,7 @@ import { Transform, Readable } from 'stream'
 import throws from 'assert-throws'
 import { fork } from 'child_process'
 import Context from '../context'
-import makeTestSuite from '../../src/make-test-suite'
+import makeTestSuite from '../../src'
 
 /** @type {Object.<string, (c: Context)>} */
 const T = {
