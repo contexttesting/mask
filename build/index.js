@@ -1,6 +1,6 @@
 const { c: color } = require('erte');
 const { readdirSync, lstatSync } = require('fs');
-const { join } = require('path');
+const { join, dirname, basename } = require('path');
 const { collect } = require('catchment');
 const { deepEqual } = require('assert-diff');
 let fork = require('@zoroaster/fork'); if (fork && fork.__esModule) fork = fork.default;
@@ -22,8 +22,28 @@ const getTests = require('./mask'); const { assertExpected } = getTests;
  * @param {string[]} [conf.jsonProps] Any additional properties to extract from the mask, and parse as _JSON_ values.
  * @param {RegExp} [conf.splitRe="/^\/\/ /gm"] A regular expression used to detect the beginning of a new test in a mask file. Default `/^\/\/ /gm`.
  */
-               function makeTestSuite(path, conf) {
-  const pathStat = lstatSync(path)
+               function makeTestSuite(path, conf, _content) {
+  let pathStat
+  try {
+    pathStat = lstatSync(path)
+  } catch (err) {
+    if (err.code != 'ENOENT') {
+      throw err
+    }
+    const dir = dirname(path)
+    const files = _content || readdirSync(dir)
+    const matchingFiles = files.filter((f) => {
+      return f.startsWith(`${basename(path)}.`)
+    })
+    if (matchingFiles.length > 1) {
+      throw new Error(`Could not resolve the result path ${path}, possible files: ${matchingFiles.join(', ')}.`)
+    } else if (matchingFiles.length) {
+      path = join(dir, matchingFiles[0])
+      pathStat = lstatSync(path)
+    } else {
+      throw new Error(`Could not resolve the result path ${path}.`)
+    }
+  }
   if (pathStat.isFile()) {
     return makeATestSuite(path, conf)
   } else if (pathStat.isDirectory()) {
@@ -33,7 +53,7 @@ const getTests = require('./mask'); const { assertExpected } = getTests;
       const nn = replaceFilename(node)
       return {
         ...acc,
-        [nn]: makeTestSuite(newPath, conf),
+        [nn]: makeTestSuite(newPath, conf, content),
       }
     }, {})
     return res
