@@ -30,7 +30,11 @@
   },
   "keywords": [
     "mask",
-    "zoroaster"
+    "spec",
+    "zoroaster",
+    "test",
+    "context",
+    "testing"
   ],
   "author": "Anton <anton@adc.sh>",
   "license": "MIT",
