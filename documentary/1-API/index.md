@@ -3,19 +3,19 @@
 The package is available by importing its default function:
 
 ```js
-import mask from '@zoroaster/mask'
+import makeTestSuite from '@zoroaster/mask'
 ```
 
 %~%
 
-```## mask
+```## makeTestSuite
 [
-  ["arg1", "string"],
-  ["arg2?", "boolean"]
+  ["result", "string"],
+  ["config", "MakeTestSuiteConf"]
 ]
 ```
 
-Call this function to get the result you want.
+Creates a test suite that can be exported to run with _Zoroaster_ Context-Testing Framework.
 
 %TYPEDEF types/index.xml%
 

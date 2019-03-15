@@ -213,7 +213,7 @@ const assertError = async (throwsConfig, error) => {
  * @prop {boolean} [includeAnswers=true] Whether to add the answers to the `stderr` and `stdout` output. Default `true`.
  */
 
-/* documentary types/make-test-suite.xml */
+/* documentary types/index.xml */
 /**
  * @typedef {import('stream').Transform} Transform
  * @typedef {import('stream').Readable} Readable
