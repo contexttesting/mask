@@ -14,7 +14,9 @@ yarn add -E @zoroaster/mask
 - [API](#api)
 - [`makeTestSuite(result: string, config: MakeTestSuiteConf)`](#maketestsuiteresult-stringconfig-maketestsuiteconf-void)
   * [`MakeTestSuiteConf`](#type-maketestsuiteconf)
+- [Testing Forks](#testing-forks)
   * [`ForkConfig`](#type-forkconfig)
+- [Enabling JSDoc](#enabling-jsdoc)
 - [Copyright](#copyright)
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/0.svg?sanitize=true"></a></p>
@@ -51,21 +53,6 @@ __<a name="type-maketestsuiteconf">`MakeTestSuiteConf`</a>__: Configuration for 
 | assertResults   | _(results: any, props: Object.&lt;string, (string\|object)&gt;\|) => void_                                  | A function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask (where `jsonProps` are parsed into JS objects) will be passed as arguments.                                                                                                                                                            | -            |
 | jsonProps       | _string[]_                                                                                                  | Any additional properties to extract from the mask, and parse as _JSON_ values.                                                                                                                                                                                                                                                                                                         | -            |
 | splitRe         | _RegExp_                                                                                                    | A regular expression used to detect the beginning of a new test in a mask file.                                                                                                                                                                                                                                                                                                         | `/^\/\/ /gm` |
-
-`import('child_process').ForkOptions` __<a name="type-forkoptions">`ForkOptions`</a>__
-
-__<a name="type-forkconfig">`ForkConfig`</a>__: Parameters for forking.
-
-|      Name      |                                       Type                                        |                                                                                      Description                                                                                      | Default |
-| -------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| __module*__    | _string_                                                                          | The path to the module to fork.                                                                                                                                                       | -       |
-| getArgs        | _(args: string[], ...contexts?: Context[]) =&gt; string[]\|Promise.&lt;string[]>_ | The function to get arguments to pass the fork based on the parsed mask input and contexts.                                                                                           | -       |
-| getOptions     | _(...contexts?: Context[]) =&gt; ForkOptions_                                     | The function to get options for the fork, such as `ENV` and `cwd`, based on contexts.                                                                                                 | -       |
-| options        | _[ForkOptions](#type-forkoptions)_                                                | Options for the forked processed, such as `ENV` and `cwd`.                                                                                                                            | -       |
-| inputs         | _[RegExp, string][]_                                                              | Inputs to push to `stdin` when `stdout` writes data. The inputs are kept on stack, and taken off the stack when the RegExp matches the written data.                                  | -       |
-| stderrInputs   | _[RegExp, string][]_                                                              | Inputs to push to `stdin` when `stderr` writes data (similar to `inputs`).                                                                                                            | -       |
-| log            | _boolean\|{stderr: Writable, stdout: Writable}_                                   | Whether to pipe data from `stdout`, `stderr` to the process's streams. If an object is passed, the output will be piped to streams specified as its `stdout` and `stderr` properties. | `false` |
-| includeAnswers | _boolean_                                                                         | Whether to add the answers to the `stderr` and `stdout` output.                                                                                                                       | `true`  |
 
 _For example, given the following function:_
 
@@ -127,11 +114,36 @@ example/test/mask/default.js > default.md > fails the test
 🦅  Executed 2 tests: 1 error.
 ```
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+
+## Testing Forks
+
+With masks, it is very easy to test fork processes.
+
+`import('child_process').ForkOptions` __<a name="type-forkoptions">`ForkOptions`</a>__
+
+__<a name="type-forkconfig">`ForkConfig`</a>__: Parameters for forking.
+
+|      Name      |                                       Type                                        |                                                                                      Description                                                                                      | Default |
+| -------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| __module*__    | _string_                                                                          | The path to the module to fork.                                                                                                                                                       | -       |
+| getArgs        | _(args: string[], ...contexts?: Context[]) =&gt; string[]\|Promise.&lt;string[]>_ | The function to get arguments to pass the fork based on the parsed mask input and contexts.                                                                                           | -       |
+| getOptions     | _(...contexts?: Context[]) =&gt; ForkOptions_                                     | The function to get options for the fork, such as `ENV` and `cwd`, based on contexts.                                                                                                 | -       |
+| options        | _[ForkOptions](#type-forkoptions)_                                                | Options for the forked processed, such as `ENV` and `cwd`.                                                                                                                            | -       |
+| inputs         | _[RegExp, string][]_                                                              | Inputs to push to `stdin` when `stdout` writes data. The inputs are kept on stack, and taken off the stack when the RegExp matches the written data.                                  | -       |
+| stderrInputs   | _[RegExp, string][]_                                                              | Inputs to push to `stdin` when `stderr` writes data (similar to `inputs`).                                                                                                            | -       |
+| log            | _boolean\|{stderr: Writable, stdout: Writable}_                                   | Whether to pipe data from `stdout`, `stderr` to the process's streams. If an object is passed, the output will be piped to streams specified as its `stdout` and `stderr` properties. | `false` |
+| includeAnswers | _boolean_                                                                         | Whether to add the answers to the `stderr` and `stdout` output.                                                                                                                       | `true`  |
+
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
+
+## Enabling JSDoc
+
 The JSDoc for contexts can be enabled by specifying types for the params to the functions.
 
 ![Zoroaster Mask JSDoc Contexts](doc/context.gif)
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true"></a></p>
 
 ## Copyright
 
