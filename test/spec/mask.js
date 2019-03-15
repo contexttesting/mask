@@ -9,7 +9,7 @@ import getTests from '../../src/mask'
 const T = {
   context: [Context, SnapshotContext],
   async 'can make a mask'({ fixture }, { test }) {
-    const res = getTests({ path: fixture`mask.js` })
+    const res = getTests({ path: fixture`get-tests/mask.js` })
     const fr = res.map(({ onError, ...rest }) => {
       ok(onError)
       return rest
@@ -37,7 +37,7 @@ const T = {
     })
   },
   async 'correct error lines when tests begin with same symbols'({ fixture }) {
-    const path = fixture`mask/same-name-start.js`
+    const path = fixture`get-tests/same-name-start.js`
     const [,res] = getTests({ path })
     await throws({
       fn: res.onError,
@@ -55,7 +55,7 @@ const T = {
     await test('mask-nl.json', fr)
   },
   async 'can make a mask with empty expected'({ fixture }) {
-    const res = getTests({ path: fixture`mask/empty.md` })
+    const res = getTests({ path: fixture`get-tests/empty.md` })
     equal(res.length, 1)
     const [test] = res
     ok(test.onError)
@@ -67,7 +67,7 @@ const T = {
     })
   },
   async 'can make a mask with blank expected'({ fixture }) {
-    const res = getTests({ path: fixture`mask/blank.md` })
+    const res = getTests({ path: fixture`get-tests/blank.md` })
     equal(res.length, 1)
     const [test] = res
     ok(test.onError)
