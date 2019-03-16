@@ -1,7 +1,8 @@
 ## 16 March 2019
 
-### 1.1.1
+### 1.2.0
 
+- [feature] Use `##` by default as the test separator in markdown files.
 - [dep] Update `@zoroaster/fork` for new features (removing ANSI, pre-processing and removing the final `\n`).
 
 ## 15 March 2019
