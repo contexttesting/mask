@@ -7,10 +7,8 @@ the input of the test
 
 /* stdout */
 stdout: the input of the test
-
 /**/
 
 /* stderr */
 stderr: config
-
 /**/

@@ -4,12 +4,10 @@
 /* stdout */
 argv: "-a test world"
 Arguments: ["-a","test","world"]
-
 /**/
 
 /* stderr */
 zoroaster test mask
-
 /**/
 
 /* code */
@@ -22,7 +20,6 @@ zoroaster test mask
 /* stdout */
 argv: "-a test world"
 Arguments: ["-a","test world"]
-
 /**/
 
 // fails on stdout
