@@ -1,4 +1,4 @@
-// !assigns the input to this.input
+## !assigns the input to this.input
 the input of the test
 
 /* config */

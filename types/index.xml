@@ -29,8 +29,8 @@
     <prop opt name="jsonProps" type="string[]">
       Any additional properties to extract from the mask, and parse as _JSON_ values.
     </prop>
-    <prop name="splitRe" type="RegExp" default="/^\/\/ /gm">
-      A regular expression used to detect the beginning of a new test in a mask file.
+    <prop opt name="splitRe" type="RegExp" default="/^\/\/ /gm` or `/^## /gm">
+      A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files.
     </prop>
   </type>
 </types>

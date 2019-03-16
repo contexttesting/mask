@@ -1,4 +1,4 @@
-// returns the correct output
+## returns the correct output
 test
 
 /* expected */

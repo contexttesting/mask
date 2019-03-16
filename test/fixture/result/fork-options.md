@@ -1,4 +1,4 @@
-// forks a module
+## forks a module
 -a test world
 
 /* stdout */

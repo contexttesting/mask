@@ -1,4 +1,4 @@
-// an empty expected
+## an empty expected
 
 /* expected */
 /**/

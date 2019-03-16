@@ -1,4 +1,4 @@
-// a test 2
+## a test 2
 hello
 
 /* expected */

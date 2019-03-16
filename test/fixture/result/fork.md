@@ -1,4 +1,4 @@
-// forks a module
+## forks a module
 -a test world
 
 /* stdout */
@@ -14,7 +14,7 @@ zoroaster test mask
 127
 /**/
 
-// forks a module with string arguments
+## forks a module with string arguments
 -a "test world"
 
 /* stdout */
@@ -22,21 +22,21 @@ argv: "-a test world"
 Arguments: ["-a","test world"]
 /**/
 
-// fails on stdout
+## fails on stdout
 -a "test world"
 
 /* stdout */
 fail
 /**/
 
-// fails on stderr
+## fails on stderr
 -a "test world"
 
 /* stderr */
 fail
 /**/
 
-// fails on code
+## fails on code
 -a "test world"
 
 /* code */

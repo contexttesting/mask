@@ -14,9 +14,11 @@ import { readFileSync } from 'fs'
  * @param {Conf} conf
  */
 const getTests = (conf) => {
-  const {
-    path, splitRe = /^\/\/ /gm,
-  } = conf
+  const { path } = conf
+  let { splitRe } = conf
+  if (!splitRe) {
+    splitRe = path.endsWith('.md') ?  /^## /gm : /^\/\/ /gm
+  }
   const m = `${readFileSync(path)}`
   const mi = splitRe.exec(m)
   if (!mi) throw new Error(`${path} does not contain tests.`)
