@@ -20,7 +20,7 @@ const getTests = require('./mask'); const { assertExpected } = getTests;
  * @param {(results: any) => string} [conf.mapActual] An optional function to get a value to test against `expected` mask property from results. By default, the full result is used.
  * @param {(results: any, props: Object.<string, (string|object)>) => void} [conf.assertResults] A function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask (where `jsonProps` are parsed into JS objects) will be passed as arguments.
  * @param {string[]} [conf.jsonProps] Any additional properties to extract from the mask, and parse as _JSON_ values.
- * @param {RegExp} [conf.splitRe="/^\/\/ /gm"] A regular expression used to detect the beginning of a new test in a mask file. Default `/^\/\/ /gm`.
+ * @param {RegExp} [conf.splitRe="/^\/\/ /gm` or `/^## /gm"] A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files. Default `/^\/\/ /gm` or `/^## /gm`.
  */
                function makeTestSuite(path, conf, _content) {
   let pathStat
@@ -235,6 +235,8 @@ const assertError = async (throwsConfig, error) => {
  * @prop {[RegExp, string][]} [stderrInputs] Inputs to push to `stdin` when `stderr` writes data (similar to `inputs`).
  * @prop {boolean|{stderr: Writable, stdout: Writable}} [log=false] Whether to pipe data from `stdout`, `stderr` to the process's streams. If an object is passed, the output will be piped to streams specified as its `stdout` and `stderr` properties. Default `false`.
  * @prop {boolean} [includeAnswers=true] Whether to add the answers to the `stderr` and `stdout` output. Default `true`.
+ * @prop {boolean} [stripAnsi=true] Remove ANSI escape sequences from the `stdout` and `stderr` prior to checking of the result. Default `true`.
+ * @prop {(function|{stdout?:function, stderr?:function})} [preprocess] The function to run on `stdout` and `stderr` before comparing it to the output. Pass an object with `stdout` and `stderr` properties for individual pre-processors.
  */
 
 /* documentary types/index.xml */
@@ -252,7 +254,7 @@ const assertError = async (throwsConfig, error) => {
  * @prop {(results: any) => string} [mapActual] An optional function to get a value to test against `expected` mask property from results. By default, the full result is used.
  * @prop {(results: any, props: Object.<string, (string|object)>) => void} [assertResults] A function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask (where `jsonProps` are parsed into JS objects) will be passed as arguments.
  * @prop {string[]} [jsonProps] Any additional properties to extract from the mask, and parse as _JSON_ values.
- * @prop {RegExp} [splitRe="/^\/\/ /gm"] A regular expression used to detect the beginning of a new test in a mask file. Default `/^\/\/ /gm`.
+ * @prop {RegExp} [splitRe="/^\/\/ /gm` or `/^## /gm"] A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files. Default `/^\/\/ /gm` or `/^## /gm`.
  */
 
 
