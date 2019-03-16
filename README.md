@@ -100,14 +100,13 @@ export default makeTestSuite('example/test/result', {
 ```
 ```
 example/test/mask/default.js
-   default.md
-    ✓  runs the test
+  ✓  runs the test
 not hello world: this is a test
-    ✗  fails the test
-    | Error: 'hello world: this is a test' == 'not hello world: this is a test'
-    |     at fails the test (example/test/result/default.md:8:1)
+  ✗  fails the test
+  | Error: 'hello world: this is a test' == 'not hello world: this is a test'
+  |     at fails the test (example/test/result/default.md:8:1)
 
-example/test/mask/default.js > default.md > fails the test
+example/test/mask/default.js > fails the test
   Error: 'hello world: this is a test' == 'not hello world: this is a test'
       at fails the test (example/test/result/default.md:8:1)
 
@@ -134,6 +133,8 @@ __<a name="type-forkconfig">`ForkConfig`</a>__: Parameters for forking.
 | stderrInputs   | _[RegExp, string][]_                                                              | Inputs to push to `stdin` when `stderr` writes data (similar to `inputs`).                                                                                                            | -       |
 | log            | _boolean\|{stderr: Writable, stdout: Writable}_                                   | Whether to pipe data from `stdout`, `stderr` to the process's streams. If an object is passed, the output will be piped to streams specified as its `stdout` and `stderr` properties. | `false` |
 | includeAnswers | _boolean_                                                                         | Whether to add the answers to the `stderr` and `stdout` output.                                                                                                                       | `true`  |
+| stripAnsi      | _boolean_                                                                         | Remove ANSI escape sequences from the `stdout` and `stderr` prior to checking of the result.                                                                                          | `true`  |
+| preprocess     | _(function\|{stdout?:function, stderr?:function})_                                | The function to run on `stdout` and `stderr` before comparing it to the output. Pass an object with `stdout` and `stderr` properties for individual pre-processors.                   | -       |
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
 
