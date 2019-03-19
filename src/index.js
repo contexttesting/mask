@@ -136,7 +136,7 @@ const makeTest = ({
       }
     }
     if (assertResults) {
-      assertResults(results, props)
+      assertResults.call(cntx, results, props)
     }
   }
   return test

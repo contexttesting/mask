@@ -105,6 +105,18 @@ const expectedAndError = {
     })
     await runTest(ts, 'test properties')
   },
+  async 'passes this context to assertResults'({ fixture, runTest }) {
+    const ts = makeTestSuite(fixture`test-suite/default.js`, {
+      getResults() {
+        return `input: hello world
+prop: {"key":"value"}`
+      },
+      assertResults() {
+        equal(this.input, 'hello world')
+      },
+    })
+    await runTest(ts, 'test properties')
+  },
 }
 
 /** @type {Object.<string, (c: Context)>} */
