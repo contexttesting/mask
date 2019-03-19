@@ -1,6 +1,6 @@
 {
   "name": "@zoroaster/mask",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "The Code For Zoroaster Mask Testing.",
   "main": "build/index.js",
   "module": "src/index.js",
