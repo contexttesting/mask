@@ -1,3 +1,10 @@
+## 20 March 2019
+
+### [1.2.1](https://github.com/contexttesting/mask/compare/v1.2.0...v1.2.1)
+
+- [fix] Asynchronous `assertResults`.
+- [fix] Pass `this` context with props to `assertResults`.
+
 ## 16 March 2019
 
 ### 1.2.0
