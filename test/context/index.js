@@ -39,6 +39,15 @@ export default class Context {
    * @example
    * fixture`result/mask`
    */
+  get f() {
+    return fixture
+  }
+  /**
+   * A tagged template that returns the relative path to the fixture.
+   * @param {string} file
+   * @example
+   * fixture`result/mask`
+   */
   static get fixture() {
     return fixture
   }

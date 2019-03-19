@@ -8,7 +8,7 @@ import makeTestSuite from '../../src'
 /** @type {Object.<string, (c: Context)>} */
 const expectedAndError = {
   context: Context,
-  async 'can create a test suite'({ fixture, runTest }) {
+  async 'can create a test suite'({ f, runTest }) {
     const t = 'pass'
     let called = 0
 
@@ -32,7 +32,7 @@ const expectedAndError = {
       const res = await stream(input)
       return res
     }
-    const ts = makeTestSuite(fixture`test-suite/default.js`, {
+    const ts = makeTestSuite(f`test-suite/default.js`, {
       context: TestContext,
       getThrowsConfig,
       getResults,
@@ -55,8 +55,8 @@ const expectedAndError = {
     })
     equal(called, 4)
   },
-  async 'asserts on empty result'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`test-suite/default.js`, {
+  async 'asserts on empty result'({ f, runTest }) {
+    const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults(input) {
         if (input == 'fail') return input
         return ''
@@ -69,8 +69,8 @@ const expectedAndError = {
       message: /'fail' == ''/,
     })
   },
-  async 'passes this context to readable'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`test-suite/default.js`, {
+  async 'passes this context to readable'({ f, runTest }) {
+    const ts = makeTestSuite(f`test-suite/default.js`, {
       getReadable() {
         const { input, ...props } = this
         return new Readable({
@@ -87,8 +87,8 @@ const expectedAndError = {
     })
     await runTest(ts, 'test properties')
   },
-  async 'passes this context to getTransform'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`test-suite/default.js`, {
+  async 'passes this context to getTransform'({ f, runTest }) {
+    const ts = makeTestSuite(f`test-suite/default.js`, {
       getTransform() {
         const { input, ...props } = this
         return new Transform({
@@ -105,8 +105,8 @@ const expectedAndError = {
     })
     await runTest(ts, 'test properties')
   },
-  async 'passes this context to assertResults'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`test-suite/default.js`, {
+  async 'passes this context to assertResults'({ f, runTest }) {
+    const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults() {
         return `input: hello world
 prop: {"key":"value"}`
@@ -116,6 +116,22 @@ prop: {"key":"value"}`
       },
     })
     await runTest(ts, 'test properties')
+  },
+  async 'assertResults can be async '({ f, runTest }) {
+    const ts = makeTestSuite(f`test-suite/default.js`, {
+      getResults() {
+        return `input: hello world
+prop: {"key":"value"}`
+      },
+      async assertResults() {
+        throw new Error('OK')
+      },
+    })
+    await throws({
+      fn: runTest,
+      args: [ts, 'test properties'],
+      message: 'OK',
+    })
   },
 }
 
