@@ -1,6 +1,5 @@
 import throws from 'assert-throws'
-import { equal, deepEqual, ok } from 'assert'
-import { inspect } from 'util'
+import { equal, deepEqual } from 'assert'
 import { Readable, Transform } from 'stream'
 import Context from '../context'
 import makeTestSuite from '../../src'
@@ -137,8 +136,8 @@ prop: {"key":"value"}`
 
 /** @type {Object.<string, (c: Context)>} */
 const errors = {
-  async 'when the actual result is not a string'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`test-suite/default.js`, {
+  async 'when the actual result is not a string'({ f, runTest }) {
+    const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults() {
         return {}
       },
@@ -149,24 +148,24 @@ const errors = {
       message: /The actual result is not an a string./,
     })
   },
-  async 'when no getThrowsConfig is given'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`test-suite/default.js`, {})
+  async 'when no getThrowsConfig is given'({ f, runTest }) {
+    const ts = makeTestSuite(f`test-suite/default.js`, {})
     await throws({
       fn: runTest,
       args: [ts, 'error pass'],
       message: /No "getThrowsConfig" function is given./,
     })
   },
-  async 'when repeating a test name'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`test-suite/default.js`, {})
+  async 'when repeating a test name'({ f, runTest }) {
+    const ts = makeTestSuite(f`test-suite/default.js`, {})
     await throws({
       fn: runTest,
       args: [ts, 'duplicate name'],
       message: /Repeated use of the test name "duplicate name"/,
     })
   },
-  async 'when cannot parse a JSON property'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`test-suite/default.js`, {
+  async 'when cannot parse a JSON property'({ f, runTest }) {
+    const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults: () => { },
       jsonProps: ['json'],
     })
@@ -181,40 +180,6 @@ const errors = {
 /** @type {Object.<string, (c: Context)>} */
 const assertResults = {
   context: Context,
-  async 'can create a test suite from a directory'({ fixture }) {
-    const ts = makeTestSuite(fixture`test-suite`, {
-      getResults(input) {
-        return input + ' - ok'
-      },
-    })
-    const s = inspect(ts)
-      .split('\n').map(a => a.trimRight()).join('\n')
-    return s
-  },
-  async 'creates a test suite from nested directories'({ fixture }) {
-    const ts = makeTestSuite(fixture`recursive`, {
-      getResults() {},
-    })
-    const s = inspect(ts)
-      .split('\n').map(a => a.trimRight()).join('\n')
-    return s
-  },
-  async 'resolves result file extension'({ fixture }) {
-    const ts = makeTestSuite(fixture`result/index`, {
-      getResults() {},
-    })
-    ok(Object.keys(ts).length)
-  },
-  async 'throws on multiple possible result file extensions'({ fixture }) {
-    const path = fixture`result/multiple`
-    await throws({
-      fn: makeTestSuite,
-      args: [path, {
-        getResults() {},
-      }],
-      message: `Could not resolve the result path ${path}, possible files: multiple.js, multiple.md.`,
-    })
-  },
   async 'asserts on results'({ fixture, runTest }) {
     const t = 'pass'
     let called = 0

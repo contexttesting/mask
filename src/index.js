@@ -25,32 +25,23 @@ import getTests, { assertExpected } from './mask'
  */
 export default function makeTestSuite(path, conf, _content) {
   let pathStat
+  const isFocused = path.startsWith('!')
+  let realPath = isFocused ? path.replace(/^!/, '') : path
   try {
-    pathStat = lstatSync(path)
+    pathStat = lstatSync(realPath)
   } catch (err) {
     if (err.code != 'ENOENT') {
       throw err
     }
-    const dir = dirname(path)
-    const files = _content || readdirSync(dir)
-    const matchingFiles = files.filter((f) => {
-      return f.startsWith(`${basename(path)}.`)
-    })
-    if (matchingFiles.length > 1) {
-      throw new Error(`Could not resolve the result path ${path}, possible files: ${matchingFiles.join(', ')}.`)
-    } else if (matchingFiles.length) {
-      path = join(dir, matchingFiles[0])
-      pathStat = lstatSync(path)
-    } else {
-      throw new Error(`Could not resolve the result path ${path}.`)
-    }
+    realPath = resolve(realPath, _content)
+    pathStat = lstatSync(realPath)
   }
   if (pathStat.isFile()) {
-    return makeATestSuite(path, conf)
+    return makeATestSuite(realPath, conf, isFocused)
   } else if (pathStat.isDirectory()) {
-    const content = readdirSync(path)
+    const content = readdirSync(realPath)
     const res = content.reduce((acc, node) => {
-      const newPath = join(path, node)
+      const newPath = join(realPath, node)
       const nn = replaceFilename(node)
       return {
         ...acc,
@@ -62,6 +53,22 @@ export default function makeTestSuite(path, conf, _content) {
 }
 const replaceFilename = (filename) => {
   return filename.replace(/\.\w+?$/, '')
+}
+
+const resolve = (path, content) => {
+  const dir = dirname(path)
+  const files = content || readdirSync(dir)
+  const matchingFiles = files.filter((f) => {
+    return f.startsWith(`${basename(path)}.`)
+  })
+  if (matchingFiles.length > 1) {
+    throw new Error(`Could not resolve the result path ${path}, possible files: ${matchingFiles.join(', ')}.`)
+  } else if (matchingFiles.length) {
+    path = join(dir, matchingFiles[0])
+  } else {
+    throw new Error(`Could not resolve the result path ${path}.`)
+  }
+  return path
 }
 
 // The `expected` property of the mask will be compared against the actual value returned by the `getActual` function. To test for the correct error message, the `error` property will be tested using `assert-throws` configuration returned by `getThrowsConfig` function. Any additional tests can be performed with `customTest` function, which will receive any additional properties extracted from the mask using `customProps` and `jsonProps`. The JSON properties will be parsed into an object.
