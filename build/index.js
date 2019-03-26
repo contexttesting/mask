@@ -12,6 +12,7 @@ const getTests = require('./mask'); const { assertExpected } = getTests;
  * @param {string} path Path to the mask file or directory of files.
  * @param {MakeTestSuiteConf} [conf] Configuration for making test suites.
  * @param {({new(): Context}|{new(): Context}[]|{})} [conf.context] Single or multiple context constructors or objects to initialise for each test.
+ * @param {({new(): Context}|{new(): Context}[]|{})} [conf.persistentContext] The context constructor(s) that will be initialised and destroyed once per test suite, having a persistent state across tests.
  * @param {(input: string, ...contexts?: Context[]) => string} [conf.getResults] A possibly async function which should return results of a test. If it returns a string, it will be compared against the `expected` property of the mask using string comparison. If it returns an object, its deep equality with `expected` can be tested by adding `'expected'` to the `jsonProps`.
  * @param {(...contexts?: Context[]) => Transform|Promise.<Transform>} [conf.getTransform] A possibly async function which returns a _Transform_ stream to be ended with the input specified in the mask. Its output will be accumulated and compared against the expected output of the mask.
  * @param {(input: string, ...contexts?: Context[]) => Readable|Promise.<Readable>} [conf.getReadable] A possibly async function which returns a _Readable_ stream constructed with the input from the mask. Its output will be stored in memory and compared against the expected output of the mask. This could be used to test a forked child process, for example.
@@ -24,43 +25,52 @@ const getTests = require('./mask'); const { assertExpected } = getTests;
  */
                function makeTestSuite(path, conf, _content) {
   let pathStat
+  const isFocused = path.startsWith('!')
+  let realPath = isFocused ? path.replace(/^!/, '') : path
   try {
-    pathStat = lstatSync(path)
+    pathStat = lstatSync(realPath)
   } catch (err) {
     if (err.code != 'ENOENT') {
       throw err
     }
-    const dir = dirname(path)
-    const files = _content || readdirSync(dir)
-    const matchingFiles = files.filter((f) => {
-      return f.startsWith(`${basename(path)}.`)
-    })
-    if (matchingFiles.length > 1) {
-      throw new Error(`Could not resolve the result path ${path}, possible files: ${matchingFiles.join(', ')}.`)
-    } else if (matchingFiles.length) {
-      path = join(dir, matchingFiles[0])
-      pathStat = lstatSync(path)
-    } else {
-      throw new Error(`Could not resolve the result path ${path}.`)
-    }
+    realPath = resolve(realPath, _content)
+    pathStat = lstatSync(realPath)
   }
+  let ts
   if (pathStat.isFile()) {
-    return makeATestSuite(path, conf)
+    ts = makeATestSuite(realPath, conf)
   } else if (pathStat.isDirectory()) {
-    const content = readdirSync(path)
-    const res = content.reduce((acc, node) => {
-      const newPath = join(path, node)
+    const content = readdirSync(realPath)
+    ts = content.reduce((acc, node) => {
+      const newPath = join(realPath, node)
       const nn = replaceFilename(node)
       return {
         ...acc,
         [nn]: makeTestSuite(newPath, conf, content),
       }
     }, {})
-    return res
   }
+  if (isFocused) return { [path]: ts }
+  return ts
 }
 const replaceFilename = (filename) => {
   return filename.replace(/\.\w+?$/, '')
+}
+
+const resolve = (path, content) => {
+  const dir = dirname(path)
+  const files = content || readdirSync(dir)
+  const matchingFiles = files.filter((f) => {
+    return f.startsWith(`${basename(path)}.`)
+  })
+  if (matchingFiles.length > 1) {
+    throw new Error(`Could not resolve the result path ${path}, possible files: ${matchingFiles.join(', ')}.`)
+  } else if (matchingFiles.length) {
+    path = join(dir, matchingFiles[0])
+  } else {
+    throw new Error(`Could not resolve the result path ${path}.`)
+  }
+  return path
 }
 
 // The `expected` property of the mask will be compared against the actual value returned by the `getActual` function. To test for the correct error message, the `error` property will be tested using `assert-throws` configuration returned by `getThrowsConfig` function. Any additional tests can be performed with `customTest` function, which will receive any additional properties extracted from the mask using `customProps` and `jsonProps`. The JSON properties will be parsed into an object.
@@ -246,6 +256,7 @@ const assertError = async (throwsConfig, error) => {
  *
  * @typedef {Object} MakeTestSuiteConf Configuration for making test suites.
  * @prop {({new(): Context}|{new(): Context}[]|{})} [context] Single or multiple context constructors or objects to initialise for each test.
+ * @prop {({new(): Context}|{new(): Context}[]|{})} [persistentContext] The context constructor(s) that will be initialised and destroyed once per test suite, having a persistent state across tests.
  * @prop {(input: string, ...contexts?: Context[]) => string} [getResults] A possibly async function which should return results of a test. If it returns a string, it will be compared against the `expected` property of the mask using string comparison. If it returns an object, its deep equality with `expected` can be tested by adding `'expected'` to the `jsonProps`.
  * @prop {(...contexts?: Context[]) => Transform|Promise.<Transform>} [getTransform] A possibly async function which returns a _Transform_ stream to be ended with the input specified in the mask. Its output will be accumulated and compared against the expected output of the mask.
  * @prop {(input: string, ...contexts?: Context[]) => Readable|Promise.<Readable>} [getReadable] A possibly async function which returns a _Readable_ stream constructed with the input from the mask. Its output will be stored in memory and compared against the expected output of the mask. This could be used to test a forked child process, for example.
