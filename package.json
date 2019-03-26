@@ -49,7 +49,7 @@
     "reloquent": "1.2.4",
     "temp-context": "2.1.0",
     "yarn-s": "1.1.0",
-    "zoroaster": "3.9.0"
+    "zoroaster": "3.10.0"
   },
   "dependencies": {
     "@zoroaster/fork": "1.2.0",

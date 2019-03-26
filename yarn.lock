@@ -167,10 +167,10 @@
     mismatch "1.0.3"
     spawncommand "2.1.1"
 
-"@zoroaster/mask@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@zoroaster/mask/-/mask-1.2.0.tgz#a489b983c07a0d43dd6b44765605dde094aa7357"
-  integrity sha512-+nHi49XiQFBuSaCOC0qEYgmumJMjQZpcSq/zBZqfTy3S0tnMuE8mfVkDPn2NSm5athg5FxlztI67yFti2+mZXQ==
+"@zoroaster/mask@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@zoroaster/mask/-/mask-1.2.1.tgz#988f7b25cb58dfae1d630ce7e0aa30938387413f"
+  integrity sha512-DuloW1N+msxvh5Pf6YqYsi7XjierASGDHnfQgKd7zcM5Bbp4WC+3ImE/eOPUD7pKbeT13j6JrvvmVpXY8XBAkA==
   dependencies:
     "@zoroaster/fork" "1.2.0"
     assert-diff "2.0.3"
@@ -200,26 +200,6 @@ alamode@1.8.4:
     argufy "1.3.2"
     catchment "3.2.2"
     erte "1.1.6"
-    pirates "4.0.1"
-    restream "3.5.0"
-    source-map "0.7.3"
-    usually "1.1.0"
-    which-stream "1.0.1"
-
-alamode@1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/alamode/-/alamode-1.8.5.tgz#a0eef08d39a9bc513c5e13859a5f8b93e6fcba9c"
-  integrity sha512-eVjJstom2uP/7s9IQi365TdCU9lQuKgIudZD1N9Tw89mrbeXwQPxY/fsyBbk2/ItCvUGgjB0s3aeNanKJmDfoQ==
-  dependencies:
-    "@a-la/export" "1.3.1"
-    "@a-la/import" "1.7.0"
-    "@a-la/jsx" "1.4.4"
-    "@a-la/markers" "1.0.3"
-    "@wrote/clone" "1.1.0"
-    "@wrote/wrote" "1.2.1"
-    argufy "1.3.2"
-    catchment "3.2.2"
-    erte "1.1.7"
     pirates "4.0.1"
     restream "3.5.0"
     source-map "0.7.3"
@@ -546,10 +526,10 @@ rexml@1.3.0:
   resolved "https://registry.yarnpkg.com/rexml/-/rexml-1.3.0.tgz#70d773c2e69da392112784e5ef7a65e77bef9612"
   integrity sha512-FCoo+tfyqX7cw0ruRaCIz2rLoDL1IRNmCUF6e1P8v2G/RPB6t0EiJPZ2A8DxNJfGG5Hc9PPF7JRnm18Q0pKbIg==
 
-snapshot-context@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/snapshot-context/-/snapshot-context-2.1.1.tgz#c63b295a156c6c8ec5abd83bc3c417ebd8bccd14"
-  integrity sha512-H3dORxs5F3N7nStKZsAaCZVdomcuQ6xPIiha0lCkzTEF+m+dLTH+ooXMuaTtbXXgFJ1pxJ9cOEu6bl6vG5iRIg==
+snapshot-context@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/snapshot-context/-/snapshot-context-2.2.0.tgz#5c2b69c4eab2f287e21784694d3975ccf4be35be"
+  integrity sha512-W7ipXBctQKDG5PwyWOIaw6U2nw1QdAARxXRml53vQhnJE6zSEZ0z/IlWroDM7Rh3jymhQdw8K7Qkw+BSsFCcLw==
   dependencies:
     assert-diff "2.0.3"
     erotic "2.0.2"
@@ -627,25 +607,25 @@ yarn-s@1.1.0:
   dependencies:
     spawncommand "1.1.0"
 
-zoroaster@3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-3.9.0.tgz#ab95d49b32eee48f8a283977ba79d2f2c0fedd56"
-  integrity sha512-tEgGmugHi4QCNmRGQdNuuzlmeHtmrk99IUo8pn+u2fr8p/z6p/O1EVdepe2ryHsTVIKErBmMzg14JW/cqXATaA==
+zoroaster@3.10.0:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-3.10.0.tgz#f5b9ca4714013f947b0a5c0d93b7047639bab743"
+  integrity sha512-YIgKYxQJevxWCWoURLGAS4skWNyUTzgU2R89X1hLRonJDyVCQDaJ4ev9hRiYnpJo4+fMsK0Zo62odslOGmR9JQ==
   dependencies:
     "@artdeco/clean-stack" "1.0.1"
     "@wrote/exists" "1.0.1"
-    "@zoroaster/mask" "1.2.0"
+    "@wrote/rm" "1.1.2"
+    "@zoroaster/mask" "1.2.1"
     "@zoroaster/reducer" "1.1.0"
-    alamode "1.8.5"
+    alamode "1.8.6"
     argufy "1.3.2"
     assert-diff "2.0.3"
     assert-throws "3.1.1"
     catchment "3.2.2"
     erte "1.1.7"
-    forkfeed "1.0.0"
-    frame-of-mind "1.0.0"
     makepromise "3.0.2"
     mismatch "1.0.3"
-    snapshot-context "2.1.1"
+    reloquent "1.2.4"
+    snapshot-context "2.2.0"
     spawncommand "2.1.1"
     usually "1.1.0"
