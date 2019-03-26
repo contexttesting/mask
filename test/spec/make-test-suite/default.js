@@ -1,8 +1,8 @@
 import throws from 'assert-throws'
 import { equal, deepEqual } from 'assert'
 import { Readable, Transform } from 'stream'
-import Context from '../context'
-import makeTestSuite from '../../src'
+import Context from '../../context'
+import makeTestSuite from '../../../src'
 
 /** @type {Object.<string, (c: Context)>} */
 const expectedAndError = {
