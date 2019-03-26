@@ -1,4 +1,4 @@
-import { throws, ok } from 'zoroaster/assert'
+import { throws, ok, deepEqual } from 'zoroaster/assert'
 import { inspect } from 'util'
 import Context from '../../context'
 import makeTestSuite from '../../../src'
@@ -6,8 +6,8 @@ import makeTestSuite from '../../../src'
 /** @type {Object.<string, (c: Context)>} */
 const T = {
   context: Context,
-  async 'can create a test suite from a directory'({ fixture }) {
-    const ts = makeTestSuite(fixture`test-suite`, {
+  async 'can create a test suite from a directory'({ f }) {
+    const ts = makeTestSuite(f`test-suite`, {
       getResults(input) {
         return input + ' - ok'
       },
@@ -16,22 +16,22 @@ const T = {
       .split('\n').map(a => a.trimRight()).join('\n')
     return s
   },
-  async 'creates a test suite from nested directories'({ fixture }) {
-    const ts = makeTestSuite(fixture`recursive`, {
+  async 'creates a test suite from nested directories'({ f }) {
+    const ts = makeTestSuite(f`recursive`, {
       getResults() {},
     })
     const s = inspect(ts)
       .split('\n').map(a => a.trimRight()).join('\n')
     return s
   },
-  async 'resolves result file extension'({ fixture }) {
-    const ts = makeTestSuite(fixture`result/index`, {
+  async 'resolves result file extension'({ f }) {
+    const ts = makeTestSuite(f`result/index`, {
       getResults() {},
     })
     ok(Object.keys(ts).length)
   },
-  async 'throws on multiple possible result file extensions'({ fixture }) {
-    const path = fixture`result/multiple`
+  async 'throws on multiple possible result file extensions'({ f }) {
+    const path = f`result/multiple`
     await throws({
       fn: makeTestSuite,
       args: [path, {
@@ -39,6 +39,23 @@ const T = {
       }],
       message: `Could not resolve the result path ${path}, possible files: multiple.js, multiple.md.`,
     })
+  },
+}
+
+/** @type {Object.<string, (c: Context)>} */
+export const focus = {
+  context: Context,
+  async 'generates a focused test suite from dir'({ f }) {
+    const ts = makeTestSuite('!' + f`test-suite`, {
+      getResults() {},
+    })
+    deepEqual(Object.keys(ts), ['!test/fixture/test-suite'])
+  },
+  async 'generates a focused test suite from file'({ f }) {
+    const ts = makeTestSuite('!' + f`result/index`, {
+      getResults() {},
+    })
+    deepEqual(Object.keys(ts), ['!test/fixture/result/index'])
   },
 }
 

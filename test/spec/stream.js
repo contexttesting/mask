@@ -7,8 +7,8 @@ import makeTestSuite from '../../src'
 /** @type {Object.<string, (c: Context)>} */
 const T = {
   context: Context,
-  async 'can stream the result'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`result/index.md`, {
+  async 'can stream the result'({ f, runTest }) {
+    const ts = makeTestSuite(f`result/index.md`, {
       getTransform({ test }) {
         const t = new Transform({
           transform(chunk, encoding, next) {
@@ -29,8 +29,8 @@ const T = {
       message: /this is a test output: pass' == 'this is a test output: fail/,
     })
   },
-  async 'displays the error from the stream'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`result/index.md`, {
+  async 'displays the error from the stream'({ f, runTest }) {
+    const ts = makeTestSuite(f`result/index.md`, {
       getTransform({ test }) {
         const t = new Transform({
           transform(chunk, encoding, next) {
@@ -47,8 +47,8 @@ const T = {
       message: /test-error: pass/,
     })
   },
-  async 'uses async getTransform'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`result/index.md`, {
+  async 'uses async getTransform'({ f, runTest }) {
+    const ts = makeTestSuite(f`result/index.md`, {
       async getTransform({ test }) {
         await new Promise(r => setTimeout(r, 100))
         const t = new Transform({
@@ -70,8 +70,8 @@ const T = {
       message: /this is a test output: pass' == 'this is a test output: fail/,
     })
   },
-  async 'gets a readable stream'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`result/stream-arg.md`, {
+  async 'gets a readable stream'({ f, runTest }) {
+    const ts = makeTestSuite(f`result/stream-arg`, {
       getReadable(input, { test }) {
         const r = new Readable({
           read() {
@@ -85,8 +85,8 @@ const T = {
     })
     await runTest(ts, 'streams result with argument')
   },
-  async 'gets an async readable stream'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`result/stream-arg.md`, {
+  async 'gets an async readable stream'({ f, runTest }) {
+    const ts = makeTestSuite(f`result/stream-arg`, {
       async getReadable(input, { test }) {
         await new Promise(r => setTimeout(r, 100))
         const r = new Readable({
@@ -101,10 +101,10 @@ const T = {
     })
     await runTest(ts, 'streams result with argument')
   },
-  async 'tests a readable fork'({ fixture, runTest }) {
-    const ts = makeTestSuite(fixture`result/stream-arg.md`, {
+  async 'tests a readable fork'({ f, runTest }) {
+    const ts = makeTestSuite(f`result/stream-arg`, {
       getReadable(input) {
-        const proc = fork(fixture`echo`, [input], {
+        const proc = fork(f`echo`, [input], {
           stdio: 'pipe',
         })
         return proc.stdout

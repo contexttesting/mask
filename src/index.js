@@ -36,11 +36,12 @@ export default function makeTestSuite(path, conf, _content) {
     realPath = resolve(realPath, _content)
     pathStat = lstatSync(realPath)
   }
+  let ts
   if (pathStat.isFile()) {
-    return makeATestSuite(realPath, conf, isFocused)
+    ts = makeATestSuite(realPath, conf)
   } else if (pathStat.isDirectory()) {
     const content = readdirSync(realPath)
-    const res = content.reduce((acc, node) => {
+    ts = content.reduce((acc, node) => {
       const newPath = join(realPath, node)
       const nn = replaceFilename(node)
       return {
@@ -48,8 +49,9 @@ export default function makeTestSuite(path, conf, _content) {
         [nn]: makeTestSuite(newPath, conf, content),
       }
     }, {})
-    return res
   }
+  if (isFocused) return { [path]: ts }
+  return ts
 }
 const replaceFilename = (filename) => {
   return filename.replace(/\.\w+?$/, '')
