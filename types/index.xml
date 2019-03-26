@@ -5,6 +5,9 @@
     <prop opt name="context" type="({new(): Context}|{new(): Context}[]|{})">
       Single or multiple context constructors or objects to initialise for each test.
     </prop>
+    <prop opt name="persistentContext" type="({new(): Context}|{new(): Context}[]|{})">
+      The context constructor(s) that will be initialised and destroyed once per test suite, having a persistent state across tests.
+    </prop>
     <prop opt name="getResults" type="(input: string, ...contexts?: Context[]) => string">
       A possibly async function which should return results of a test. If it returns a string, it will be compared against the `expected` property of the mask using string comparison. If it returns an object, its deep equality with `expected` can be tested by adding `'expected'` to the `jsonProps`.
     </prop>
