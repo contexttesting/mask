@@ -21,11 +21,11 @@ Creates a test suite that can be exported to run with _Zoroaster_ Context-Testin
 
 _For example, given the following function:_
 
-%EXAMPLE: example/src/index.js%
+%EXAMPLE: example/src%
 
 _Zoroastser can test it using a mask:_
 
-%EXAMPLE: example/test/mask/default.js, ../../../src => @zoroaster/mask%
+%EXAMPLE: example/test/mask/default, ../../../src => @zoroaster/mask%
 %FORK node_modules/.bin/zoroaster -a example/test/mask/default.js%
 
 %~%

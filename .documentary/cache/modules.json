@@ -1,0 +1,12 @@
+{
+  "node_modules/.bin/zoroaster": {
+    "mtime": 1554718819000,
+    "hash": [
+      "@artdeco/clean-stack 1.0.1",
+      "argufy 1.3.3",
+      "path",
+      "package.json 1554718884000"
+    ],
+    "md5": "1016a881bcc7e4c7844f4ed47a868739"
+  }
+}

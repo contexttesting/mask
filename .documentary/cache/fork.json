@@ -1,0 +1,6 @@
+{
+  "[1016a881bcc7e4c7844f4ed47a868739] node_modules/.bin/zoroaster -a example/test/mask/default.js": {
+    "stdout": " example/test/mask/default.js\n  \u001b[32m✓\u001b[0m  runs the test\n\u001b[31mnot\u001b[0m\u001b[41m \u001b[0m\u001b[31m\u001b[0m\u001b[90mhello world: this is a test\u001b[0m\n  \u001b[31m✗\u001b[0m  fails the test\n  | Error: 'hello world: this is a test' == 'not hello world: this is a test'\n  |     at fails the test (example/test/result/default.md:8:1)\n\n\u001b[31mexample/test/mask/default.js > fails the test\u001b[0m\n  Error: 'hello world: this is a test' == 'not hello world: this is a test'\n      at fails the test (example/test/result/default.md:8:1)\n\n🦅  Executed 2 tests: 1 error.\n",
+    "stderr": "Reverting JS hook to add new one.\nReverting JSX hook to add new one, pragma:\nconst { h } = require(\"preact\");\n"
+  }
+}
