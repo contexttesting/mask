@@ -1,11 +1,22 @@
+import { equal } from 'zoroaster/assert'
 import makeTestSuite from '../../src'
-import Context from '../context'
 
-const ts = makeTestSuite('test/result', {
+export default makeTestSuite('test/result/default', {
   async getResults(input) {
     return input + ' ok'
   },
-  context: Context,
 })
 
-export default ts
+export const regex = makeTestSuite('test/result/regex', {
+  async getResults(input) {
+    const res = input + `\nfunction ${this.functionName}() {}`
+    equal(res, `/**
+ * JsDoc in mask testing.
+ * @param {string} param The param.
+ */
+function helloWorld() {}`)
+    return res
+  },
+  propStartRe: /\/\*@/,
+  propEndRe: /\/\*@\*\//,
+})

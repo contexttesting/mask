@@ -22,6 +22,8 @@ import getTests, { assertExpected } from './mask'
  * @param {(results: any, props: Object.<string, (string|object)>) => (void|Promise)} [conf.assertResults] A possibly async function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask (where `jsonProps` are parsed into JS objects) will be passed as arguments.
  * @param {string[]} [conf.jsonProps] Any additional properties to extract from the mask, and parse as _JSON_ values.
  * @param {RegExp} [conf.splitRe="/^\/\/ /gm` or `/^## /gm"] A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files. Default `/^\/\/ /gm` or `/^## /gm`.
+ * @param {RegExp} [conf.propStartRe="\/\‎⁎"] The regex to detect the start of the property, e.g., in `/⁎ propName ⁎/` it is the default regex that detects `/⁎`. There's no option to define the end of the regex after the name. [If copying, replace `⁎` with *]. Default `\/\‎⁎`.
+ * @param {RegExp} [conf.propEndRe="/\/\⁎\⁎\//"] The regex which idicates the end of the property, e.g, in `/⁎ propName ⁎/ some prop value /⁎⁎/` it is the default that detects `/⁎⁎/`. [If copying, replace `⁎` with `*`]. Default `/\/\⁎\⁎\//`.
  */
 export default function makeTestSuite(path, conf, _content) {
   let pathStat
@@ -161,8 +163,13 @@ const getInputsFromProps = (s) => {
   return res
 }
 
+/**
+ * @param {string} maskPath Path to the mask.
+ */
 const makeATestSuite = (maskPath, conf) => {
-  if (!conf) throw new Error('No configuration is given. A config should at least contain either a "getThrowsConfig", "getResults", "getTransform" or "getReadable" functions.')
+  /** @type {MakeTestSuiteConf} */
+  const c = conf
+  if (!c) throw new Error('No configuration is given. A config should at least contain either a "getThrowsConfig", "getResults", "getTransform" or "getReadable" functions.')
   const {
     context,
     persistentContext,
@@ -175,8 +182,11 @@ const makeATestSuite = (maskPath, conf) => {
     jsonProps = [],
     splitRe,
     fork: forkConfig,
-  } = conf
-  const tests = getTests({ path: maskPath, splitRe })
+    propEndRe,
+    propStartRe,
+  } = c
+  const tests = getTests({
+    path: maskPath, splitRe, propEndRe, propStartRe })
 
   const t = tests.reduce((acc, {
     name, input, error, onError, ...rest
@@ -266,4 +276,6 @@ const assertError = async (throwsConfig, error) => {
  * @prop {(results: any, props: Object.<string, (string|object)>) => (void|Promise)} [assertResults] A possibly async function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask (where `jsonProps` are parsed into JS objects) will be passed as arguments.
  * @prop {string[]} [jsonProps] Any additional properties to extract from the mask, and parse as _JSON_ values.
  * @prop {RegExp} [splitRe="/^\/\/ /gm` or `/^## /gm"] A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files. Default `/^\/\/ /gm` or `/^## /gm`.
+ * @prop {RegExp} [propStartRe="\/\‎⁎"] The regex to detect the start of the property, e.g., in `/⁎ propName ⁎/` it is the default regex that detects `/⁎`. There's no option to define the end of the regex after the name. [If copying, replace `⁎` with *]. Default `\/\‎⁎`.
+ * @prop {RegExp} [propEndRe="/\/\⁎\⁎\//"] The regex which idicates the end of the property, e.g, in `/⁎ propName ⁎/ some prop value /⁎⁎/` it is the default that detects `/⁎⁎/`. [If copying, replace `⁎` with `*`]. Default `/\/\⁎\⁎\//`.
  */
