@@ -7,6 +7,8 @@ const { readFileSync } = require('fs');
  * @typedef {Object} Conf
  * @prop {string} path Path to the mask file.
  * @prop {RegExp} splitRe The regular expression to split the file by.
+ * @prop {RegExp} propStartRe The regular expression indicating the start of the property of the mask.
+ * @prop {RegExp} propEndRe The regular expression indicating the end of the property of the mask.
  */
 
 /**
@@ -14,7 +16,7 @@ const { readFileSync } = require('fs');
  * @param {Conf} conf
  */
 const getTests = (conf) => {
-  const { path } = conf
+  const { path, propStartRe = /\/\*/, propEndRe = /\/\*\*\// } = conf
   let { splitRe } = conf
   if (!splitRe) {
     splitRe = path.endsWith('.md') ?  /^## /gm : /^\/\/ /gm
@@ -27,11 +29,11 @@ const getTests = (conf) => {
   const t = mm.split(splitRe).filter(a => a)
   const tests = t.map((test) => {
     const [name, total] = split(test, '\n')
-    const [i, body] = split(total, '\n/*')
+    const [i, body] = splitWithRe(total, new RegExp(`\n${propStartRe.source}`))
     const input = i.replace(/\n$/, '')
 
     const expected = mismatch(
-      /\/\* +(.+) +\*\/(\n?)([\s\S]*?)\n\/\*\*\//g,
+      new RegExp(`${propStartRe.source} +(.+) +\\*\\/(\n?)([\\s\\S]*?)\n${propEndRe.source}`, 'g'),
       body,
       ['key', 'newLine', 'value'],
     ).reduce((acc, { key, newLine, value }) => {
@@ -85,6 +87,15 @@ const getTests = (conf) => {
 
 const makeStack = (message, name, path, lineNumber) => {
   return `Error: ${message}\n    at ${name} (${path}:${lineNumber}:1)`
+}
+
+const splitWithRe = (s, re) => {
+  const nl = s.search(re)
+  if (nl < 0) throw new Error(
+    `Could not process "${s}": propStart re ${re} returned -1`)
+  const first = s.substr(0, nl)
+  const second = s.substr(nl + 1)
+  return [first, second]
 }
 
 const split = (s, del) => {
