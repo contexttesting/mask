@@ -40,6 +40,11 @@
   resolved "https://registry.yarnpkg.com/@artdeco/clean-stack/-/clean-stack-1.0.1.tgz#7e4d3bb1b0ac62173b00e4bba7091f7847cdb088"
   integrity sha512-ZSavD8NpWA1/1SRCKrx8LZ5WfbKS1kRUIFOERJvR1jXqCAcbM3xWSP2VdCKEh4lCwWghSWQkotbpK6n+o1Y/xQ==
 
+"@artdeco/clean-stack@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@artdeco/clean-stack/-/clean-stack-1.1.1.tgz#0a68b9a061b5076ebaf948c150ea26d09c1e753f"
+  integrity sha512-q5lO3vGUo0WgkSqzgzjL0HQdA9t2HzQqZISuVuQWMh9xqLuiLFP/ZTsxFc8vpMl7mNpGk7Mm0OeyFQ+Evrp0Cw==
+
 "@depack/cache@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@depack/cache/-/cache-1.0.0.tgz#7b8c7473dc96b410f719af80ae0be5ded9e55ad3"
@@ -161,7 +166,7 @@
     "@wrote/rm" "1.1.3"
     "@wrote/write" "1.0.3"
 
-"@zoroaster/fork@1.2.0", "@zoroaster/fork@^1.2.0":
+"@zoroaster/fork@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@zoroaster/fork/-/fork-1.2.0.tgz#a9edc3a83a1c476dc70173d8beccb9a2aac14535"
   integrity sha512-vdqQkD7R1RAS3re/KNT+4TzeAJEpPU5fFgdm7me29oQh4NM1uQ6lfpb7wIjFhF2qk3Zmu2mCFWjOWWl+48TkeQ==
@@ -172,6 +177,18 @@
     forkfeed "1.0.0"
     mismatch "1.0.3"
     spawncommand "2.1.1"
+
+"@zoroaster/fork@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@zoroaster/fork/-/fork-1.2.1.tgz#0502179e92d2e5dfefef05a1866da2ddb3def19d"
+  integrity sha512-zMuu1dfGFavOZq7BJ4Z1cCACWASxFSMvIAj/TPvsZKwr8a7r24ucI6CyfFMRkyT5l65XOAVUTwCkY7YR2FP2XA==
+  dependencies:
+    assert-diff "2.0.3"
+    catchment "^3.2.3"
+    erte "^1.1.7"
+    forkfeed "^1.0.0"
+    mismatch "^1.1.0"
+    spawncommand "^2.1.2"
 
 "@zoroaster/mask@1.3.0":
   version "1.3.0"
@@ -265,6 +282,14 @@ catchment@3.2.3, catchment@^3.2.3:
 catchment@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/catchment/-/catchment-1.0.0.tgz#3061f71be0102710be84328d2f94363a165f8c4b"
+
+catchment@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/catchment/-/catchment-3.3.0.tgz#e57eb70183d6a75ee71da0cb8ec2e76ac01317d2"
+  integrity sha512-PACm54CBCUZv1uEOMyNiB6i0kkDMdDN0+VYXIQAaeZMDcjudyPccgpYLWQfGCwCW/Q9SOfD6MyBLmxL3qh7V3A==
+  dependencies:
+    "@artdeco/clean-stack" "^1.1.1"
+    erotic "^2.1.0"
 
 clean-stack@1.3.0:
   version "1.3.0"
@@ -368,6 +393,13 @@ erotic@2.0.3, erotic@^2.0.3:
   dependencies:
     "@artdeco/clean-stack" "1.0.1"
 
+erotic@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/erotic/-/erotic-2.1.1.tgz#97f20c2d6e7fd2ec6f7996823009d3ac8ae7157f"
+  integrity sha512-S1ns+uibigdXxxzqiO5VNZw3d0YNrVb4jZ7OUAklO4722/ytp+nta6txsUhYmnIEI0TF7jjXNjGvcmw0I/Rs7A==
+  dependencies:
+    "@artdeco/clean-stack" "^1.1.1"
+
 erte@1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/erte/-/erte-1.1.4.tgz#1400a891622c5a12970b710b2f227a7182c0dc9c"
@@ -390,7 +422,7 @@ eslint-config-artdeco@1.0.1:
   resolved "https://registry.yarnpkg.com/eslint-config-artdeco/-/eslint-config-artdeco-1.0.1.tgz#4451c9d0ed1ce4d33dfd43a6315f12c8bfb04274"
   integrity sha1-RFHJ0O0c5NM9/UOmMV8SyL+wQnQ=
 
-forkfeed@1.0.0:
+forkfeed@1.0.0, forkfeed@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/forkfeed/-/forkfeed-1.0.0.tgz#e519201d8f3809a0802b72347066a0a772f0629b"
   integrity sha512-E8O9yqYwJLxyExwKLAbDe/Mw20fUuxwplFB/h8lpRQWgKrPcih3uuVKPyXqcJ0N/iPHJMHV6ZH1iFjIkRYvaFw==
@@ -465,6 +497,11 @@ mismatch@1.1.0, mismatch@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/mismatch/-/mismatch-1.1.0.tgz#0f5cee695d3afa0f909f87fab34fe9ac63f8c064"
   integrity sha512-/nVtAFATS/DPGc4qrlNQzNrxg3b64NOwZbhlrEm9tLlGduq54uMCZhlqSF5Kmy/dhQeoPZDu1iCUcOUruGcO3g==
+
+mismatch@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/mismatch/-/mismatch-1.1.1.tgz#db632cf3adc2cf9ba5ae917e1336d2005f40b232"
+  integrity sha512-FF1CAXaEHDI1N9wt7EUvOz0rqO7QVrcpABr6knBI7BhK+HlIotk522Vb7mL5jNcYYu+MWkGjB7q+P5S+AzFkwg==
 
 node-modules-regexp@^1.0.0:
   version "1.0.0"
@@ -562,7 +599,7 @@ spawncommand@2.1.1:
   dependencies:
     catchment "3.2.2"
 
-spawncommand@^2.1.1:
+spawncommand@^2.1.1, spawncommand@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/spawncommand/-/spawncommand-2.1.2.tgz#37b878bcf5c2b091c70f8c8afb9c2144342c118a"
   integrity sha512-KXMLkogsNCMbn0kPOvoDmUiQ7ZULYyV+73d2PAGSR6KxTKYU+1yZYny0VPVHunHykbsNxNzAAXpzPnhuwsk4QA==
