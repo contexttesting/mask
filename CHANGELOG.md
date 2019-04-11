@@ -1,3 +1,10 @@
+## 11 April 2019
+
+### [1.4.0](https://github.com/contexttesting/mask/compare/v1.3.0...v1.4.0)
+
+- [feature] Support `propStartRe` and `propEndRe`.
+- [deps] Update and unlock dependencies.
+
 ## 26 March 2019
 
 ### [1.3.0](https://github.com/contexttesting/mask/compare/v1.2.1...v1.3.0)
