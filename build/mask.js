@@ -24,6 +24,7 @@ const getTests = (conf) => {
   const m = `${readFileSync(path)}`
   const mi = splitRe.exec(m)
   if (!mi) throw new Error(`${path} does not contain tests.`)
+  const preamble = m.slice(0, mi.index).replace(/\n\n$/, '')
   const mm = m.slice(mi.index)
   splitRe.lastIndex = 0
   const t = mm.split(splitRe).filter(a => a)
@@ -46,6 +47,7 @@ const getTests = (conf) => {
     return {
       name,
       input,
+      ...(preamble ? { preamble } : {}),
       ...expected,
     }
   })
