@@ -1,3 +1,9 @@
+## 18 April 2019
+
+### [1.5.0](https://github.com/contexttesting/mask/compare/v1.4.0...v1.5.0)
+
+- [feature] Add preamble parsing (text on top of the result file will be available via `this.preamble` in masks).
+
 ## 11 April 2019
 
 ### [1.4.0](https://github.com/contexttesting/mask/compare/v1.3.0...v1.4.0)
