@@ -20,3 +20,9 @@ function helloWorld() {}`)
   propStartRe: /\/\*@/,
   propEndRe: /\/\*@\*\//,
 })
+
+export const preamble = makeTestSuite('test/result/preamble', {
+  getResults() {
+    return this.preamble
+  },
+})
