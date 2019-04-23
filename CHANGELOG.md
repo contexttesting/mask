@@ -1,3 +1,9 @@
+## 23 April 2019
+
+### [1.6.0](https://github.com/contexttesting/mask/compare/v1.5.0...v1.6.0)
+
+- [feature] Handle errors in interactive mode by updating mask properties.
+
 ## 18 April 2019
 
 ### [1.5.0](https://github.com/contexttesting/mask/compare/v1.4.0...v1.5.0)
