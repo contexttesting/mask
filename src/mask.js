@@ -84,31 +84,35 @@ const getTests = (conf) => {
     // possibly also remember custom test stack later
     const stack = makeStack(error.message, name, path, lineNumber)
     err.stack = stack
-    if (process.env['ZOROASTER_INTERACTIVE'] && error.property && error.actual) {
-      // update in interactive mode
-      const position = positions[error.property]
-      if (!position) throw err
-      const start = position.start + lengthDifference
-      const b = resultFile.slice(0, start)
-      const a = resultFile.slice(start + position.length)
-      const newFile = `${b}${error.actual}${a}`
-      console.error('Result does not match property "%s"\n  at %s (%s:%s:1)', error.property, c(name, 'blue'), path, lineNumber)
-      let shouldUpdate = false
-      const answer = await askSingle('Show more (d), skip (s), or update (u): [u]')
-      if (answer == 'd') {
-        console.log(c('Actual: ', 'blue'))
-        console.log(error.actual)
-        console.log(c('Expected: ', 'blue'))
-        console.log(error.expected)
-        shouldUpdate = await confirm('Update the result')
-      } else if (!answer || answer == 'u') {
-        shouldUpdate = true
+    if (error.property && error.actual) {
+      const handleUpdate = async () => {
+        // update in interactive mode
+        const position = positions[error.property]
+        if (!position) return false
+        const start = position.start + lengthDifference
+        const b = resultFile.slice(0, start)
+        const a = resultFile.slice(start + position.length)
+        const newFile = `${b}${error.actual}${a}`
+        console.error('Result does not match property "%s"\n  at %s (%s:%s:1)', error.property, c(name, 'blue'), path, lineNumber)
+        let shouldUpdate = false
+        const answer = await askSingle('Show more (d), skip (s), or update (u): [u]')
+        if (answer == 'd') {
+          console.log(c('Actual: ', 'blue'))
+          console.log(error.actual)
+          console.log(c('Expected: ', 'blue'))
+          console.log(error.expected)
+          shouldUpdate = await confirm('Update the result')
+        } else if (!answer || answer == 'u') {
+          shouldUpdate = true
+        }
+        if (!shouldUpdate) return false
+        lengthDifference += error.actual.length - position.length
+        await writeFileSync(path, newFile)
+        resultFile = `${readFileSync(path)}`
+
+        return true
       }
-      if (!shouldUpdate) throw err
-      lengthDifference += error.actual.length - position.length
-      await writeFileSync(path, newFile)
-      resultFile = `${readFileSync(path)}`
-      return
+      err.handleUpdate = handleUpdate
     }
     throw err
   }
