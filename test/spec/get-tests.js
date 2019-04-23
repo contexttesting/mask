@@ -4,7 +4,7 @@ import throws from 'assert-throws'
 import Context from '../context'
 import getTests from '../../src/mask'
 
-/** @type {Object.<string, (c: Context, sc: SnapshotContext)>} */
+/** @type {Object.<string, (c: Context)>} */
 const T = {
   context: Context,
   async 'can make a mask'({ fixture }) {

@@ -1,7 +1,9 @@
-import erte from 'erte'
+import erte, { c } from 'erte'
 import { equal } from 'assert'
 import mismatch from 'mismatch'
-import { readFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
+import { askSingle, confirm } from 'reloquent'
+import { splitWithPositions } from './lib'
 
 /**
  * @typedef {Object} Conf
@@ -21,23 +23,31 @@ const getTests = (conf) => {
   if (!splitRe) {
     splitRe = path.endsWith('.md') ?  /^## /gm : /^\/\/ /gm
   }
-  const m = `${readFileSync(path)}`
-  const mi = splitRe.exec(m)
+  let resultFile = `${readFileSync(path)}`
+  const mi = splitRe.exec(resultFile)
   if (!mi) throw new Error(`${path} does not contain tests.`)
-  const preamble = m.slice(0, mi.index).replace(/\n\n$/, '')
-  const mm = m.slice(mi.index)
+  const preamble = resultFile.slice(0, mi.index).replace(/\n\n$/, '')
+  const mm = resultFile.slice(mi.index)
   splitRe.lastIndex = 0
-  const t = mm.split(splitRe).filter(a => a)
-  const tests = t.map((test) => {
+  const t = splitWithPositions(mm, splitRe).filter(({ match }) => {
+    return match
+  })
+  const tests = t.map(({ match: test, position, separator }) => {
     const [name, total] = split(test, '\n')
     const [i, body] = splitWithRe(total, new RegExp(`\n${propStartRe.source}`))
+    const bodyStartsAt = test.indexOf(body)
     const input = i.replace(/\n$/, '')
 
-    const expected = mismatch(
-      new RegExp(`${propStartRe.source} +(.+) +\\*\\/(\n?)([\\s\\S]*?)\n${propEndRe.source}`, 'g'),
+    const foundProps = mismatch(
+      new RegExp(`(${propStartRe.source} +(.+) +\\*\\/(\n?))([\\s\\S]*?)\n${propEndRe.source}`, 'g'),
       body,
-      ['key', 'newLine', 'value'],
-    ).reduce((acc, { key, newLine, value }) => {
+      ['preValue', 'key', 'newLine', 'value'], true,
+    )
+    /** @type {!Object<string, number>} */
+    const positions = {}
+    const expected = foundProps.reduce((acc, { preValue, key, newLine, value, position: p }) => {
+      const fullPosition = position + bodyStartsAt + p + preValue.length + separator.length
+      positions[key] = { start: fullPosition, length: value.length }
       const val = (!value && newLine) ? newLine : value
       return {
         ...acc,
@@ -47,19 +57,23 @@ const getTests = (conf) => {
     return {
       name,
       input,
+      positions,
       ...(preamble ? { preamble } : {}),
       ...expected,
     }
   })
 
-  const lines = m.split('\n')
+  const lines = resultFile.split('\n')
+  let lengthDifference = 0
+
   /**
    * A function to be called on error in a test.
    * @param {string} name
-   * @param {Error} error
-   * @throws {Error} An error with a stack trace pointing at the line in the mask file.
+   * @param {!Object<string, number>} positions
+   * @param {!Error} error
+   * @throws {!Error} An error with a stack trace pointing at the line in the mask file.
    */
-  const onError = (name, error) => {
+  const onError = async (name, positions, error) => {
     const lineRe = new RegExp(`${splitRe.source}${name}\r?$`)
     const lineNumber = lines.reduce((acc, current, index) => {
       if (acc) return acc // found
@@ -70,14 +84,40 @@ const getTests = (conf) => {
     // possibly also remember custom test stack later
     const stack = makeStack(error.message, name, path, lineNumber)
     err.stack = stack
+    if (process.env['ZOROASTER_INTERACTIVE'] && error.property && error.actual) {
+      // update in interactive mode
+      const position = positions[error.property]
+      if (!position) throw err
+      const start = position.start + lengthDifference
+      const b = resultFile.slice(0, start)
+      const a = resultFile.slice(start + position.length)
+      const newFile = `${b}${error.actual}${a}`
+      console.error('Result does not match property "%s"\n  at %s (%s:%s:1)', error.property, c(name, 'blue'), path, lineNumber)
+      let shouldUpdate = false
+      const answer = await askSingle('Show more (d), skip (s), or update (u): [u]')
+      if (answer == 'd') {
+        console.log(c('Actual: ', 'blue'))
+        console.log(error.actual)
+        console.log(c('Expected: ', 'blue'))
+        console.log(error.expected)
+        shouldUpdate = await confirm('Update the result')
+      } else if (!answer || answer == 'u') {
+        shouldUpdate = true
+      }
+      if (!shouldUpdate) throw err
+      lengthDifference += error.actual.length - position.length
+      await writeFileSync(path, newFile)
+      resultFile = `${readFileSync(path)}`
+      return
+    }
     throw err
   }
-  const testsWithOnError = tests.map(({ name, ...rest }) => {
+  const testsWithOnError = tests.map(({ name, positions, ...rest }) => {
     /**
      * @type {function}
      * @param {Error} error An error with a stack trace pointing at the line in the mask file.
      */
-    const boundOnError = onError.bind(null, name)
+    const boundOnError = onError.bind(null, name, positions)
     return {
       ...rest,
       name,
@@ -116,6 +156,7 @@ export const assertExpected = (result, expected) => {
   } catch (err) {
     const e = erte(expected, result)
     console.log(e) // eslint-disable-line no-console
+    err.property = 'expected'
     throw err
   }
 }
