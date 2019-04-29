@@ -1,8 +1,8 @@
 import { collect } from 'catchment'
+import throws from 'assert-throws'
 import { deepEqual } from 'assert-diff'
 import fork from '@zoroaster/fork'
 import { assertExpected } from '../mask'
-import throws from 'assert-throws'
 
 /**
  * Create a new test.
@@ -18,7 +18,7 @@ const makeTest = ({
     if (error) {
       if (!getThrowsConfig)
         throw new Error('No "getThrowsConfig" function is given.')
-      const throwsConfig = getThrowsConfig.call(cntx, input, ...contexts)
+      const throwsConfig = getThrowsConfig.call(cntx, ...contexts)
       await assertError(throwsConfig, error)
       return
     } else if (getTransform) {
@@ -28,7 +28,7 @@ const makeTest = ({
       results = await collect(rs)
     } else if (getReadable) {
       assertHasExpected(expected)
-      const rs = await getReadable.call(cntx, input, ...contexts)
+      const rs = await getReadable.call(cntx, ...contexts)
       results = await collect(rs)
     } else if (forkConfig) {
       if (props.inputs) {
@@ -41,11 +41,11 @@ const makeTest = ({
         contexts,
       })
 
-      results = getResults ? await getResults.call(cntx, input, ...contexts) : r
+      results = getResults ? await getResults.call(cntx, ...contexts) : r
     } else if (!getResults) {
       throw new Error('Nothing was tested.')
     } else {
-      results = await getResults.call(cntx, input, ...contexts)
+      results = await getResults.call(cntx, ...contexts)
     }
 
     if (expected !== undefined) {

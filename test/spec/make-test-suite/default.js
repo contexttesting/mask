@@ -21,14 +21,14 @@ const expectedAndError = {
         }
       }
     }
-    const getThrowsConfig = (input, { stream }) => {
+    const getThrowsConfig = function ({ stream }) {
       return {
         fn: stream,
-        args: [input],
+        args: [this.input],
       }
     }
-    const getResults = async (input, { stream }) => {
-      const res = await stream(input)
+    const getResults = async function ({ stream }) {
+      const res = await stream(this.input)
       return res
     }
     const ts = makeTestSuite(f`test-suite/default.js`, {
@@ -56,8 +56,8 @@ const expectedAndError = {
   },
   async 'asserts on empty result'({ f, runTest }) {
     const ts = makeTestSuite(f`test-suite/default.js`, {
-      getResults(input) {
-        if (input == 'fail') return input
+      getResults() {
+        if (this.input == 'fail') return this.input
         return ''
       },
     })
@@ -205,8 +205,8 @@ const assertResults = {
         if (additional) equal(actualAdditional, additional)
         if (json) deepEqual(actualJson, json)
       },
-      async getResults(input, { stream }) {
-        const res = await stream(input)
+      async getResults({ stream }) {
+        const res = await stream(this.input)
         return res
       },
       customProps: ['additional'],

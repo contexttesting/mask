@@ -72,7 +72,8 @@ const T = {
   },
   async 'gets a readable stream'({ f, runTest }) {
     const ts = makeTestSuite(f`result/stream-arg`, {
-      getReadable(input, { test }) {
+      getReadable({ test }) {
+        const input = this.input
         const r = new Readable({
           read() {
             this.push(`${input}: ${test}`)
@@ -87,7 +88,8 @@ const T = {
   },
   async 'gets an async readable stream'({ f, runTest }) {
     const ts = makeTestSuite(f`result/stream-arg`, {
-      async getReadable(input, { test }) {
+      async getReadable({ test }) {
+        const input = this.input
         await new Promise(r => setTimeout(r, 100))
         const r = new Readable({
           read() {
@@ -103,8 +105,8 @@ const T = {
   },
   async 'tests a readable fork'({ f, runTest }) {
     const ts = makeTestSuite(f`result/stream-arg`, {
-      getReadable(input) {
-        const proc = fork(f`echo`, [input], {
+      getReadable() {
+        const proc = fork(f`echo`, [this.input], {
           stdio: 'pipe',
         })
         return proc.stdout
