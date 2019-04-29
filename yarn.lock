@@ -165,13 +165,13 @@ assert-throws@3.1.1:
     erotic "2.0.1"
     erte "1.1.4"
 
-assert-throws@3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/assert-throws/-/assert-throws-3.2.0.tgz#f77344aed1e4680f793b29e9581dba50f63bfc52"
-  integrity sha512-0Sa7L15WqCAaRpFeB64t4aLKc+4d9+OMJg4OMfISY9GaS2N19S4Fvci4mXcx/39G4YjYU+Erg11q36YZlaB/8w==
+assert-throws@3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/assert-throws/-/assert-throws-3.2.1.tgz#9d1a6633d7101418c3c2c0c39f5f776c14381e06"
+  integrity sha512-UuyqFVDDgZ/gbUNCeEx/cgLa+nlJGF+SWECGXwArR2FdVq/sPXn3QUJFh6kq3Bv8mc7wtXjeTyKGJsu7xtoBBQ==
   dependencies:
-    erotic "2.1.1"
-    erte "1.1.7"
+    erotic "^2.1.1"
+    erte "^1.2.0"
 
 catchment@^1.0.0:
   version "1.0.0"
@@ -211,11 +211,6 @@ diff@3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
   integrity sha512-A46qtFgd+g7pDZinpnwiRJtxbC1hpgf0uzP3iG89scHk0AUC7A1TGxf5OiiOUv/JMZR8GOt8hL900hV0bOy5xA==
-
-diff@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.1.tgz#0c667cb467ebbb5cea7f14f135cc2dba7780a8ff"
-  integrity sha512-s2+XdvhPCOF01LRQBC8hf4vhbVmI2CGS5aZnxLJlT5FtdhPCDFq80q++zK2KlrVorVDdL5BOGZ/VfLrVtYNF+Q==
 
 differently@^1.0.0:
   version "1.0.1"
@@ -274,7 +269,7 @@ erotic@2.0.1:
   dependencies:
     "@artdeco/clean-stack" "1.0.0"
 
-erotic@2.1.1, erotic@^2.1.0, erotic@^2.1.1:
+erotic@^2.1.0, erotic@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/erotic/-/erotic-2.1.1.tgz#97f20c2d6e7fd2ec6f7996823009d3ac8ae7157f"
   integrity sha512-S1ns+uibigdXxxzqiO5VNZw3d0YNrVb4jZ7OUAklO4722/ytp+nta6txsUhYmnIEI0TF7jjXNjGvcmw0I/Rs7A==
@@ -287,13 +282,6 @@ erte@1.1.4:
   integrity sha1-FACokWIsWhKXC3ELLyJ6cYLA3Jw=
   dependencies:
     diff "3.5.0"
-
-erte@1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/erte/-/erte-1.1.7.tgz#6402500055d615a57493048729f524c1072749d9"
-  integrity sha512-GFYXicFCaoQHhIQ1KrIbihebMpH1BeXcRkbKDKzCcW4UgczhoyWzCvd79MlAeHGuJ8+Jirtm8tHC91AQ0GPa0A==
-  dependencies:
-    diff "4.0.1"
 
 erte@^1.1.7, erte@^1.2.0:
   version "1.2.0"
