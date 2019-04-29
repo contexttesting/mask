@@ -1,4 +1,4 @@
-import { deepEqual } from 'assert-diff'
+import deepEqual from '@zoroaster/deep-equal'
 import Context from '../context'
 import { splitWithPositions } from '../../src/lib'
 

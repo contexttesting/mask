@@ -70,7 +70,7 @@ const T = {
     await throws({
       fn: runTest,
       args: [ts, 'forks a module'],
-      message: /'FAIL' == 'TEST'/,
+      message: /'FAIL' === 'TEST'/,
     })
   },
 }

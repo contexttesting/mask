@@ -1,6 +1,6 @@
 import { collect } from 'catchment'
 import throws from 'assert-throws'
-import { deepEqual } from 'assert-diff'
+import deepEqual from '@zoroaster/deep-equal'
 import fork from '@zoroaster/fork'
 import { assertExpected } from '../mask'
 

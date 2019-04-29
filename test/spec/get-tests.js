@@ -1,4 +1,4 @@
-import { deepEqual } from 'assert-diff'
+import deepEqual from '@zoroaster/deep-equal'
 import { ok, equal } from 'assert'
 import throws from 'assert-throws'
 import Context from '../context'
