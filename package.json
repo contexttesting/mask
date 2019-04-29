@@ -58,7 +58,7 @@
   "dependencies": {
     "@zoroaster/deep-equal": "^1.0.1",
     "@zoroaster/fork": "^1.2.3",
-    "assert-throws": "3.2.1",
+    "assert-throws": "3.2.2",
     "catchment": "^3.3.0",
     "erte": "^1.2.0",
     "mismatch": "^1.2.0"

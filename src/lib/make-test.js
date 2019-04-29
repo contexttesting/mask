@@ -4,16 +4,24 @@ import deepEqual from '@zoroaster/deep-equal'
 import fork from '@zoroaster/fork'
 import { assertExpected } from '../mask'
 
+// * @param {{ input:string, error: string, getTransform: () => Transform, getReadable: (input: string) => Readable, getThrowsConfig: Function }} param
+
 /**
  * Create a new test.
- * @param {{ input:string, error: string, getTransform: () => Transform, getReadable: (input: string) => Readable, getThrowsConfig: Function }} param
+ * @param {_contextTesting.MaskConfig} params
+ * @param {string} params.input
+ * @param {string} params.error
+ * @param {string} params.expected
+ * @param {*} params.props
  */
-const makeTest = ({
-  input, error, getThrowsConfig, getTransform, getResults, expected,
-  assertResults, props, mapActual, getReadable, forkConfig,
-}) => {
+const makeTest = (params) => {
+  const {
+    input, error, expected, props,
+    getThrowsConfig, getTransform, getResults,
+    assertResults, mapActual, getReadable, forkConfig,
+  } = params
   const test = async (...contexts) => {
-    const cntx = { input, ...props }
+    const cntx = /** @type {_contextTesting.MaskContext} */ ({ input, ...props })
     let results
     if (error) {
       if (!getThrowsConfig)
@@ -31,8 +39,8 @@ const makeTest = ({
       const rs = await getReadable.call(cntx, ...contexts)
       results = await collect(rs)
     } else if (forkConfig) {
-      if (props.inputs) {
-        forkConfig.inputs = getInputsFromProps(props.inputs)
+      if (props['inputs']) {
+        forkConfig['inputs'] = getInputsFromProps(props['inputs'])
       }
       const r = await fork({
         forkConfig,
@@ -78,14 +86,20 @@ const getInputsFromProps = (s) => {
   return res
 }
 
-/**
- * @param {{ fn: !Function }} throwsConfig
- */
 const assertError = async (throwsConfig, error) => {
-  await throws({
+  await throws(/** @type {_assertThrows.Config} */ ({
     ...throwsConfig,
     message: error,
-  })
+  }))
 }
 
 export default makeTest
+
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('../../types').MaskConfig} _contextTesting.MaskConfig
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('assert-throws').Config} _assertThrows.Config
+ */

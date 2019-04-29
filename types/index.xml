@@ -12,9 +12,12 @@
     <prop opt string name="preamble">
       The text at the top of the mask result file if present.
     </prop>
+    <prop opt string name="inputs">
+      The synchronous inputs for the fork, each on a new line in form of `question: answer`.
+    </prop>
   </type>
 
-  <type name="MaskConfig" record desc="Configuration for making test suites.">
+  <type name="MaskConfig" desc="Configuration for making test suites.">
     <prop opt name="context" type="function(new: _contextTesting.Context)|Array<function(new: _contextTesting.Context)>|*">
       The single or multiple context constructors or objects to initialise for each test.
     </prop>
@@ -45,13 +48,13 @@
     <prop opt name="jsonProps" type="!Array<string>">
       The properties of the mask to parse as _JSON_ values.
     </prop>
-    <prop opt name="splitRe" type="!RegExp" default="/^\/\/ /gm` or `/^## /gm">
-      A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files.
+    <prop opt name="splitRe" type="!RegExp">
+      A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files. Default `/^\/\/ /gm` or `/^## /gm`.
     </prop>
-    <prop opt name="propStartRe" type="!RegExp" default="\/\‎⁎">
+    <prop name="propStartRe" type="!RegExp" default="\/\‎⁎">
       The regex to detect the start of the property, e.g., in `/⁎ propName ⁎/` it is the default regex that detects `/⁎`. There's no option to define the end of the regex after the name. [If copying, replace `⁎` with `*`].
     </prop>
-    <prop opt name="propEndRe" type="!RegExp" default="/\/\⁎\⁎\//">
+    <prop name="propEndRe" type="!RegExp" default="/\/\⁎\⁎\//">
       The regex which indicates the end of the property, e.g, in `/⁎ propName ⁎/ some prop value /⁎⁎/` it is the default that detects `/⁎⁎/`. [If copying, replace `⁎` with `*`].
     </prop>
   </type>

@@ -18,7 +18,7 @@ import makeTest from './lib/make-test'
  * @param {function(*): string} [conf.mapActual] The function to get a value to test against `expected` mask property from results returned by `getResults`.
  * @param {function(*, Object<string, *>): !Promise|undefined} [conf.assertResults] A possibly async function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask's result (where `jsonProps` are parsed into JS objects) will be passed as arguments.
  * @param {!Array<string>} [conf.jsonProps] The properties of the mask to parse as _JSON_ values.
- * @param {!RegExp} [conf.splitRe="/^\/\/ /gm` or `/^## /gm"] A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files. Default `/^\/\/ /gm` or `/^## /gm`.
+ * @param {!RegExp} [conf.splitRe] A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files. Default `/^\/\/ /gm` or `/^## /gm`.
  * @param {!RegExp} [conf.propStartRe="\/\‎⁎"] The regex to detect the start of the property, e.g., in `/⁎ propName ⁎/` it is the default regex that detects `/⁎`. There's no option to define the end of the regex after the name. [If copying, replace `⁎` with `*`]. Default `\/\‎⁎`.
  * @param {!RegExp} [conf.propEndRe="/\/\⁎\⁎\//"] The regex which indicates the end of the property, e.g, in `/⁎ propName ⁎/ some prop value /⁎⁎/` it is the default that detects `/⁎⁎/`. [If copying, replace `⁎` with `*`]. Default `/\/\⁎\⁎\//`.
  */
@@ -91,7 +91,7 @@ const parseProps = (props, jsonProps) => {
  * @param {string} maskPath Path to the mask.
  */
 const makeATestSuite = (maskPath, conf) => {
-  /** @type {MakeTestSuiteConf} */
+  /** @type {!_contextTesting.MaskConfig} */
   const c = conf
   if (!c) throw new Error('No configuration is given. A config should at least contain either a "getThrowsConfig", "getResults", "getTransform" or "getReadable" functions.')
   const {
@@ -113,7 +113,7 @@ const makeATestSuite = (maskPath, conf) => {
     path: maskPath, splitRe, propEndRe, propStartRe })
 
   const t = tests.reduce((acc, {
-    name, input, error, onError, ...rest
+    name, input, 'error': error, onError, ...rest
   }) => {
     let setupError
     let props
@@ -121,7 +121,7 @@ const makeATestSuite = (maskPath, conf) => {
     if (name in acc)
       setupError = `Repeated use of the test name "${name}".`
     try {
-      ({ expected, ...props } = parseProps(rest, jsonProps))
+      ({ 'expected': expected, ...props } = parseProps(rest, jsonProps))
     } catch ({ message }) {
       setupError = message
     }
@@ -146,8 +146,8 @@ const makeATestSuite = (maskPath, conf) => {
     }
     return acc
   }, {
-    ...(context ? { context }: {}),
-    ...(persistentContext ? { persistentContext }: {}),
+    ...(context ? { 'context': context }: {}),
+    ...(persistentContext ? { 'persistentContext': persistentContext }: {}),
   })
   return t
 }

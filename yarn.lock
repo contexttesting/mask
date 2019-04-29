@@ -165,10 +165,10 @@ assert-throws@3.1.1:
     erotic "2.0.1"
     erte "1.1.4"
 
-assert-throws@3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/assert-throws/-/assert-throws-3.2.1.tgz#9d1a6633d7101418c3c2c0c39f5f776c14381e06"
-  integrity sha512-UuyqFVDDgZ/gbUNCeEx/cgLa+nlJGF+SWECGXwArR2FdVq/sPXn3QUJFh6kq3Bv8mc7wtXjeTyKGJsu7xtoBBQ==
+assert-throws@3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/assert-throws/-/assert-throws-3.2.2.tgz#64ab8783706b13ecda8725f0ff941fc6524a933a"
+  integrity sha512-EJwOsbtPxhm73P2iK3qQwHI13YeHTKIDPUV6OejiHweN5G59SsrVQfDbiON407FXO+gXKHftqqqMwH56Gh/B+g==
   dependencies:
     erotic "^2.1.1"
     erte "^1.2.0"
