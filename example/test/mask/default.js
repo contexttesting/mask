@@ -12,11 +12,10 @@ class Context {
 export default makeTestSuite('example/test/result', {
   context: Context,
   /**
-   * @param {string} input
    * @param {Context} t
    */
-  async getResults(input, { fixture }) {
-    const res = await fn(fixture, input)
+  async getResults({ fixture }) {
+    const res = await fn(fixture, this.input)
     return res
   },
 })

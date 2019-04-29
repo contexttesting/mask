@@ -1,4 +1,4 @@
-import { read } from '@wrote/wrote'
+import read from '@wrote/read'
 
 /**
  * An example function that reads a file.

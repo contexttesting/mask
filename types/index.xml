@@ -1,44 +1,56 @@
-<types>
-  <import name="Transform" from="stream"/>
-  <import name="Readable" from="stream"/>
-  <type name="MakeTestSuiteConf" desc="Configuration for making test suites.">
-    <prop opt name="context" type="({new(): Context}|{new(): Context}[]|{})">
-      Single or multiple context constructors or objects to initialise for each test.
+<types ns="_contextTesting">
+  <import name="Transform" from="stream" link="https://nodejs.org/api/stream.html#stream_class_stream_transform" />
+  <import name="Readable" from="stream" link="https://nodejs.org/api/stream.html#stream_class_stream_readable" />
+  <import name="Config" from="assert-throws" ns="_assertThrows" link="https://github.com/artdecocode/assert-throws#type-_assertthrowsconfig" />
+  <import name="ForkConfig" from="@zoroaster/fork" ns="_contextTesting" link="https://github.com/contexttesting/fork#type-forkconfig" desc="The configuration of the fork." />
+
+  <type name="MaskContext" desc="The `this` context of mask methods which contains the mask's properties extracted from the result file.">
+    <prop name="input">
+      The input to the mask, normally as string, but parsed into an object if `jsonProps` contains the `'input'` value.
     </prop>
-    <prop opt name="persistentContext" type="({new(): Context}|{new(): Context}[]|{})">
+    <prop opt string name="preamble">
+      The text at the top of the mask result file if present.
+    </prop>
+  </type>
+
+  <type name="MaskConfig" desc="Configuration for making test suites.">
+    <prop opt name="context" type="function(new: Context)|Array<function(new: Context)>|*">
+      The single or multiple context constructors or objects to initialise for each test.
+    </prop>
+    <prop opt name="persistentContext" type="function(new: Context)|Array<function(new: Context)>|*">
       The context constructor(s) that will be initialised and destroyed once per test suite, having a persistent state across tests.
     </prop>
-    <prop opt name="getResults" type="(input: string, ...contexts?: Context[]) => string">
-      A possibly async function which should return results of a test. If it returns a string, it will be compared against the `expected` property of the mask using string comparison. If it returns an object, its deep equality with `expected` can be tested by adding `'expected'` to the `jsonProps`.
+    <prop opt name="getResults" type="function(this:_contextTesting.MaskContext, ...Context): *|!Promise">
+      A possibly async function which returns results of a test. If it outputs a string, it will be compared against the `expected` property of the mask using string comparison. If it outputs an object, its deep equality with `expected` can be tested by adding `'expected'` to the `jsonProps`. Otherwise, the result must be mapped for comparison with `expected` using the `mapActual` method.
     </prop>
-    <prop opt name="getTransform" type="(...contexts?: Context[]) => Transform|Promise.<Transform>">
-      A possibly async function which returns a _Transform_ stream to be ended with the input specified in the mask. Its output will be accumulated and compared against the expected output of the mask.
+    <prop opt name="getTransform" type="function(this:_contextTesting.MaskContext, ...Context): stream.Transform|!Promise<!stream.Transform>">
+      A possibly async function which returns a _Transform_ stream to be ended with the input specified in the mask's result. Its output will be accumulated and compared against the expected output of the mask.
     </prop>
-    <prop opt name="getReadable" type="(input: string, ...contexts?: Context[]) => Readable|Promise.<Readable>">
-      A possibly async function which returns a _Readable_ stream constructed with the input from the mask. Its output will be stored in memory and compared against the expected output of the mask. This could be used to test a forked child process, for example.
+    <prop opt name="getReadable" type="function(this:_contextTesting.MaskContext, ...Context): stream.Readable|Promise<stream.Readable>">
+      A possibly async function which returns a _Readable_ stream constructed with the input from the mask. Its output will be stored in memory and compared against the expected output of the mask.
     </prop>
-    <prop opt name="fork" type="string|ForkConfig">
-      A path to the module to fork with input as arguments, and compare its output against the `code`, `stdout` and `stderr` properties of the mask. Arguments with whitespace should be wrapped in speech marks, i.e. `'` or `"`. Additionally, `ForkConfig` with `module`, `getArgs`, `options` and `getOptions` properties can be passed for more control of how the fork will be started.
+    <prop opt name="fork" type="string|_contextTesting.ForkConfig">
+      The path to the module to fork with the mask's input split by whitespace as arguments, output of which will be compared against the `code`, `stdout` and `stderr` properties of the mask. Arguments with whitespace should be wrapped in speech marks, i.e. `'` or `"`. Additionally, `ForkConfig` with `module`, `getArgs`, `options` and `getOptions` properties can be passed for more control of how the fork will be started.
     </prop>
-    <prop opt name="getThrowsConfig" type="(input: string, ...contexts?: Context[]) => { fn: function, args?: any[], message?: (string|RegExp) }">
+    <prop opt name="getThrowsConfig" type="function (this:_contextTesting.MaskContext, ...Context): _assertThrows.Config">
       A function which should return a configuration for [`assert-throws`](https://github.com/artdecocode/assert-throws), including `fn` and `args`, when testing an error.
     </prop>
-    <prop opt name="mapActual" type="(results: any) => string">
-      An optional function to get a value to test against `expected` mask property from results. By default, the full result is used.
+    <prop opt name="mapActual" type="function(*): string">
+      The function to get a value to test against `expected` mask property from results returned by `getResults`.
     </prop>
-    <prop opt name="assertResults" type="(results: any, props: Object.<string, (string|object)>) => (void|Promise)">
-      A possibly async function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask (where `jsonProps` are parsed into JS objects) will be passed as arguments.
+    <prop opt name="assertResults" type="function(*, Object<string, *>): !Promise|undefined">
+      A possibly async function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask's result (where `jsonProps` are parsed into JS objects) will be passed as arguments.
     </prop>
-    <prop opt name="jsonProps" type="string[]">
-      Any additional properties to extract from the mask, and parse as _JSON_ values.
+    <prop opt name="jsonProps" type="!Array<string>">
+      The properties of the mask to parse as _JSON_ values.
     </prop>
-    <prop opt name="splitRe" type="RegExp" default="/^\/\/ /gm` or `/^## /gm">
+    <prop opt name="splitRe" type="!RegExp" default="/^\/\/ /gm` or `/^## /gm">
       A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files.
     </prop>
-    <prop opt name="propStartRe" type="RegExp" default="\/\‎⁎">
+    <prop opt name="propStartRe" type="!RegExp" default="\/\‎⁎">
       The regex to detect the start of the property, e.g., in `/⁎ propName ⁎/` it is the default regex that detects `/⁎`. There's no option to define the end of the regex after the name. [If copying, replace `⁎` with `*`].
     </prop>
-    <prop opt name="propEndRe" type="RegExp" default="/\/\⁎\⁎\//">
+    <prop opt name="propEndRe" type="!RegExp" default="/\/\⁎\⁎\//">
       The regex which idicates the end of the property, e.g, in `/⁎ propName ⁎/ some prop value /⁎⁎/` it is the default that detects `/⁎⁎/`. [If copying, replace `⁎` with `*`].
     </prop>
   </type>
