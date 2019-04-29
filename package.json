@@ -14,7 +14,8 @@
     "doc": "NODE_DEBUG=doc doc -o README.md -n _contextTesting",
     "depack": "GOOGLE_CLOSURE_COMPILER=/Volumes/backup/closure-compiler/target/closure-compiler-1.0-SNAPSHOT.jar depack depack/depack.js -l -a -p -o depack/index.js --externs externs.js -s",
     "b": "alamode src -o build -s",
-    "d": "yarn-s d1",
+    "d": "yarn-s d1 externs types",
+    "types": "typal types.js -c",
     "d1": "typal src/index.js -c",
     "externs": "typal externs.js -e",
     "build": "yarn-s d b doc",
@@ -23,8 +24,10 @@
   },
   "files": [
     "build",
-    "src"
+    "src",
+    "externs.js"
   ],
+  "externs": "externs.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/contexttesting/mask.git"

@@ -78,6 +78,9 @@ const getInputsFromProps = (s) => {
   return res
 }
 
+/**
+ * @param {{ fn: !Function }} throwsConfig
+ */
 const assertError = async (throwsConfig, error) => {
   await throws({
     ...throwsConfig,

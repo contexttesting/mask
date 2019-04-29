@@ -43,7 +43,7 @@ const getTests = (conf) => {
       body,
       ['preValue', 'key', 'newLine', 'value'], true,
     )
-    /** @type {!Object<string, number>} */
+    /** @type {Object<string,{ start: number, length: number }>} */
     const positions = {}
     const expected = foundProps.reduce((acc, { preValue, key, newLine, value, position: p }) => {
       const fullPosition = position + bodyStartsAt + p + preValue.length + separator.length
@@ -69,7 +69,7 @@ const getTests = (conf) => {
   /**
    * A function to be called on error in a test.
    * @param {string} name
-   * @param {!Object<string, number>} positions
+   * @param {!Object<string, { start: number, length: number }>} positions
    * @param {!Error} error
    * @throws {!Error} An error with a stack trace pointing at the line in the mask file.
    */
@@ -119,7 +119,7 @@ const getTests = (conf) => {
   const testsWithOnError = tests.map(({ name, positions, ...rest }) => {
     /**
      * @type {function}
-     * @param {Error} error An error with a stack trace pointing at the line in the mask file.
+     * @param {!Error} error An error with a stack trace pointing at the line in the mask file.
      */
     const boundOnError = onError.bind(null, name, positions)
     return {
