@@ -26,6 +26,12 @@ _Zoroastser can test it using a mask:_
 %EXAMPLE: example/test/mask/default, ../../../src => @zoroaster/mask%
 %FORK node_modules/.bin/zoroaster -a example/test/mask/default.js%
 
+%~%
+
+## Types
+
+The following types are used to define the configuration of the mask.
+
 %TYPEDEF types/index.xml%
 
 %~%

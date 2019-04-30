@@ -13,6 +13,7 @@ yarn add -D @zoroaster/mask
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
 - [`makeTestSuite(result: string, config: MakeTestSuiteConf)`](#maketestsuiteresult-stringconfig-maketestsuiteconf-void)
+- [Types](#types)
   * [`MaskContext`](#type-maskcontext)
   * [`MaskConfig`](#type-maskconfig)
 - [Testing Forks](#testing-forks)
@@ -96,6 +97,12 @@ example/test/mask/default.js > fails the test
 🦅  Executed 2 tests: 1 error.
 ```
 
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+
+## Types
+
+The following types are used to define the configuration of the mask.
+
 [`import('stream').Transform`](https://nodejs.org/api/stream.html#stream_class_stream_transform) __<a name="type-streamtransform">`stream.Transform`</a>__
 
 [`import('stream').Readable`](https://nodejs.org/api/stream.html#stream_class_stream_readable) __<a name="type-streamreadable">`stream.Readable`</a>__
@@ -132,7 +139,7 @@ __<a name="type-maskconfig">`MaskConfig`</a>__: Configuration for making test su
 | propStartRe       | <em>!RegExp</em>                                                                                                                                                                  | The regex to detect the start of the property, e.g., in `/⁎ propName ⁎/` it is the default regex that detects `/⁎`. There's no option to define the end of the regex after the name. [If copying, replace `⁎` with `*`].                                                                                                                                                                                                           | `\/\‎⁎`      |
 | propEndRe         | <em>!RegExp</em>                                                                                                                                                                  | The regex which indicates the end of the property, e.g, in `/⁎ propName ⁎/ some prop value /⁎⁎/` it is the default that detects `/⁎⁎/`. [If copying, replace `⁎` with `*`].                                                                                                                                                                                                                                                        | `/\/\⁎\⁎\//` |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/2.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
 
 ## Testing Forks
 
@@ -164,7 +171,7 @@ __<a name="type-forkpreprocessor">`ForkPreprocessor`</a>__: An object with `stdo
 | stdout | <em>[Preprocessor](#type-preprocessor)</em> | How to process `stdout` before asserts. |
 | stderr | <em>[Preprocessor](#type-preprocessor)</em> | How to process `stderr` before asserts. |
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/3.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true"></a></p>
 
 ## Enabling JSDoc
 
@@ -172,7 +179,7 @@ The JSDoc for contexts can be enabled by specifying types for the params to the 
 
 ![Zoroaster Mask JSDoc Contexts](doc/context.gif)
 
-<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/4.svg?sanitize=true"></a></p>
+<p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/5.svg?sanitize=true"></a></p>
 
 ## Copyright
 
