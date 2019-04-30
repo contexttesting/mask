@@ -4,8 +4,6 @@ import deepEqual from '@zoroaster/deep-equal'
 import fork from '@zoroaster/fork'
 import { assertExpected } from '../mask'
 
-// * @param {{ input:string, error: string, getTransform: () => Transform, getReadable: (input: string) => Readable, getThrowsConfig: Function }} param
-
 /**
  * Create a new test.
  * @param {_contextTesting.MaskConfig} params

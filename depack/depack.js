@@ -6,2043 +6,1089 @@ const assert = require('assert');
 const readline = require('readline');
 const stream = require('stream');
 const os = require('os');
-const child_process = require('child_process');var l = l || {};
-l.scope = {};
-l.O = function(a) {
-  var b = 0;
-  return function() {
-    return b < a.length ? {done:!1, value:a[b++]} : {done:!0};
-  };
-};
-l.Z = function(a) {
-  return {next:l.O(a)};
-};
-l.w = function(a) {
-  var b = "undefined" != typeof Symbol && Symbol.iterator && a[Symbol.iterator];
-  return b ? b.call(a) : l.Z(a);
-};
-l.K = function(a) {
-  for (var b, c = []; !(b = a.next()).done;) {
-    c.push(b.value);
-  }
-  return c;
-};
-l.f = function(a) {
-  return a instanceof Array ? a : l.K(l.w(a));
-};
-l.N = !1;
-l.ja = !1;
-l.ka = !1;
-l.la = !1;
-l.ea = l.N || "function" == typeof Object.create ? Object.create : function(a) {
-  function b() {
-  }
-  b.prototype = a;
-  return new b;
-};
-l.ia = function() {
-  var a = {Y:!0}, b = {};
-  try {
-    return b.__proto__ = a, b.Y;
-  } catch (c) {
-  }
-  return !1;
-};
-l.setPrototypeOf = "function" == typeof Object.setPrototypeOf ? Object.setPrototypeOf : l.ia() ? function(a, b) {
-  a.__proto__ = b;
-  if (a.__proto__ !== b) {
-    throw new TypeError(a + " is not extensible");
-  }
-  return a;
-} : null;
-l.S = function(a, b) {
-  a.prototype = l.ea(b.prototype);
-  a.prototype.constructor = a;
-  if (l.setPrototypeOf) {
-    var c = l.setPrototypeOf;
-    c(a, b);
-  } else {
-    for (c in b) {
-      if ("prototype" != c) {
-        if (Object.defineProperties) {
-          var g = Object.getOwnPropertyDescriptor(b, c);
-          g && Object.defineProperty(a, c, g);
-        } else {
-          a[c] = b[c];
-        }
-      }
-    }
-  }
-  a.qa = b.prototype;
-};
-l.aa = function(a) {
-  return "undefined" != typeof window && window === a ? a : "undefined" != typeof global && null != global ? global : a;
-};
-l.global = l.aa(this);
-l.defineProperty = l.N || "function" == typeof Object.defineProperties ? Object.defineProperty : function(a, b, c) {
-  a != Array.prototype && a != Object.prototype && (a[b] = c.value);
-};
-l.B = function(a, b) {
-  if (b) {
-    var c = l.global;
-    a = a.split(".");
-    for (var g = 0; g < a.length - 1; g++) {
-      var f = a[g];
-      f in c || (c[f] = {});
-      c = c[f];
-    }
-    a = a[a.length - 1];
-    g = c[a];
-    b = b(g);
-    b != g && null != b && l.defineProperty(c, a, {configurable:!0, writable:!0, value:b});
-  }
-};
-l.W = !1;
-l.B("Promise", function(a) {
-  function b(d) {
-    this.c = 0;
-    this.o = void 0;
-    this.b = [];
-    var e = this.i();
-    try {
-      d(e.resolve, e.reject);
-    } catch (h) {
-      e.reject(h);
-    }
-  }
-  function c() {
-    this.b = null;
-  }
-  function g(d) {
-    return d instanceof b ? d : new b(function(e) {
-      e(d);
-    });
-  }
-  if (a && !l.W) {
-    return a;
-  }
-  c.prototype.c = function(d) {
-    if (null == this.b) {
-      this.b = [];
-      var e = this;
-      this.i(function() {
-        e.o();
-      });
-    }
-    this.b.push(d);
-  };
-  var f = l.global.setTimeout;
-  c.prototype.i = function(d) {
-    f(d, 0);
-  };
-  c.prototype.o = function() {
-    for (; this.b && this.b.length;) {
-      var d = this.b;
-      this.b = [];
-      for (var e = 0; e < d.length; ++e) {
-        var h = d[e];
-        d[e] = null;
-        try {
-          h();
-        } catch (m) {
-          this.l(m);
-        }
-      }
-    }
-    this.b = null;
-  };
-  c.prototype.l = function(d) {
-    this.i(function() {
-      throw d;
-    });
-  };
-  b.prototype.i = function() {
-    function d(m) {
-      return function(n) {
-        h || (h = !0, m.call(e, n));
-      };
-    }
-    var e = this, h = !1;
-    return {resolve:d(this.da), reject:d(this.l)};
-  };
-  b.prototype.da = function(d) {
-    if (d === this) {
-      this.l(new TypeError("A Promise cannot resolve to itself"));
-    } else {
-      if (d instanceof b) {
-        this.ga(d);
-      } else {
-        a: {
-          switch(typeof d) {
-            case "object":
-              var e = null != d;
-              break a;
-            case "function":
-              e = !0;
-              break a;
-            default:
-              e = !1;
-          }
-        }
-        e ? this.F(d) : this.u(d);
-      }
-    }
-  };
-  b.prototype.F = function(d) {
-    var e = void 0;
-    try {
-      e = d.then;
-    } catch (h) {
-      this.l(h);
-      return;
-    }
-    "function" == typeof e ? this.ha(e, d) : this.u(d);
-  };
-  b.prototype.l = function(d) {
-    this.A(2, d);
-  };
-  b.prototype.u = function(d) {
-    this.A(1, d);
-  };
-  b.prototype.A = function(d, e) {
-    if (0 != this.c) {
-      throw Error("Cannot settle(" + d + ", " + e + "): Promise already settled in state" + this.c);
-    }
-    this.c = d;
-    this.o = e;
-    this.D();
-  };
-  b.prototype.D = function() {
-    if (null != this.b) {
-      for (var d = 0; d < this.b.length; ++d) {
-        k.c(this.b[d]);
-      }
-      this.b = null;
-    }
-  };
-  var k = new c;
-  b.prototype.ga = function(d) {
-    var e = this.i();
-    d.G(e.resolve, e.reject);
-  };
-  b.prototype.ha = function(d, e) {
-    var h = this.i();
-    try {
-      d.call(e, h.resolve, h.reject);
-    } catch (m) {
-      h.reject(m);
-    }
-  };
-  b.prototype.then = function(d, e) {
-    function h(r, t) {
-      return "function" == typeof r ? function(v) {
-        try {
-          m(r(v));
-        } catch (q) {
-          n(q);
-        }
-      } : t;
-    }
-    var m, n, p = new b(function(r, t) {
-      m = r;
-      n = t;
-    });
-    this.G(h(d, m), h(e, n));
-    return p;
-  };
-  b.prototype.catch = function(d) {
-    return this.then(void 0, d);
-  };
-  b.prototype.G = function(d, e) {
-    function h() {
-      switch(m.c) {
-        case 1:
-          d(m.o);
-          break;
-        case 2:
-          e(m.o);
-          break;
-        default:
-          throw Error("Unexpected state: " + m.c);
-      }
-    }
-    var m = this;
-    null == this.b ? k.c(h) : this.b.push(h);
-  };
-  b.resolve = g;
-  b.reject = function(d) {
-    return new b(function(e, h) {
-      h(d);
-    });
-  };
-  b.race = function(d) {
-    return new b(function(e, h) {
-      for (var m = l.w(d), n = m.next(); !n.done; n = m.next()) {
-        g(n.value).G(e, h);
-      }
-    });
-  };
-  b.all = function(d) {
-    var e = l.w(d), h = e.next();
-    return h.done ? g([]) : new b(function(m, n) {
-      function p(v) {
-        return function(q) {
-          r[v] = q;
-          t--;
-          0 == t && m(r);
-        };
-      }
-      var r = [], t = 0;
-      do {
-        r.push(void 0), t++, g(h.value).G(p(r.length - 1), n), h = e.next();
-      } while (!h.done);
-    });
-  };
-  return b;
-});
-l.X = "jscomp_symbol_";
-l.M = function() {
-  l.M = function() {
-  };
-  l.global.Symbol || (l.global.Symbol = l.Symbol);
-};
-function aa(a, b) {
-  this.b = a;
-  l.defineProperty(this, "description", {configurable:!0, writable:!0, value:b});
-}
-aa.prototype.toString = function() {
-  return this.b;
-};
-l.Symbol = function() {
-  function a(c) {
-    if (this instanceof a) {
-      throw new TypeError("Symbol is not a constructor");
-    }
-    return new aa(l.X + (c || "") + "_" + b++, c);
-  }
-  var b = 0;
-  return a;
-}();
-l.I = function() {
-  l.M();
-  var a = l.global.Symbol.iterator;
-  a || (a = l.global.Symbol.iterator = l.global.Symbol("Symbol.iterator"));
-  "function" != typeof Array.prototype[a] && l.defineProperty(Array.prototype, a, {configurable:!0, writable:!0, value:function() {
-    return l.ca(l.O(this));
-  }});
-  l.I = function() {
-  };
-};
-l.ba = function() {
-  l.M();
-  var a = l.global.Symbol.asyncIterator;
-  a || (a = l.global.Symbol.asyncIterator = l.global.Symbol("Symbol.asyncIterator"));
-  l.ba = function() {
-  };
-};
-l.ca = function(a) {
-  l.I();
-  a = {next:a};
-  a[l.global.Symbol.iterator] = function() {
-    return this;
-  };
-  return a;
-};
-l.L = {};
-l.L.$ = function(a) {
-  if (!(a instanceof Object)) {
-    throw new TypeError("Iterator result " + a + " is not an object");
-  }
-};
-function x() {
-  this.A = !1;
-  this.u = null;
-  this.c = void 0;
-  this.b = 1;
-  this.o = this.l = 0;
-  this.F = this.i = null;
-}
-function ba(a) {
-  if (a.A) {
-    throw new TypeError("Generator is already running");
-  }
-  a.A = !0;
-}
-x.prototype.D = function(a) {
-  this.c = a;
-};
-function ca(a, b) {
-  a.i = {R:b, T:!0};
-  a.b = a.l || a.o;
-}
-x.prototype.return = function(a) {
-  this.i = {return:a};
-  this.b = this.o;
-};
-function J(a, b, c) {
-  a.b = c;
-  return {value:b};
-}
-x.prototype.j = function(a) {
-  this.b = a;
-};
-function da(a) {
-  a.l = 0;
-  var b = a.i.R;
-  a.i = null;
-  return b;
-}
-function ea(a) {
-  var b = a.F.splice(0)[0];
-  (b = a.i = a.i || b) ? b.T ? a.b = a.l || a.o : void 0 != b.j && a.o < b.j ? (a.b = b.j, a.i = null) : a.b = a.o : a.b = 0;
-}
-function fa(a) {
-  this.b = new x;
-  this.c = a;
-}
-function ha(a, b) {
-  ba(a.b);
-  var c = a.b.u;
-  if (c) {
-    return ia(a, "return" in c ? c["return"] : function(g) {
-      return {value:g, done:!0};
-    }, b, a.b.return);
-  }
-  a.b.return(b);
-  return M(a);
-}
-function ia(a, b, c, g) {
-  try {
-    var f = b.call(a.b.u, c);
-    l.L.$(f);
-    if (!f.done) {
-      return a.b.A = !1, f;
-    }
-    var k = f.value;
-  } catch (d) {
-    return a.b.u = null, ca(a.b, d), M(a);
-  }
-  a.b.u = null;
-  g.call(a.b, k);
-  return M(a);
-}
-function M(a) {
-  for (; a.b.b;) {
-    try {
-      var b = a.c(a.b);
-      if (b) {
-        return a.b.A = !1, {value:b.value, done:!1};
-      }
-    } catch (c) {
-      a.b.c = void 0, ca(a.b, c);
-    }
-  }
-  a.b.A = !1;
-  if (a.b.i) {
-    b = a.b.i;
-    a.b.i = null;
-    if (b.T) {
-      throw b.R;
-    }
-    return {value:b.return, done:!0};
-  }
-  return {value:void 0, done:!0};
-}
-function ja(a) {
-  this.next = function(b) {
-    ba(a.b);
-    a.b.u ? b = ia(a, a.b.u.next, b, a.b.D) : (a.b.D(b), b = M(a));
-    return b;
-  };
-  this.throw = function(b) {
-    ba(a.b);
-    a.b.u ? b = ia(a, a.b.u["throw"], b, a.b.D) : (ca(a.b, b), b = M(a));
-    return b;
-  };
-  this.return = function(b) {
-    return ha(a, b);
-  };
-  l.I();
-  this[Symbol.iterator] = function() {
-    return this;
-  };
-}
-l.L.na = function(a, b) {
-  b = new ja(new fa(b));
-  l.setPrototypeOf && l.setPrototypeOf(b, a.prototype);
-  return b;
-};
-l.P = function(a) {
-  function b(g) {
-    return a.next(g);
-  }
-  function c(g) {
-    return a.throw(g);
-  }
-  return new Promise(function(g, f) {
-    function k(d) {
-      d.done ? g(d.value) : Promise.resolve(d.value).then(b, c).then(k, f);
-    }
-    k(a.next());
-  });
-};
-l.ma = function(a) {
-  return l.P(a());
-};
-l.h = function(a) {
-  return l.P(new ja(new fa(a)));
-};
-l.B("Object.is", function(a) {
-  return a ? a : function(b, c) {
-    return b === c ? 0 !== b || 1 / b === 1 / c : b !== b && c !== c;
-  };
-});
-l.B("Array.prototype.includes", function(a) {
-  return a ? a : function(b, c) {
-    var g = this;
-    g instanceof String && (g = String(g));
-    var f = g.length;
-    c = c || 0;
-    for (0 > c && (c = Math.max(c + f, 0)); c < f; c++) {
-      var k = g[c];
-      if (k === b || Object.is(k, b)) {
-        return !0;
-      }
-    }
-    return !1;
-  };
-});
-l.H = function(a, b, c) {
-  if (null == a) {
-    throw new TypeError("The 'this' value for String.prototype." + c + " must not be null or undefined");
-  }
-  if (b instanceof RegExp) {
-    throw new TypeError("First argument to String.prototype." + c + " must not be a regular expression");
-  }
-  return a + "";
-};
-l.B("String.prototype.includes", function(a) {
-  return a ? a : function(b, c) {
-    return -1 !== l.H(this, b, "includes").indexOf(b, c || 0);
-  };
-});
-l.B("String.prototype.repeat", function(a) {
-  return a ? a : function(b) {
-    var c = l.H(this, null, "repeat");
-    if (0 > b || 1342177279 < b) {
-      throw new RangeError("Invalid count value");
-    }
-    b |= 0;
-    for (var g = ""; b;) {
-      if (b & 1 && (g += c), b >>>= 1) {
-        c += c;
-      }
-    }
-    return g;
-  };
-});
-l.oa = function(a, b) {
-  l.I();
-  a instanceof String && (a += "");
-  var c = 0, g = {next:function() {
-    if (c < a.length) {
-      var f = c++;
-      return {value:b(f, a[f]), done:!1};
-    }
-    g.next = function() {
-      return {done:!0, value:void 0};
-    };
-    return g.next();
-  }};
-  g[Symbol.iterator] = function() {
-    return g;
-  };
-  return g;
-};
-l.B("String.prototype.endsWith", function(a) {
-  return a ? a : function(b, c) {
-    var g = l.H(this, b, "endsWith");
-    void 0 === c && (c = g.length);
-    c = Math.max(0, Math.min(c | 0, g.length));
-    for (var f = b.length; 0 < f && 0 < c;) {
-      if (g[--c] != b[--f]) {
-        return !1;
-      }
-    }
-    return 0 >= f;
-  };
-});
-l.fa = function(a, b) {
-  return Object.prototype.hasOwnProperty.call(a, b);
-};
-l.assign = "function" == typeof Object.assign ? Object.assign : function(a, b) {
-  for (var c = 1; c < arguments.length; c++) {
-    var g = arguments[c];
-    if (g) {
-      for (var f in g) {
-        l.fa(g, f) && (a[f] = g[f]);
-      }
-    }
-  }
-  return a;
-};
-l.B("Object.assign", function(a) {
-  return a || l.assign;
-});
-l.B("String.prototype.startsWith", function(a) {
-  return a ? a : function(b, c) {
-    var g = l.H(this, b, "startsWith"), f = g.length, k = b.length;
-    c = Math.max(0, Math.min(c | 0, g.length));
-    for (var d = 0; d < k && c < f;) {
-      if (g[c++] != b[d++]) {
-        return !1;
-      }
-    }
-    return d >= k;
-  };
-});
+const child_process = require('child_process');             
 /*
  diff package https://github.com/kpdecker/jsdiff
  BSD License
  Copyright (c) 2009-2015, Kevin Decker <kpdecker@gmail.com>
 */
-function ka() {
+function F(a, b, c) {
+  let g = a[a.length - 1];
+  g && g.c === b && g.g === c ? a[a.length - 1] = {count:g.count + 1, c:b, g:c} : a.push({count:1, c:b, g:c});
 }
-function la(a, b) {
-  var c = new ka;
-  a = ma(a.split(""));
-  b = ma(b.split(""));
-  var g = b.length, f = a.length, k = 1, d = g + f, e = [{g:-1, s:[]}], h = na(c, e[0], b, a, 0);
-  if (e[0].g + 1 >= g && h + 1 >= f) {
-    return [{value:c.join(b), count:b.length}];
+function G(a, b, c, g, f) {
+  let h = c.length, e = g.length, d = b.b;
+  f = d - f;
+  let k = 0;
+  for (; d + 1 < h && f + 1 < e && a.equals(c[d + 1], g[f + 1]);) {
+    d++, f++, k++;
   }
-  for (; k <= d;) {
-    a: {
-      for (h = -1 * k; h <= k; h += 2) {
-        var m = e[h - 1];
-        var n = e[h + 1], p = (n ? n.g : 0) - h;
-        m && (e[h - 1] = void 0);
-        var r = m && m.g + 1 < g;
-        p = n && 0 <= p && p < f;
-        if (r || p) {
-          !r || p && m.g < n.g ? (m = {g:n.g, s:n.s.slice(0)}, oa(m.s, void 0, !0)) : (m.g++, oa(m.s, !0, void 0));
-          p = na(c, m, b, a, h);
-          if (m.g + 1 >= g && p + 1 >= f) {
-            h = pa(c, m.s, b, a);
-            break a;
-          }
-          e[h] = m;
-        } else {
-          e[h] = void 0;
-        }
-      }
-      k++;
-      h = void 0;
-    }
-    if (h) {
-      return h;
-    }
-  }
-}
-function oa(a, b, c) {
-  var g = a[a.length - 1];
-  g && g.m === b && g.v === c ? a[a.length - 1] = {count:g.count + 1, m:b, v:c} : a.push({count:1, m:b, v:c});
-}
-function na(a, b, c, g, f) {
-  var k = c.length, d = g.length, e = b.g;
-  f = e - f;
-  for (var h = 0; e + 1 < k && f + 1 < d && a.equals(c[e + 1], g[f + 1]);) {
-    e++, f++, h++;
-  }
-  h && b.s.push({count:h});
-  b.g = e;
+  k && b.f.push({count:k});
+  b.b = d;
   return f;
 }
-ka.prototype.equals = function(a, b) {
-  return a === b;
-};
-function ma(a) {
-  for (var b = [], c = 0; c < a.length; c++) {
+function H(a) {
+  let b = [];
+  for (let c = 0; c < a.length; c++) {
     a[c] && b.push(a[c]);
   }
   return b;
 }
-ka.prototype.join = function(a) {
-  return a.join("");
-};
-function pa(a, b, c, g) {
-  for (var f = 0, k = b.length, d = 0, e = 0; f < k; f++) {
-    var h = b[f];
-    if (h.v) {
-      h.value = a.join(g.slice(e, e + h.count)), e += h.count, f && b[f - 1].m && (h = b[f - 1], b[f - 1] = b[f], b[f] = h);
-    } else {
-      if (h.m) {
-        h.value = a.join(c.slice(d, d + h.count));
-      } else {
-        var m = c.slice(d, d + h.count);
-        m = m.map(function(n, p) {
-          p = g[e + p];
-          return p.length > n.length ? p : n;
-        });
-        h.value = a.join(m);
+function aa(a, b) {
+  var c = new ba;
+  a = H(a.split(""));
+  b = H(b.split(""));
+  let g = b.length, f = a.length, h = 1, e = g + f, d = [{b:-1, f:[]}];
+  var k = G(c, d[0], b, a, 0);
+  if (d[0].b + 1 >= g && k + 1 >= f) {
+    return [{value:c.join(b), count:b.length}];
+  }
+  for (; h <= e;) {
+    a: {
+      for (k = -1 * h; k <= h; k += 2) {
+        var l = d[k - 1];
+        let m = d[k + 1];
+        var n = (m ? m.b : 0) - k;
+        l && (d[k - 1] = void 0);
+        let q = l && l.b + 1 < g;
+        n = m && 0 <= n && n < f;
+        if (q || n) {
+          !q || n && l.b < m.b ? (l = {b:m.b, f:m.f.slice(0)}, F(l.f, void 0, !0)) : (l.b++, F(l.f, !0, void 0));
+          n = G(c, l, b, a, k);
+          if (l.b + 1 >= g && n + 1 >= f) {
+            k = ca(c, l.f, b, a);
+            break a;
+          }
+          d[k] = l;
+        } else {
+          d[k] = void 0;
+        }
       }
-      d += h.count;
-      h.m || (e += h.count);
+      h++;
+      k = void 0;
+    }
+    if (k) {
+      return k;
     }
   }
-  c = b[k - 1];
-  1 < k && "string" === typeof c.value && (c.m || c.v) && a.equals("", c.value) && (b[k - 2].value += c.value, b.pop());
+}
+class ba {
+  equals(a, b) {
+    return a === b;
+  }
+  join(a) {
+    return a.join("");
+  }
+}
+function ca(a, b, c, g) {
+  let f = 0, h = b.length, e = 0, d = 0;
+  for (; f < h; f++) {
+    var k = b[f];
+    if (k.g) {
+      k.value = a.join(g.slice(d, d + k.count)), d += k.count, f && b[f - 1].c && (k = b[f - 1], b[f - 1] = b[f], b[f] = k);
+    } else {
+      if (k.c) {
+        k.value = a.join(c.slice(e, e + k.count));
+      } else {
+        let l = c.slice(e, e + k.count);
+        l = l.map(function(n, m) {
+          m = g[d + m];
+          return m.length > n.length ? m : n;
+        });
+        k.value = a.join(l);
+      }
+      e += k.count;
+      k.c || (d += k.count);
+    }
+  }
+  c = b[h - 1];
+  1 < h && "string" === typeof c.value && (c.c || c.g) && a.equals("", c.value) && (b[h - 2].value += c.value, b.pop());
   return b;
 }
-;var qa = {black:30, red:31, green:32, yellow:33, blue:34, magenta:35, cyan:36, white:37, grey:90}, ra = {black:40, red:41, green:42, yellow:43, blue:44, magenta:45, cyan:46, white:47};
-function N(a, b) {
-  return (b = qa[b]) ? "\u001b[" + b + "m" + a + "\u001b[0m" : a;
+;const da = {black:30, red:31, green:32, yellow:33, blue:34, magenta:35, cyan:36, white:37, grey:90}, ea = {black:40, red:41, green:42, yellow:43, blue:44, magenta:45, cyan:46, white:47};
+function J(a, b) {
+  return (b = da[b]) ? `\x1b[${b}m${a}\x1b[0m` : a;
 }
-function sa(a) {
-  return (a = ra[a]) ? "\u001b[" + a + "m \u001b[0m" : " ";
+function K(a) {
+  return (a = ea[a]) ? `\x1b[${a}m${" "}\x1b[0m` : " ";
 }
-function ta(a, b) {
-  return la(a, b).map(function(c) {
-    var g = c.v, f = c.value, k = f.split(" ");
-    return c.m ? k.map(function(d) {
-      return d.replace(/\n$/mg, "\u23ce\n");
-    }).map(function(d) {
-      return N(d, "green");
-    }).join(sa("green")) : g ? k.map(function(d) {
-      return d.replace(/\n$/mg, "\u23ce\n");
-    }).map(function(d) {
-      return N(d, "red");
-    }).join(sa("red")) : N(f, "grey");
+function L(a, b) {
+  return aa(a, b).map(({c, g, value:f}) => {
+    const h = f.split(" ");
+    return c ? h.map(e => e.replace(/\n$/mg, "\u23ce\n")).map(e => J(e, "green")).join(K("green")) : g ? h.map(e => e.replace(/\n$/mg, "\u23ce\n")).map(e => J(e, "red")).join(K("red")) : J(f, "grey");
   }).join("");
 }
-;var T = fs, ua = T.lstatSync, va = T.readFileSync, wa = T.readdirSync, xa = T.writeFileSync;
-var ya = path, za = ya.basename, Aa = ya.dirname, Ba = ya.join;
-var Ca = assert, Da = Ca.deepStrictEqual, Ea = Ca.equal, Fa = Ca.strictEqual;
-function Ga(a, b) {
-  var c = ["preValue", "key", "newLine", "value"], g = !0;
-  g = void 0 === g ? !1 : g;
-  var f = [];
-  b.replace(a, function(k, d) {
-    for (var e = [], h = 1; h < arguments.length; ++h) {
-      e[h - 1] = arguments[h];
-    }
-    h = e[e.length - 2];
-    h = g ? {position:h} : {};
-    e = e.slice(0, e.length - 2).reduce(function(m, n, p) {
-      p = c[p];
-      if (!p || void 0 === n) {
-        return m;
+;const {lstatSync:M, readFileSync:N, readdirSync:O, writeFileSync:fa} = fs;
+const {basename:ha, dirname:ia, join:P} = path;
+const {deepStrictEqual:ja, equal:ka, strictEqual:la} = assert;
+function ma(a, b) {
+  var c = ["preValue", "key", "newLine", "value"];
+  const g = [];
+  b.replace(a, (f, ...h) => {
+    f = {position:h[h.length - 2]};
+    h = h.slice(0, h.length - 2).reduce((e, d, k) => {
+      k = c[k];
+      if (!k || void 0 === d) {
+        return e;
       }
-      m[p] = n;
-      return m;
-    }, h);
-    f.push(e);
+      e[k] = d;
+      return e;
+    }, f);
+    g.push(h);
   });
-  return f;
+  return g;
 }
-;var Ha = readline.createInterface;
-function Ia(a, b, c) {
-  return setTimeout(function() {
-    var g = Error((a ? a : "Promise") + " has timed out after " + b + "ms");
+;const {createInterface:na} = readline;
+function oa(a, b, c) {
+  return setTimeout(() => {
+    const g = Error(`${a ? a : "Promise"} has timed out after ${b}ms`);
     g.stack = g.message;
     c(g);
   }, b);
 }
-function Ja(a, b) {
-  var c, g = new Promise(function(f, k) {
-    c = Ia(a, b, k);
+function pa(a, b) {
+  let c;
+  const g = new Promise((f, h) => {
+    c = oa(a, b, h);
   });
   return {timeout:c, promise:g};
 }
-function Ka(a, b, c) {
-  var g, f, k;
-  return l.h(function(d) {
-    if (1 == d.b) {
-      if (!(a instanceof Promise)) {
-        throw Error("Promise expected");
-      }
-      if (!b) {
-        throw Error("Timeout must be a number");
-      }
-      if (0 > b) {
-        throw Error("Timeout cannot be negative");
-      }
-      g = Ja(c, b);
-      f = g.promise;
-      k = g.timeout;
-      d.l = 0;
-      d.o = 2;
-      return J(d, Promise.race([a, f]), 4);
-    }
-    if (2 != d.b) {
-      return d.return(d.c);
-    }
-    d.F = [d.i];
-    d.l = 0;
-    d.o = 0;
-    clearTimeout(k);
-    return ea(d);
-  });
+async function qa(a, b, c) {
+  if (!(a instanceof Promise)) {
+    throw Error("Promise expected");
+  }
+  if (!b) {
+    throw Error("Timeout must be a number");
+  }
+  if (0 > b) {
+    throw Error("Timeout cannot be negative");
+  }
+  const {promise:g, timeout:f} = pa(c, b);
+  try {
+    return await Promise.race([a, g]);
+  } finally {
+    clearTimeout(f);
+  }
 }
-;function La(a, b) {
+;function ra(a, b) {
   var c = b = void 0 === b ? {} : b, g = Object.assign({}, c);
   b = c.timeout;
-  var f = void 0 === c.password ? !1 : c.password, k = void 0 === c.output ? process.stdout : c.output;
+  var f = void 0 === c.password ? !1 : c.password, h = void 0 === c.output ? process.stdout : c.output;
   c = void 0 === c.input ? process.stdin : c.input;
   g = (delete g.timeout, delete g.password, delete g.output, delete g.input, g);
-  k = Ha(Object.assign({}, {input:c, output:k}, g));
+  h = na(Object.assign({}, {input:c, output:h}, g));
   if (f) {
-    var d = k.output;
-    k._writeToOutput = function(e) {
-      if (["\r\n", "\n", "\r"].includes(e)) {
-        return d.write(e);
+    const e = h.output;
+    h._writeToOutput = d => {
+      if (["\r\n", "\n", "\r"].includes(d)) {
+        return e.write(d);
       }
-      e = e.split(a);
-      "2" == e.length ? (d.write(a), d.write("*".repeat(e[1].length))) : d.write("*");
+      d = d.split(a);
+      "2" == d.length ? (e.write(a), e.write("*".repeat(d[1].length))) : e.write("*");
     };
   }
-  f = new Promise(k.question.bind(k, a));
-  b = b ? Ka(f, b, "reloquent: " + a) : f;
-  k.promise = Ma(b, k);
-  return k;
+  f = new Promise(h.question.bind(h, a));
+  b = b ? qa(f, b, `reloquent: ${a}`) : f;
+  h.promise = sa(b, h);
+  return h;
 }
-function Ma(a, b) {
-  var c;
-  return l.h(function(g) {
-    if (1 == g.b) {
-      return g.l = 0, g.o = 2, J(g, a, 4);
-    }
-    if (2 != g.b) {
-      return c = g.c, g.return(c);
-    }
-    g.F = [g.i];
-    g.l = 0;
-    g.o = 0;
+const sa = async(a, b) => {
+  try {
+    return await a;
+  } finally {
     b.close();
-    return ea(g);
-  });
-}
-;function Na(a, b) {
-  var c, g;
-  return l.h(function(f) {
-    if (1 == f.b) {
-      if ("object" != typeof a) {
-        throw Error("Please give an object with questions");
-      }
-      c = Object.keys(a);
-      return J(f, c.reduce(function(k, d) {
-        var e, h, m, n, p, r, t, v, q, u, B, C, y;
-        return l.h(function(z) {
-          switch(z.b) {
-            case 1:
-              return J(z, k, 2);
-            case 2:
-              e = z.c;
-              h = a[d];
-              switch(typeof h) {
-                case "object":
-                  m = Object.assign({}, h);
-                  break;
-                case "string":
-                  m = {text:h};
-                  break;
-                default:
-                  throw Error("A question must be a string or an object.");
-              }m.text = m.text + (m.text.endsWith("?") ? "" : ":") + " ";
-              m.defaultValue && (n = m.defaultValue);
-              if (!m.getDefault) {
-                z.j(3);
-                break;
-              }
-              return J(z, m.getDefault(), 4);
-            case 4:
-              p = z.c;
-            case 3:
-              return r = n || "", n && p && n != p ? r = "\u001b[90m" + n + "\u001b[0m" : n && n == p && (r = ""), t = p || "", v = m.text + (r ? "[" + r + "] " : "") + (t ? "[" + t + "] " : ""), q = La(v, {timeout:b, password:m.password}), u = q.promise, J(z, u, 5);
-            case 5:
-              C = (B = z.c) || p || m.defaultValue;
-              "function" == typeof m.validation && m.validation(C);
-              if ("function" != typeof m.postProcess) {
-                z.j(6);
-                break;
-              }
-              return J(z, m.postProcess(C), 7);
-            case 7:
-              C = z.c;
-            case 6:
-              return y = {}, z.return(Object.assign({}, e, (y[d] = C, y)));
-          }
-        });
-      }, {}), 2);
+  }
+};
+async function ta(a, b) {
+  if ("object" != typeof a) {
+    throw Error("Please give an object with questions");
+  }
+  return await Object.keys(a).reduce(async(c, g) => {
+    c = await c;
+    var f = a[g];
+    switch(typeof f) {
+      case "object":
+        f = Object.assign({}, f);
+        break;
+      case "string":
+        f = {text:f};
+        break;
+      default:
+        throw Error("A question must be a string or an object.");
     }
-    g = f.c;
-    return f.return(g);
-  });
-}
-;function Oa() {
-  var a, b;
-  return l.h(function(c) {
-    if (1 == c.b) {
-      return J(c, Na({question:"Show more (d), skip (s), or update (u): [u]"}, void 0), 2);
+    f.text = `${f.text}${f.text.endsWith("?") ? "" : ":"} `;
+    var h;
+    if (f.defaultValue) {
+      var e = f.defaultValue;
     }
-    a = c.c;
-    b = a.question;
-    return c.return(b);
-  });
+    f.getDefault && (h = await f.getDefault());
+    let d = e || "";
+    e && h && e != h ? d = `\x1b[90m${e}\x1b[0m` : e && e == h && (d = "");
+    e = h || "";
+    ({promise:e} = ra(`${f.text}${d ? `[${d}] ` : ""}${e ? `[${e}] ` : ""}`, {timeout:b, password:f.password}));
+    h = await e || h || f.defaultValue;
+    "function" == typeof f.validation && f.validation(h);
+    "function" == typeof f.postProcess && (h = await f.postProcess(h));
+    return Object.assign({}, c, {[g]:h});
+  }, {});
 }
-function Pa() {
-  var a = void 0 === a ? {} : a;
-  var b, c, g, f, k, d, e;
-  return l.h(function(h) {
-    if (1 == h.b) {
-      return b = a, c = void 0 === b.defaultYes ? !0 : b.defaultYes, g = b.timeout, f = "Update the result".endsWith("?"), k = (f ? "Update the result".replace(/\?$/, "") : "Update the result") + " (y/n)" + (f ? "?" : ""), J(h, Na({question:{text:k, defaultValue:c ? "y" : "n"}}, g), 2);
-    }
-    d = h.c;
-    e = d.question;
-    return h.return("y" == e);
-  });
+;async function ua() {
+  const {question:a} = await ta({question:"Show more (d), skip (s), or update (u): [u]"}, void 0);
+  return a;
 }
-;function Qa(a, b) {
-  var c = [];
-  a.replace(b, function(g, f) {
+async function va() {
+  const {defaultYes:a = !0, timeout:b} = {};
+  var c = "Update the result".endsWith("?");
+  ({question:c} = await ta({question:{text:`${c ? "Update the result".replace(/\?$/, "") : "Update the result"} (y/n)${c ? "?" : ""}`, defaultValue:a ? "y" : "n"}}, b));
+  return "y" == c;
+}
+;const wa = (a, b) => {
+  let c = [];
+  a.replace(b, (g, f) => {
     c.push({position:f, separator:g});
   });
-  c = [{position:0, separator:""}].concat(l.f(c));
-  return c.reduce(function(g, f, k, d) {
-    var e = f.position;
-    f = f.separator;
-    var h = f.length;
-    k = d[k + 1];
-    if (!k) {
-      return k = a.slice(e + h), g.push({position:e, separator:f, match:k}), g;
+  c = [{position:0, separator:""}, ...c];
+  return c.reduce((g, {position:f, separator:h}, e, d) => {
+    var {length:k} = h;
+    e = d[e + 1];
+    if (!e) {
+      return k = a.slice(f + k), g.push({position:f, separator:h, match:k}), g;
     }
-    k = a.slice(e + h, k.position);
-    g.push({position:e, separator:f, match:k});
+    ({position:e} = e);
+    k = a.slice(f + k, e);
+    g.push({position:f, separator:h, match:k});
     return g;
   }, []);
-}
-;function Ra(a) {
-  function b(p, r) {
-    var t, v, q, u, B, C, y, z, F;
-    return l.h(function() {
-      t = new RegExp("" + k.source + p + "\r?$");
-      v = m.reduce(function(A, w, E) {
-        return A ? A : t.test(w) ? E + 1 : A;
-      }, null);
-      q = Error(r.message);
-      u = "Error: " + r.message + "\n    at " + p + " (" + c + ":" + v + ":1)";
-      q.stack = u;
-      r.property && r.actual && (B = r, C = B.property, y = B.actual, z = B.expected, F = function() {
-        var A, w, E, K, L, H, I;
-        return l.h(function(D) {
-          switch(D.b) {
-            case 1:
-              A = h[C];
-              if (!A) {
-                return D.return(!1);
-              }
-              w = A.start + n;
-              E = d.slice(0, w);
-              K = d.slice(w + A.length);
-              L = "" + E + y + K;
-              console.error('Result does not match property "%s"\n  at %s (%s:%s:1)', C, N(p, "blue"), c, v);
-              H = !1;
-              return J(D, Oa(), 2);
-            case 2:
-              I = D.c;
-              if ("d" != I) {
-                I && "u" != I || (H = !0);
-                D.j(3);
-                break;
-              }
-              console.log(N("Actual: ", "blue"));
-              console.log(y);
-              console.log(N("Expected: ", "blue"));
-              console.log(z);
-              return J(D, Pa(), 4);
-            case 4:
-              H = D.c;
-            case 3:
-              if (!H) {
-                return D.return(!1);
-              }
-              n += y.length - A.length;
-              return J(D, xa(c, L), 5);
-            case 5:
-              return d = "" + va(c), D.return(!0);
-          }
-        });
-      }, q.handleUpdate = F);
-      throw q;
-    });
-  }
-  var c = a.path, g = void 0 === a.propStartRe ? /\/\*/ : a.propStartRe, f = void 0 === a.propEndRe ? /\/\*\*\// : a.propEndRe, k = a.splitRe;
-  k || (k = c.endsWith(".md") ? /^## /gm : /^\/\/ /gm);
-  var d = "" + va(c);
-  a = k.exec(d);
+};
+const Aa = a => {
+  const {path:b, propStartRe:c = /\/\*/, propEndRe:g = /\/\*\*\//} = a;
+  let {splitRe:f} = a;
+  f || (f = b.endsWith(".md") ? /^## /gm : /^\/\/ /gm);
+  let h = `${N(b)}`;
+  a = f.exec(h);
   if (!a) {
-    throw Error(c + " does not contain tests.");
+    throw Error(`${b} does not contain tests.`);
   }
-  var e = d.slice(0, a.index).replace(/\n\n$/, "");
-  a = d.slice(a.index);
-  k.lastIndex = 0;
-  var h = {};
-  a = Qa(a, k).filter(function(p) {
-    return p.match;
-  }).map(function(p) {
-    var r = p.match, t = p.position, v = p.separator, q = l.w(Sa(r));
-    p = q.next().value;
-    q = q.next().value;
-    var u = l.w(Ta(q, new RegExp("\n" + g.source)));
-    q = u.next().value;
-    u = u.next().value;
-    var B = r.indexOf(u);
-    r = q.replace(/\n$/, "");
-    q = Ga(new RegExp("(" + g.source + " +(.+) +\\*\\/(\n?))([\\s\\S]*?)\n" + f.source, "g"), u).reduce(function(C, y) {
-      var z = y.key, F = y.newLine, A = y.value;
-      h[z] = {start:t + B + y.position + y.preValue.length + v.length, length:A.length};
-      y = {};
-      return Object.assign({}, C, (y[z] = !A && F ? F : A, y));
+  const e = h.slice(0, a.index).replace(/\n\n$/, "");
+  a = h.slice(a.index);
+  f.lastIndex = 0;
+  const d = {};
+  a = wa(a, f).filter(m => {
+    ({match:m} = m);
+    return m;
+  }).map(m => {
+    var {match:q, position:r, separator:p} = m;
+    const [t, u] = xa(q), [w, y] = ya(u, new RegExp(`\n${c.source}`)), B = q.indexOf(y);
+    m = w.replace(/\n$/, "");
+    const A = ma(new RegExp(`(${c.source} +(.+) +\\*\\/(\n?))([\\s\\S]*?)\n${g.source}`, "g"), y).reduce((x, v) => {
+      var {preValue:I, key:E, newLine:D, value:C, position:z} = v;
+      d[E] = {start:r + B + z + I.length + p.length, length:C.length};
+      return Object.assign({}, x, {[E]:!C && D ? D : C});
     }, {});
-    return Object.assign({}, {name:p, input:r}, e ? {preamble:e} : {}, q);
+    return Object.assign({}, {name:t, input:m}, e ? {preamble:e} : {}, A);
   });
-  var m = d.split("\n"), n = 0;
-  return a.map(function(p) {
-    var r = Object.assign({}, p);
-    p = p.name;
-    r = (delete r.name, r);
-    var t = b.bind(null, p);
-    return Object.assign({}, r, {name:p, V:t});
+  const k = h.split("\n");
+  let l = 0;
+  const n = async(m, q) => {
+    const r = new RegExp(`${f.source}${m}\r?$`), p = k.reduce((u, w, y) => u ? u : r.test(w) ? y + 1 : u, null), t = Error(q.message);
+    t.stack = `Error: ${q.message}\n    at ${m} (${b}:${p}:1)`;
+    if (q.property && q.actual) {
+      const {property:u, actual:w, expected:y} = q;
+      t.handleUpdate = async() => {
+        const B = d[u];
+        if (!B) {
+          return !1;
+        }
+        var A = B.start + l, x = h.slice(0, A);
+        A = h.slice(A + B.length);
+        x = `${x}${w}${A}`;
+        console.error('Result does not match property "%s"\n  at %s (%s:%s:1)', u, J(m, "blue"), b, p);
+        A = !1;
+        const v = await ua();
+        "d" == v ? (console.log(J("Actual: ", "blue")), console.log(w), console.log(J("Expected: ", "blue")), console.log(y), A = await va()) : v && "u" != v || (A = !0);
+        if (!A) {
+          return !1;
+        }
+        l += w.length - B.length;
+        await fa(b, x);
+        h = `${N(b)}`;
+        return !0;
+      };
+    }
+    throw t;
+  };
+  return a.map(m => {
+    var q = Object.assign({}, m);
+    m = m.name;
+    q = (delete q.name, q);
+    const r = n.bind(null, m);
+    return Object.assign({}, q, {name:m, m:r});
   });
-}
-function Ta(a, b) {
-  var c = a.search(b);
+}, ya = (a, b) => {
+  const c = a.search(b);
   if (0 > c) {
-    throw Error('Could not process "' + a + '": propStart re ' + b + " returned -1");
+    throw Error(`Could not process "${a}": propStart re ${b} returned -1`);
   }
   return [a.substr(0, c), a.substr(c + 1)];
-}
-function Sa(a) {
-  var b = a.indexOf("\n");
+}, xa = a => {
+  const b = a.indexOf("\n");
   return [a.substr(0, b), a.substr(b + 1)];
-}
-;var Ua = stream, Va = Ua.PassThrough, U = Ua.Writable;
-function Wa(a, b) {
-  var c = Error().stack;
-  a = void 0 === a ? 0 : a;
-  b = void 0 === b ? !1 : b;
-  if (0 === a && !b) {
-    return c;
+};
+const {PassThrough:Ba, Writable:Ca} = stream;
+const Da = (a, b = 0, c = !1) => {
+  if (0 === b && !c) {
+    return a;
   }
-  c = c.split("\n", b ? a + 1 : void 0);
-  return b ? c[c.length - 1] : c.slice(a).join("\n");
-}
-;var Xa = os.homedir;
-var Ya = /\s+at.*(?:\(|\s)(.*)\)?/, Za = /^(?:(?:(?:node|(?:internal\/[\w/]*|.*node_modules\/(?:IGNORED_MODULES)\/.*)?\w+)\.js:\d+:\d+)|native)/, cb = Xa();
-function db(a) {
-  var b = {}, c = void 0 === b.pretty ? !1 : b.pretty;
-  b = (void 0 === b.ignoredModules ? ["pirates"] : b.ignoredModules).join("|");
-  var g = new RegExp(Za.source.replace("IGNORED_MODULES", b));
-  return a.replace(/\\/g, "/").split("\n").filter(function(f) {
-    f = f.match(Ya);
-    if (null === f || !f[1]) {
+  a = a.split("\n", c ? b + 1 : void 0);
+  return c ? a[a.length - 1] : a.slice(b).join("\n");
+}, Ea = (a, b = !1) => Da(a, 2 + (b ? 1 : 0)), Fa = a => {
+  ({callee:{caller:a}} = a);
+  return a;
+};
+const {homedir:Ga} = os;
+const Ha = /\s+at.*(?:\(|\s)(.*)\)?/, Ia = /^(?:(?:(?:node|(?:internal\/[\w/]*|.*node_modules\/(?:IGNORED_MODULES)\/.*)?\w+)\.js:\d+:\d+)|native)/, Ja = Ga(), Ka = a => {
+  const {pretty:b = !1, ignoredModules:c = ["pirates"]} = {}, g = c.join("|"), f = new RegExp(Ia.source.replace("IGNORED_MODULES", g));
+  return a.replace(/\\/g, "/").split("\n").filter(h => {
+    h = h.match(Ha);
+    if (null === h || !h[1]) {
       return !0;
     }
-    f = f[1];
-    return f.includes(".app/Contents/Resources/electron.asar") || f.includes(".app/Contents/Resources/default_app.asar") ? !1 : !g.test(f);
-  }).filter(function(f) {
-    return f.trim();
-  }).map(function(f) {
-    return c ? f.replace(Ya, function(k, d) {
-      return k.replace(d, d.replace(cb, "~"));
-    }) : f;
-  }).join("\n");
-}
-;function eb(a, b, c) {
-  c = void 0 === c ? !1 : c;
+    h = h[1];
+    return h.includes(".app/Contents/Resources/electron.asar") || h.includes(".app/Contents/Resources/default_app.asar") ? !1 : !f.test(h);
+  }).filter(h => h.trim()).map(h => b ? h.replace(Ha, (e, d) => e.replace(d, d.replace(Ja, "~"))) : h).join("\n");
+};
+function La(a, b, c = !1) {
   return function(g) {
-    var f = arguments.callee.caller;
-    var k = Wa(2, !0);
-    var d = g instanceof Error, e = d ? g.message : g;
-    f = ["Error: " + e].concat(l.f(null !== f && a === f || c ? [b] : [k, b])).join("\n");
-    f = db(f);
-    return Object.assign(d ? g : Error(), {message:e, stack:f});
+    var f = Fa(arguments), {stack:h} = Error();
+    const e = Da(h, 2, !0), d = (h = g instanceof Error) ? g.message : g;
+    f = [`Error: ${d}`, ...null !== f && a === f || c ? [b] : [e, b]].join("\n");
+    f = Ka(f);
+    return Object.assign(h ? g : Error(), {message:d, stack:f});
   };
 }
-;function fb(a) {
-  var b = arguments.callee.caller;
-  var c = Wa(2 + ((void 0 === a ? 0 : a) ? 1 : 0));
-  return eb(b, c, a);
+;function R(a) {
+  var {stack:b} = Error();
+  const c = Fa(arguments);
+  b = Ea(b, a);
+  return La(c, b, a);
 }
-;function gb(a, b) {
-  b.once("error", function(c) {
+;const Ma = (a, b) => {
+  b.once("error", c => {
     a.emit("error", c);
   });
   return b;
-}
-;var hb = ["", ""];
-hb.raw = hb.slice();
-var ib = ["", ""];
-ib.raw = ib.slice();
-function jb(a) {
-  var b = a || {}, c = Object.assign({}, b), g = void 0 === b.binary ? !1 : b.binary, f = void 0 === b.rs ? null : b.rs;
-  b = (delete c.binary, delete c.rs, c);
-  a = a || {};
-  var k = void 0 === a.C ? fb(!0) : a.C, d = a.proxyError;
-  var e = U.call(this, b) || this;
-  e.b = [];
-  e.J = new Promise(function(h, m) {
-    e.on("finish", function() {
-      var n;
-      g ? n = Buffer.concat(e.b) : n = e.b.join("");
-      h(n);
-      e.b = [];
-    });
-    e.once("error", function(n) {
-      if (-1 == n.stack.indexOf("\n")) {
-        k(n);
-      } else {
-        var p = db(n.stack);
-        n.stack = p;
-        d && k(n);
-      }
-      m(n);
-    });
-    f && gb(e, f).pipe(e);
-  });
-  return e;
-}
-l.S(jb, U);
-jb.prototype._write = function(a, b, c) {
-  this.b.push(a);
-  c();
 };
-l.global.Object.defineProperties(jb.prototype, {promise:{configurable:!0, enumerable:!0, get:function() {
-  return this.J;
-}}});
-function kb(a) {
-  var b = void 0 === b ? {} : b;
-  var c, g, f;
-  return l.h(function(k) {
-    if (1 == k.b) {
-      return c = new jb(Object.assign({}, {rs:a}, b, {C:fb(!0)})), g = c.promise, J(k, g, 2);
-    }
-    f = k.c;
-    return k.return(f);
-  });
-}
-;function lb(a, b) {
-  return l.h(function(c) {
-    return J(c, b(a), 0);
-  });
-}
-function mb(a, b) {
-  return l.h(function(c) {
-    if (b instanceof RegExp) {
-      if (!b.test(a)) {
-        throw Error(a + " does not match regular expression " + b);
-      }
-      return c.j(0);
-    }
-    if ("function" != typeof b) {
-      if (b && a != b) {
-        throw c = ta("" + a, "" + b), Error(c + "\n" + (a + " != " + b));
-      }
-      return c.j(0);
-    }
-    return J(c, lb(a, b), 0);
-  });
-}
-function nb(a) {
-  var b, c, g, f, k, d, e, h, m, n, p, r;
-  return l.h(function(t) {
-    if (1 == t.b) {
-      if (!a) {
-        throw Error("Config expected.");
-      }
-      b = fb(!0);
-      c = a;
-      g = Object.assign({}, c);
-      f = c.fn;
-      k = void 0 === c.args ? [] : c.args;
-      d = c.context;
-      e = c.error;
-      h = (delete g.fn, delete g.args, delete g.context, delete g.error, g);
-      if ("function" != typeof f) {
-        throw Error("Function expected.");
-      }
-      m = Array.isArray(k) ? k : [k];
-      t.l = 2;
-      return J(t, ob(f, d, m, e, h), 4);
-    }
-    if (2 != t.b) {
-      return n = t.c, t.return(n);
-    }
-    p = da(t);
-    r = b(p);
-    throw r;
-  });
-}
-function ob(a, b, c, g, f) {
-  var k, d, e;
-  return l.h(function(h) {
-    switch(h.b) {
-      case 1:
-        return k = Error(), h.l = 2, b ? J(h, a.call.apply(a, [b].concat(l.f(c))), 5) : J(h, a.apply(null, l.f(c)), 5);
-      case 5:
-        throw k;
-      case 2:
-        d = da(h);
-        if (d === k) {
-          throw e = a.name && "fn" !== a.name ? a.name + " " : "", Error("Function " + e + "should have thrown.");
-        }
-        if (g && g !== d) {
-          throw Error(d + " is not strict equal to " + g + ".");
-        }
-        return J(h, Object.keys(f).reduce(function(m, n) {
-          var p, r;
-          return l.h(function(t) {
-            if (1 == t.b) {
-              return J(t, m, 2);
-            }
-            p = f[n];
-            r = d[n];
-            return J(t, mb(r, p), 0);
-          });
-        }, {}), 8);
-      case 8:
-        return h.return(d);
-    }
-  });
-}
-;function pb(a, b) {
-  for (var c = [], g = 1; g < arguments.length; ++g) {
-    c[g - 1] = arguments[g];
-  }
-  var f = -1;
-  return a.replace(/%s/g, function() {
-    f++;
-    return c[f];
-  });
-}
-function qb(a, b) {
-  function c(d, e) {
-    if (d instanceof Date && e instanceof Date) {
-      var h = d.getTime() != e.getTime() ? !1 : void 0;
-      return h ? "" : f(d, e);
-    }
-    if (d instanceof Date && !(e instanceof Date) || !(d instanceof Date) && e instanceof Date || Array.isArray(d) && !Array.isArray(e) || !Array.isArray(d) && Array.isArray(e)) {
-      return f(d, e);
-    }
-    if (V(d) && V(e) || !V(d) && V(e) || V(d) && !V(e)) {
-      return d != e ? f(d, e) : "";
-    }
-    if (d.constructor && !e.constructor) {
-      return f(d.constructor.name, e);
-    }
-    if (!d.constructor && e.constructor) {
-      return f(d, e.constructor.name);
-    }
-    if (d.constructor && e.constructor) {
-      if (d.constructor.name != e.constructor.name) {
-        return f(d.constructor.name, e.constructor.name);
-      }
-      h = d.valueOf();
-      var m = e.valueOf();
-      if (V(h) && V(m) && h != m) {
-        return f(h, m);
-      }
-    }
-    if (Array.isArray(d) && Array.isArray(e)) {
-      var n;
-      h = d.map(function(q, u) {
-        n = u;
-        (q = c(q, e[u])) && (q = g("[" + u + "]") + "\n" + q);
-        return q;
-      }).filter(Boolean);
-      m = e.slice(n + 1).map(function(q, u) {
-        return g("[" + (n + u + 1) + "]") + "\n" + f(void 0, q);
-      });
-      return [].concat(l.f(h), l.f(m)).join("\n");
-    }
-    if ("object" == typeof d && "object" == typeof e) {
-      var p = [], r = [], t = [];
-      Object.keys(d).forEach(function(q) {
-        q in e ? t.push(q) : r.push(q);
-      });
-      Object.keys(e).forEach(function(q) {
-        q in d || p.push(q);
-      });
-      h = r.map(function(q) {
-        return f("" + q + (": " + rb(d[q])));
-      });
-      m = p.map(function(q) {
-        return f(void 0, q + ": " + rb(e[q]));
-      });
-      var v = t.map(function(q) {
-        k++;
-        var u = c(d[q], e[q]), B = "";
-        u && (B += g(Array.isArray(d[q]) && Array.isArray(e[q]) ? q + ".Array" : q), B += "\n" + u);
-        k--;
-        return B;
-      }).filter(Boolean);
-      return [].concat(l.f(h), l.f(m), l.f(v)).join("\n");
-    }
-    console.error("Could not compare two values: %s %s. Please file a bug with differently.", d, e);
-  }
-  function g(d) {
-    var e = " ".repeat(2 * k);
-    return pb("%s%s", e, d);
-  }
-  function f(d, e) {
-    var h = " ".repeat(2 * k);
-    e = void 0 !== e ? N("+ " + rb(e), "green") : null;
-    d = void 0 !== d ? N("- " + rb(d), "red") : null;
-    var m = [];
-    d && m.push(pb("%s%s", h, d));
-    e && m.push(pb("%s%s", h, e));
-    return m.join("\n");
-  }
-  var k = 0;
-  return c(a, b);
-}
-function V(a) {
-  return null === a ? !0 : "string number boolean symbol null undefined".split(" ").includes(typeof a);
-}
-function rb(a) {
-  return Array.isArray(a) ? "Array[" + a.toString() + "]" : a && a.toString ? a.toString() : "" + a;
-}
-;var sb = child_process.fork;
-function tb(a, b) {
-  var c = Error().stack;
-  a = void 0 === a ? 0 : a;
-  b = void 0 === b ? !1 : b;
-  if (0 === a && !b) {
-    return c;
-  }
-  c = c.split("\n", b ? a + 1 : void 0);
-  return b ? c[c.length - 1] : c.slice(a).join("\n");
-}
-;var ub = /\s+at.*(?:\(|\s)(.*)\)?/, vb = /^(?:(?:(?:node|(?:internal\/[\w/]*|.*node_modules\/(?:IGNORED_MODULES)\/.*)?\w+)\.js:\d+:\d+)|native)/, wb = Xa();
-function xb(a) {
-  var b = {}, c = void 0 === b.pretty ? !1 : b.pretty;
-  b = (void 0 === b.ignoredModules ? ["pirates"] : b.ignoredModules).join("|");
-  var g = new RegExp(vb.source.replace("IGNORED_MODULES", b));
-  return a.replace(/\\/g, "/").split("\n").filter(function(f) {
-    f = f.match(ub);
-    if (null === f || !f[1]) {
-      return !0;
-    }
-    f = f[1];
-    return f.includes(".app/Contents/Resources/electron.asar") || f.includes(".app/Contents/Resources/default_app.asar") ? !1 : !g.test(f);
-  }).filter(function(f) {
-    return f.trim();
-  }).map(function(f) {
-    return c ? f.replace(ub, function(k, d) {
-      return k.replace(d, d.replace(wb, "~"));
-    }) : f;
-  }).join("\n");
-}
-;function yb(a, b, c) {
-  c = void 0 === c ? !1 : c;
-  return function(g) {
-    var f = arguments.callee.caller;
-    var k = tb(2, !0);
-    var d = g instanceof Error, e = d ? g.message : g;
-    f = ["Error: " + e].concat(l.f(null !== f && a === f || c ? [b] : [k, b])).join("\n");
-    f = xb(f);
-    return Object.assign(d ? g : Error(), {message:e, stack:f});
-  };
-}
-;function zb(a) {
-  var b = arguments.callee.caller;
-  var c = tb(2 + ((void 0 === a ? 0 : a) ? 1 : 0));
-  return yb(b, c, a);
-}
-;function Ab(a, b) {
-  b.once("error", function(c) {
-    a.emit("error", c);
-  });
-  return b;
-}
-;var Bb = ["", ""];
-Bb.raw = Bb.slice();
-var Cb = ["", ""];
-Cb.raw = Cb.slice();
-function X(a) {
-  var b = a || {}, c = Object.assign({}, b), g = void 0 === b.binary ? !1 : b.binary, f = void 0 === b.rs ? null : b.rs;
-  b = (delete c.binary, delete c.rs, c);
-  a = a || {};
-  var k = void 0 === a.C ? zb(!0) : a.C, d = a.proxyError;
-  var e = U.call(this, b) || this;
-  e.b = [];
-  e.J = new Promise(function(h, m) {
-    e.on("finish", function() {
-      var n;
-      g ? n = Buffer.concat(e.b) : n = e.b.join("");
-      h(n);
-      e.b = [];
-    });
-    e.once("error", function(n) {
-      if (-1 == n.stack.indexOf("\n")) {
+class Na extends Ca {
+  constructor(a) {
+    var b = a || {}, c = Object.assign({}, b);
+    const g = void 0 === b.binary ? !1 : b.binary, f = void 0 === b.rs ? null : b.rs;
+    b = (delete c.binary, delete c.rs, c);
+    const {j:h = R(!0), proxyError:e} = a || {}, d = (k, l) => h(l);
+    super(b);
+    this.h = [];
+    this.i = new Promise((k, l) => {
+      this.on("finish", () => {
+        let n;
+        g ? n = Buffer.concat(this.h) : n = this.h.join("");
         k(n);
-      } else {
-        var p = xb(n.stack);
-        n.stack = p;
-        d && k(n);
-      }
-      m(n);
-    });
-    f && Ab(e, f).pipe(e);
-  });
-  return e;
-}
-l.S(X, U);
-X.prototype._write = function(a, b, c) {
-  this.b.push(a);
-  c();
-};
-l.global.Object.defineProperties(X.prototype, {promise:{configurable:!0, enumerable:!0, get:function() {
-  return this.J;
-}}});
-function Db(a) {
-  var b = void 0 === b ? {} : b;
-  var c, g, f;
-  return l.h(function(k) {
-    if (1 == k.b) {
-      return c = new X(Object.assign({}, {rs:a}, b, {C:zb(!0)})), g = c.promise, J(k, g, 2);
-    }
-    f = k.c;
-    return k.return(f);
-  });
-}
-;function Eb(a) {
-  var b, c, g, f, k, d;
-  return l.h(function(e) {
-    if (1 == e.b) {
-      return b = l, c = b.w, J(e, Promise.all([new Promise(function(h, m) {
-        a.on("error", m).on("exit", function(n) {
-          h(n);
-        });
-      }), a.stdout ? Db(a.stdout) : void 0, a.stderr ? Db(a.stderr) : void 0]), 2);
-    }
-    g = c.call(b, e.c);
-    f = g.next().value;
-    k = g.next().value;
-    d = g.next().value;
-    return e.return({code:f, stdout:k, stderr:d});
-  });
-}
-;function Fb(a, b, c, g) {
-  c = void 0 === c ? [] : c;
-  if (g = void 0 === g ? null : g) {
-    a.on("data", function(e) {
-      return g.write(e);
-    });
-  }
-  c = l.w(c);
-  var f = c.next().value, k = l.K(c);
-  if (f) {
-    var d = function(e) {
-      var h = l.w(f), m = h.next().value;
-      h = h.next().value;
-      m.test(e) && (e = h + "\n", g && g.write(e), b.write(e), e = l.w(k), f = e.next().value, k = l.K(e), f || a.removeListener("data", d));
-    };
-    a.on("data", d);
-  }
-}
-;function Gb() {
-}
-function Hb(a, b) {
-  var c = new Gb;
-  a = Ib(a.split(""));
-  b = Ib(b.split(""));
-  var g = b.length, f = a.length, k = 1, d = g + f, e = [{g:-1, s:[]}], h = Jb(c, e[0], b, a, 0);
-  if (e[0].g + 1 >= g && h + 1 >= f) {
-    return [{value:c.join(b), count:b.length}];
-  }
-  for (; k <= d;) {
-    a: {
-      for (h = -1 * k; h <= k; h += 2) {
-        var m = e[h - 1];
-        var n = e[h + 1], p = (n ? n.g : 0) - h;
-        m && (e[h - 1] = void 0);
-        var r = m && m.g + 1 < g;
-        p = n && 0 <= p && p < f;
-        if (r || p) {
-          !r || p && m.g < n.g ? (m = {g:n.g, s:n.s.slice(0)}, Kb(m.s, void 0, !0)) : (m.g++, Kb(m.s, !0, void 0));
-          p = Jb(c, m, b, a, h);
-          if (m.g + 1 >= g && p + 1 >= f) {
-            h = Lb(c, m.s, b, a);
-            break a;
-          }
-          e[h] = m;
+        this.h = [];
+      });
+      this.once("error", n => {
+        if (-1 == n.stack.indexOf("\n")) {
+          d`${n}`;
         } else {
-          e[h] = void 0;
+          const m = Ka(n.stack);
+          n.stack = m;
+          e && d`${n}`;
         }
+        l(n);
+      });
+      f && Ma(this, f).pipe(this);
+    });
+  }
+  _write(a, b, c) {
+    this.h.push(a);
+    c();
+  }
+  get promise() {
+    return this.i;
+  }
+}
+const Oa = async a => {
+  var b = void 0 === b ? {} : b;
+  ({promise:a} = new Na(Object.assign({}, {rs:a}, b, {j:R(!0)})));
+  return await a;
+};
+const Pa = async(a, b) => {
+  await b(a);
+}, Qa = async(a, b) => {
+  if (b instanceof RegExp) {
+    if (!b.test(a)) {
+      throw Error(`${a} does not match regular expression ${b}`);
+    }
+  } else {
+    if ("function" == typeof b) {
+      await Pa(a, b);
+    } else {
+      if (b && a != b) {
+        const c = L(`${a}`, `${b}`);
+        throw Error(`${c}\n${`${a} != ${b}`}`);
       }
-      k++;
-      h = void 0;
-    }
-    if (h) {
-      return h;
     }
   }
-}
-function Kb(a, b, c) {
-  var g = a[a.length - 1];
-  g && g.m === b && g.v === c ? a[a.length - 1] = {count:g.count + 1, m:b, v:c} : a.push({count:1, m:b, v:c});
-}
-function Jb(a, b, c, g, f) {
-  var k = c.length, d = g.length, e = b.g;
-  f = e - f;
-  for (var h = 0; e + 1 < k && f + 1 < d && a.equals(c[e + 1], g[f + 1]);) {
-    e++, f++, h++;
+};
+async function Ra(a) {
+  if (!a) {
+    throw Error("Config expected.");
   }
-  h && b.s.push({count:h});
-  b.g = e;
+  const b = R(!0);
+  var c = Object.assign({}, a);
+  const g = a.fn;
+  var f = void 0 === a.args ? [] : a.args;
+  const h = a.context;
+  a = a.error;
+  c = (delete c.fn, delete c.args, delete c.context, delete c.error, c);
+  if ("function" != typeof g) {
+    throw Error("Function expected.");
+  }
+  f = Array.isArray(f) ? f : [f];
+  try {
+    return await Sa(g, h, f, a, c);
+  } catch (e) {
+    throw b(e);
+  }
+}
+const Sa = async(a, b, c, g, f) => {
+  const h = Error();
+  try {
+    throw b ? await a.call(b, ...c) : await a(...c), h;
+  } catch (e) {
+    if (e === h) {
+      throw Error(`Function ${a.name && "fn" !== a.name ? `${a.name} ` : ""}should have thrown.`);
+    }
+    if (g && g !== e) {
+      throw Error(`${e} is not strict equal to ${g}.`);
+    }
+    await Object.keys(f).reduce(async(d, k) => {
+      await d;
+      await Qa(e[k], f[k]);
+    }, {});
+    return e;
+  }
+};
+const S = (...a) => {
+  let b = -1;
+  return "%s%s".replace(/%s/g, () => {
+    b++;
+    return a[b];
+  });
+};
+function Ta(a, b) {
+  let c = 0;
+  const g = (e, d = void 0) => {
+    const k = " ".repeat(2 * c);
+    d = void 0 !== d ? J("+ " + T(d), "green") : null;
+    e = void 0 !== e ? J("- " + T(e), "red") : null;
+    const l = [];
+    e && l.push(S(k, e));
+    d && l.push(S(k, d));
+    return l.join("\n");
+  }, f = e => {
+    const d = " ".repeat(2 * c);
+    return S(d, e);
+  }, h = (e, d) => {
+    if (e instanceof Date && d instanceof Date) {
+      var k = e.getTime() != d.getTime() ? !1 : void 0;
+      return k ? "" : g(e, d);
+    }
+    if (e instanceof Date && !(d instanceof Date) || !(e instanceof Date) && d instanceof Date || Array.isArray(e) && !Array.isArray(d) || !Array.isArray(e) && Array.isArray(d)) {
+      return g(e, d);
+    }
+    if (U(e) && U(d) || !U(e) && U(d) || U(e) && !U(d)) {
+      return e != d ? g(e, d) : "";
+    }
+    if (e.constructor && !d.constructor) {
+      return g(e.constructor.name, d);
+    }
+    if (!e.constructor && d.constructor) {
+      return g(e, d.constructor.name);
+    }
+    if (e.constructor && d.constructor) {
+      if (e.constructor.name != d.constructor.name) {
+        return g(e.constructor.name, d.constructor.name);
+      }
+      k = e.valueOf();
+      var l = d.valueOf();
+      if (U(k) && U(l) && k != l) {
+        return g(k, l);
+      }
+    }
+    if (Array.isArray(e) && Array.isArray(d)) {
+      let n;
+      k = e.map((m, q) => {
+        n = q;
+        (m = h(m, d[q])) && (m = `${f(`[${q}]`)}\n${m}`);
+        return m;
+      }).filter(Boolean);
+      l = d.slice(n + 1).map((m, q) => `${f(`[${n + q + 1}]`)}\n${g(void 0, m)}`);
+      return [...k, ...l].join("\n");
+    }
+    if ("object" == typeof e && "object" == typeof d) {
+      const n = [], m = [], q = [];
+      Object.keys(e).forEach(p => {
+        p in d ? q.push(p) : m.push(p);
+      });
+      Object.keys(d).forEach(p => {
+        p in e || n.push(p);
+      });
+      k = m.map(p => g(`${p}${`: ${T(e[p])}`}`));
+      l = n.map(p => g(void 0, `${p}: ${T(d[p])}`));
+      const r = q.map(p => {
+        c++;
+        const t = h(e[p], d[p]);
+        let u = "";
+        t && (u += f(Array.isArray(e[p]) && Array.isArray(d[p]) ? `${p}.Array` : p), u += "\n" + t);
+        c--;
+        return u;
+      }).filter(Boolean);
+      return [...k, ...l, ...r].join("\n");
+    }
+    console.error("Could not compare two values: %s %s. Please file a bug with differently.", e, d);
+  };
+  return h(a, b);
+}
+const U = a => null === a ? !0 : "string number boolean symbol null undefined".split(" ").includes(typeof a), T = a => Array.isArray(a) ? `Array[${a.toString()}]` : a && a.toString ? a.toString() : `${a}`;
+const {fork:Ua} = child_process;
+const Va = (a, b = 0, c = !1) => {
+  if (0 === b && !c) {
+    return a;
+  }
+  a = a.split("\n", c ? b + 1 : void 0);
+  return c ? a[a.length - 1] : a.slice(b).join("\n");
+}, Wa = (a, b = !1) => Va(a, 2 + (b ? 1 : 0)), Xa = a => {
+  ({callee:{caller:a}} = a);
+  return a;
+};
+const Ya = /\s+at.*(?:\(|\s)(.*)\)?/, Za = /^(?:(?:(?:node|(?:internal\/[\w/]*|.*node_modules\/(?:IGNORED_MODULES)\/.*)?\w+)\.js:\d+:\d+)|native)/, $a = Ga(), ab = a => {
+  const {pretty:b = !1, ignoredModules:c = ["pirates"]} = {}, g = c.join("|"), f = new RegExp(Za.source.replace("IGNORED_MODULES", g));
+  return a.replace(/\\/g, "/").split("\n").filter(h => {
+    h = h.match(Ya);
+    if (null === h || !h[1]) {
+      return !0;
+    }
+    h = h[1];
+    return h.includes(".app/Contents/Resources/electron.asar") || h.includes(".app/Contents/Resources/default_app.asar") ? !1 : !f.test(h);
+  }).filter(h => h.trim()).map(h => b ? h.replace(Ya, (e, d) => e.replace(d, d.replace($a, "~"))) : h).join("\n");
+};
+function bb(a, b, c = !1) {
+  return function(g) {
+    var f = Xa(arguments), {stack:h} = Error();
+    const e = Va(h, 2, !0), d = (h = g instanceof Error) ? g.message : g;
+    f = [`Error: ${d}`, ...null !== f && a === f || c ? [b] : [e, b]].join("\n");
+    f = ab(f);
+    return Object.assign(h ? g : Error(), {message:d, stack:f});
+  };
+}
+;function cb(a) {
+  var {stack:b} = Error();
+  const c = Xa(arguments);
+  b = Wa(b, a);
+  return bb(c, b, a);
+}
+;const db = (a, b) => {
+  b.once("error", c => {
+    a.emit("error", c);
+  });
+  return b;
+};
+class V extends Ca {
+  constructor(a) {
+    var b = a || {}, c = Object.assign({}, b);
+    const g = void 0 === b.binary ? !1 : b.binary, f = void 0 === b.rs ? null : b.rs;
+    b = (delete c.binary, delete c.rs, c);
+    const {j:h = cb(!0), proxyError:e} = a || {}, d = (k, l) => h(l);
+    super(b);
+    this.h = [];
+    this.i = new Promise((k, l) => {
+      this.on("finish", () => {
+        let n;
+        g ? n = Buffer.concat(this.h) : n = this.h.join("");
+        k(n);
+        this.h = [];
+      });
+      this.once("error", n => {
+        if (-1 == n.stack.indexOf("\n")) {
+          d`${n}`;
+        } else {
+          const m = ab(n.stack);
+          n.stack = m;
+          e && d`${n}`;
+        }
+        l(n);
+      });
+      f && db(this, f).pipe(this);
+    });
+  }
+  _write(a, b, c) {
+    this.h.push(a);
+    c();
+  }
+  get promise() {
+    return this.i;
+  }
+}
+const eb = async a => {
+  var b = void 0 === b ? {} : b;
+  ({promise:a} = new V(Object.assign({}, {rs:a}, b, {j:cb(!0)})));
+  return await a;
+};
+const fb = async a => {
+  const [b, c, g] = await Promise.all([new Promise((f, h) => {
+    a.on("error", h).on("exit", e => {
+      f(e);
+    });
+  }), a.stdout ? eb(a.stdout) : void 0, a.stderr ? eb(a.stderr) : void 0]);
+  return {code:b, stdout:c, stderr:g};
+};
+const gb = (a, b, c = [], g = null) => {
+  if (g) {
+    a.on("data", d => g.write(d));
+  }
+  let [f, ...h] = c;
+  if (f) {
+    var e = d => {
+      const [k, l] = f;
+      k.test(d) && (d = `${l}\n`, g && g.write(d), b.write(d), [f, ...h] = h, f || a.removeListener("data", e));
+    };
+    a.on("data", e);
+  }
+};
+function hb(a, b, c) {
+  let g = a[a.length - 1];
+  g && g.c === b && g.g === c ? a[a.length - 1] = {count:g.count + 1, c:b, g:c} : a.push({count:1, c:b, g:c});
+}
+function ib(a, b, c, g, f) {
+  let h = c.length, e = g.length, d = b.b;
+  f = d - f;
+  let k = 0;
+  for (; d + 1 < h && f + 1 < e && a.equals(c[d + 1], g[f + 1]);) {
+    d++, f++, k++;
+  }
+  k && b.f.push({count:k});
+  b.b = d;
   return f;
 }
-Gb.prototype.equals = function(a, b) {
-  return a === b;
-};
-function Ib(a) {
-  for (var b = [], c = 0; c < a.length; c++) {
+function jb(a) {
+  let b = [];
+  for (let c = 0; c < a.length; c++) {
     a[c] && b.push(a[c]);
   }
   return b;
 }
-Gb.prototype.join = function(a) {
-  return a.join("");
-};
-function Lb(a, b, c, g) {
-  for (var f = 0, k = b.length, d = 0, e = 0; f < k; f++) {
-    var h = b[f];
-    if (h.v) {
-      h.value = a.join(g.slice(e, e + h.count)), e += h.count, f && b[f - 1].m && (h = b[f - 1], b[f - 1] = b[f], b[f] = h);
-    } else {
-      if (h.m) {
-        h.value = a.join(c.slice(d, d + h.count));
-      } else {
-        var m = c.slice(d, d + h.count);
-        m = m.map(function(n, p) {
-          p = g[e + p];
-          return p.length > n.length ? p : n;
-        });
-        h.value = a.join(m);
+function kb(a, b) {
+  var c = new lb;
+  a = jb(a.split(""));
+  b = jb(b.split(""));
+  let g = b.length, f = a.length, h = 1, e = g + f, d = [{b:-1, f:[]}];
+  var k = ib(c, d[0], b, a, 0);
+  if (d[0].b + 1 >= g && k + 1 >= f) {
+    return [{value:c.join(b), count:b.length}];
+  }
+  for (; h <= e;) {
+    a: {
+      for (k = -1 * h; k <= h; k += 2) {
+        var l = d[k - 1];
+        let m = d[k + 1];
+        var n = (m ? m.b : 0) - k;
+        l && (d[k - 1] = void 0);
+        let q = l && l.b + 1 < g;
+        n = m && 0 <= n && n < f;
+        if (q || n) {
+          !q || n && l.b < m.b ? (l = {b:m.b, f:m.f.slice(0)}, hb(l.f, void 0, !0)) : (l.b++, hb(l.f, !0, void 0));
+          n = ib(c, l, b, a, k);
+          if (l.b + 1 >= g && n + 1 >= f) {
+            k = mb(c, l.f, b, a);
+            break a;
+          }
+          d[k] = l;
+        } else {
+          d[k] = void 0;
+        }
       }
-      d += h.count;
-      h.m || (e += h.count);
+      h++;
+      k = void 0;
+    }
+    if (k) {
+      return k;
     }
   }
-  c = b[k - 1];
-  1 < k && "string" === typeof c.value && (c.m || c.v) && a.equals("", c.value) && (b[k - 2].value += c.value, b.pop());
+}
+class lb {
+  equals(a, b) {
+    return a === b;
+  }
+  join(a) {
+    return a.join("");
+  }
+}
+function mb(a, b, c, g) {
+  let f = 0, h = b.length, e = 0, d = 0;
+  for (; f < h; f++) {
+    var k = b[f];
+    if (k.g) {
+      k.value = a.join(g.slice(d, d + k.count)), d += k.count, f && b[f - 1].c && (k = b[f - 1], b[f - 1] = b[f], b[f] = k);
+    } else {
+      if (k.c) {
+        k.value = a.join(c.slice(e, e + k.count));
+      } else {
+        let l = c.slice(e, e + k.count);
+        l = l.map(function(n, m) {
+          m = g[d + m];
+          return m.length > n.length ? m : n;
+        });
+        k.value = a.join(l);
+      }
+      e += k.count;
+      k.c || (d += k.count);
+    }
+  }
+  c = b[h - 1];
+  1 < h && "string" === typeof c.value && (c.c || c.g) && a.equals("", c.value) && (b[h - 2].value += c.value, b.pop());
   return b;
 }
-;var Mb = {black:30, red:31, green:32, yellow:33, blue:34, magenta:35, cyan:36, white:37, grey:90}, Nb = {black:40, red:41, green:42, yellow:43, blue:44, magenta:45, cyan:46, white:47};
-function Y(a, b) {
-  return (b = Mb[b]) ? "\u001b[" + b + "m" + a + "\u001b[0m" : a;
+;const nb = {black:30, red:31, green:32, yellow:33, blue:34, magenta:35, cyan:36, white:37, grey:90}, ob = {black:40, red:41, green:42, yellow:43, blue:44, magenta:45, cyan:46, white:47};
+function W(a, b) {
+  return (b = nb[b]) ? `\x1b[${b}m${a}\x1b[0m` : a;
 }
-function Ob(a) {
-  return (a = Nb[a]) ? "\u001b[" + a + "m \u001b[0m" : " ";
+function pb(a) {
+  return (a = ob[a]) ? `\x1b[${a}m${" "}\x1b[0m` : " ";
 }
-function Pb(a, b) {
-  return Hb(a, b).map(function(c) {
-    var g = c.v, f = c.value, k = f.split(" ");
-    return c.m ? k.map(function(d) {
-      return d.replace(/\n$/mg, "\u23ce\n");
-    }).map(function(d) {
-      return Y(d, "green");
-    }).join(Ob("green")) : g ? k.map(function(d) {
-      return d.replace(/\n$/mg, "\u23ce\n");
-    }).map(function(d) {
-      return Y(d, "red");
-    }).join(Ob("red")) : Y(f, "grey");
+function qb(a, b) {
+  return kb(a, b).map(({c, g, value:f}) => {
+    const h = f.split(" ");
+    return c ? h.map(e => e.replace(/\n$/mg, "\u23ce\n")).map(e => W(e, "green")).join(pb("green")) : g ? h.map(e => e.replace(/\n$/mg, "\u23ce\n")).map(e => W(e, "red")).join(pb("red")) : W(f, "grey");
   }).join("");
 }
-;function Qb(a, b) {
-  for (var c = [], g = 1; g < arguments.length; ++g) {
-    c[g - 1] = arguments[g];
-  }
-  var f = -1;
-  return a.replace(/%s/g, function() {
-    f++;
-    return c[f];
+;const X = (...a) => {
+  let b = -1;
+  return "%s%s".replace(/%s/g, () => {
+    b++;
+    return a[b];
   });
-}
-function Rb(a, b) {
-  function c(d, e) {
-    if (d instanceof Date && e instanceof Date) {
-      var h = d.getTime() != e.getTime() ? !1 : void 0;
-      return h ? "" : f(d, e);
+};
+function rb(a, b) {
+  let c = 0;
+  const g = (e, d = void 0) => {
+    const k = " ".repeat(2 * c);
+    d = void 0 !== d ? W("+ " + Y(d), "green") : null;
+    e = void 0 !== e ? W("- " + Y(e), "red") : null;
+    const l = [];
+    e && l.push(X(k, e));
+    d && l.push(X(k, d));
+    return l.join("\n");
+  }, f = e => {
+    const d = " ".repeat(2 * c);
+    return X(d, e);
+  }, h = (e, d) => {
+    if (e instanceof Date && d instanceof Date) {
+      var k = e.getTime() != d.getTime() ? !1 : void 0;
+      return k ? "" : g(e, d);
     }
-    if (d instanceof Date && !(e instanceof Date) || !(d instanceof Date) && e instanceof Date || Array.isArray(d) && !Array.isArray(e) || !Array.isArray(d) && Array.isArray(e)) {
-      return f(d, e);
+    if (e instanceof Date && !(d instanceof Date) || !(e instanceof Date) && d instanceof Date || Array.isArray(e) && !Array.isArray(d) || !Array.isArray(e) && Array.isArray(d)) {
+      return g(e, d);
     }
-    if (Z(d) && Z(e) || !Z(d) && Z(e) || Z(d) && !Z(e)) {
-      return d != e ? f(d, e) : "";
+    if (Z(e) && Z(d) || !Z(e) && Z(d) || Z(e) && !Z(d)) {
+      return e != d ? g(e, d) : "";
     }
-    if (d.constructor && !e.constructor) {
-      return f(d.constructor.name, e);
+    if (e.constructor && !d.constructor) {
+      return g(e.constructor.name, d);
     }
-    if (!d.constructor && e.constructor) {
-      return f(d, e.constructor.name);
+    if (!e.constructor && d.constructor) {
+      return g(e, d.constructor.name);
     }
-    if (d.constructor && e.constructor) {
-      if (d.constructor.name != e.constructor.name) {
-        return f(d.constructor.name, e.constructor.name);
+    if (e.constructor && d.constructor) {
+      if (e.constructor.name != d.constructor.name) {
+        return g(e.constructor.name, d.constructor.name);
       }
-      h = d.valueOf();
-      var m = e.valueOf();
-      if (Z(h) && Z(m) && h != m) {
-        return f(h, m);
+      k = e.valueOf();
+      var l = d.valueOf();
+      if (Z(k) && Z(l) && k != l) {
+        return g(k, l);
       }
     }
-    if (Array.isArray(d) && Array.isArray(e)) {
-      var n;
-      h = d.map(function(q, u) {
-        n = u;
-        (q = c(q, e[u])) && (q = g("[" + u + "]") + "\n" + q);
-        return q;
+    if (Array.isArray(e) && Array.isArray(d)) {
+      let n;
+      k = e.map((m, q) => {
+        n = q;
+        (m = h(m, d[q])) && (m = `${f(`[${q}]`)}\n${m}`);
+        return m;
       }).filter(Boolean);
-      m = e.slice(n + 1).map(function(q, u) {
-        return g("[" + (n + u + 1) + "]") + "\n" + f(void 0, q);
-      });
-      return [].concat(l.f(h), l.f(m)).join("\n");
+      l = d.slice(n + 1).map((m, q) => `${f(`[${n + q + 1}]`)}\n${g(void 0, m)}`);
+      return [...k, ...l].join("\n");
     }
-    if ("object" == typeof d && "object" == typeof e) {
-      var p = [], r = [], t = [];
-      Object.keys(d).forEach(function(q) {
-        q in e ? t.push(q) : r.push(q);
+    if ("object" == typeof e && "object" == typeof d) {
+      const n = [], m = [], q = [];
+      Object.keys(e).forEach(p => {
+        p in d ? q.push(p) : m.push(p);
       });
-      Object.keys(e).forEach(function(q) {
-        q in d || p.push(q);
+      Object.keys(d).forEach(p => {
+        p in e || n.push(p);
       });
-      h = r.map(function(q) {
-        return f("" + q + (": " + Sb(d[q])));
-      });
-      m = p.map(function(q) {
-        return f(void 0, q + ": " + Sb(e[q]));
-      });
-      var v = t.map(function(q) {
-        k++;
-        var u = c(d[q], e[q]), B = "";
-        u && (B += g(Array.isArray(d[q]) && Array.isArray(e[q]) ? q + ".Array" : q), B += "\n" + u);
-        k--;
-        return B;
+      k = m.map(p => g(`${p}${`: ${Y(e[p])}`}`));
+      l = n.map(p => g(void 0, `${p}: ${Y(d[p])}`));
+      const r = q.map(p => {
+        c++;
+        const t = h(e[p], d[p]);
+        let u = "";
+        t && (u += f(Array.isArray(e[p]) && Array.isArray(d[p]) ? `${p}.Array` : p), u += "\n" + t);
+        c--;
+        return u;
       }).filter(Boolean);
-      return [].concat(l.f(h), l.f(m), l.f(v)).join("\n");
+      return [...k, ...l, ...r].join("\n");
     }
-    console.error("Could not compare two values: %s %s. Please file a bug with differently.", d, e);
-  }
-  function g(d) {
-    var e = " ".repeat(2 * k);
-    return Qb("%s%s", e, d);
-  }
-  function f(d, e) {
-    var h = " ".repeat(2 * k);
-    e = void 0 !== e ? Y("+ " + Sb(e), "green") : null;
-    d = void 0 !== d ? Y("- " + Sb(d), "red") : null;
-    var m = [];
-    d && m.push(Qb("%s%s", h, d));
-    e && m.push(Qb("%s%s", h, e));
-    return m.join("\n");
-  }
-  var k = 0;
-  return c(a, b);
+    console.error("Could not compare two values: %s %s. Please file a bug with differently.", e, d);
+  };
+  return h(a, b);
 }
-function Z(a) {
-  return null === a ? !0 : "string number boolean symbol null undefined".split(" ").includes(typeof a);
-}
-function Sb(a) {
-  return Array.isArray(a) ? "Array[" + a.toString() + "]" : a && a.toString ? a.toString() : "" + a;
-}
-;function Tb(a, b, c, g) {
+const Z = a => null === a ? !0 : "string number boolean symbol null undefined".split(" ").includes(typeof a), Y = a => Array.isArray(a) ? `Array[${a.toString()}]` : a && a.toString ? a.toString() : `${a}`;
+const sb = async(a, b, c, g) => {
   b = void 0 === b ? [] : b;
   c = void 0 === c ? [] : c;
   g = void 0 === g ? {} : g;
-  var f, k, d, e, h, m, n, p, r, t;
-  return l.h(function(v) {
-    switch(v.b) {
-      case 1:
-        f = {stdio:"pipe", execArgv:[]};
-        if ("string" == typeof a) {
-          return v.return({U:a, args:b, options:f});
-        }
-        k = a;
-        d = k.module;
-        e = k.getArgs;
-        h = k.options;
-        m = k.getOptions;
-        if (!e) {
-          n = b;
-          v.j(2);
-          break;
-        }
-        return J(v, e.call.apply(e, [g, b].concat(l.f(c))), 3);
-      case 3:
-        n = v.c;
-      case 2:
-        p = n;
-        r = f;
-        if (h) {
-          r = Object.assign({}, f, h);
-          v.j(4);
-          break;
-        }
-        if (!m) {
-          v.j(4);
-          break;
-        }
-        return J(v, m.call.apply(m, [g].concat(l.f(c))), 6);
-      case 6:
-        t = v.c, r = Object.assign({}, f, t);
-      case 4:
-        return v.return({U:d, args:p, options:r});
-    }
-  });
-}
-function Ub(a, b, c) {
+  const f = {stdio:"pipe", execArgv:[]};
+  if ("string" == typeof a) {
+    return {l:a, args:b, options:f};
+  }
+  const {module:h, getArgs:e, options:d, getOptions:k} = a;
+  a = e ? await e.call(g, b, ...c) : b;
+  b = f;
+  d ? b = Object.assign({}, f, d) : k && (c = await k.call(g, ...c), b = Object.assign({}, f, c));
+  return {l:h, args:a, options:b};
+}, tb = (a, b, c) => {
   try {
     if ("string" == typeof b) {
       try {
-        Fa(a, b);
-      } catch (d) {
-        var g = Pb(b, a);
-        console.log(g);
-        throw d;
+        la(a, b);
+      } catch (f) {
+        const h = qb(b, a);
+        console.log(h);
+        throw f;
       }
     } else {
       if (b) {
-        var f = JSON.parse(a);
+        var g = JSON.parse(a);
         try {
-          Da(f, b, void 0);
-        } catch (d) {
-          var k = Rb(b, f);
-          d.message = [d.message, k].filter(Boolean).join("\n");
-          throw d;
+          ja(g, b, void 0);
+        } catch (f) {
+          const h = rb(b, g);
+          f.message = [f.message, h].filter(Boolean).join("\n");
+          throw f;
         }
       }
     }
-  } catch (d) {
-    throw c && (d.property = c), d;
+  } catch (f) {
+    throw c && (f.property = c), f;
   }
-}
-;function Vb(a) {
+};
+function ub(a) {
   var b = ["q", "a"];
-  var c = void 0 === c ? !1 : c;
-  var g = [];
-  a.replace(/(['"])?([\s\S]+?)\1(\s+|$)/g, function(f, k) {
-    for (var d = [], e = 1; e < arguments.length; ++e) {
-      d[e - 1] = arguments[e];
-    }
-    e = d[d.length - 2];
-    e = c ? {position:e} : {};
-    d = d.slice(0, d.length - 2).reduce(function(h, m, n) {
-      n = b[n];
-      if (!n || void 0 === m) {
+  const c = [];
+  a.replace(/(['"])?([\s\S]+?)\1(\s+|$)/g, (g, ...f) => {
+    g = f.slice(0, f.length - 2).reduce((h, e, d) => {
+      d = b[d];
+      if (!d || void 0 === e) {
         return h;
       }
-      h[n] = m;
+      h[d] = e;
       return h;
-    }, e);
-    g.push(d);
+    }, {});
+    c.push(g);
   });
-  return g;
+  return c;
 }
-;function Wb(a) {
-  return Vb(a).map(function(b) {
-    return b.a;
-  });
-}
-;function Xb(a) {
-  var b, c, g, f, k, d, e, h, m, n, p, r, t, v, q, u, B, C, y, z, F, A, w, E, K, L, H, I, D, $a, P, ab, bb;
-  return l.h(function(G) {
-    switch(G.b) {
-      case 1:
-        return b = a, c = b.forkConfig, g = b.input, f = void 0 === b.props ? {} : b.props, k = void 0 === b.contexts ? [] : b.contexts, d = g ? Wb(g) : [], J(G, Tb(c, d, k, Object.assign({}, f, {input:g})), 2);
-      case 2:
-        e = G.c;
-        h = e.U;
-        m = e.args;
-        n = e.options;
-        if (!h) {
-          throw Error("Please specify a module to fork");
-        }
-        var O = sb(h, m, n), Q = Eb(O);
-        O.promise = Q;
-        O.spawnCommand = O.spawnargs.join(" ");
-        p = O;
-        r = p.promise;
-        t = p.stdout;
-        v = p.stdin;
-        q = p.stderr;
-        u = c;
-        B = void 0 === u.includeAnswers ? !0 : u.includeAnswers;
-        C = u.log;
-        y = u.inputs;
-        z = u.stderrInputs;
-        F = void 0 === u.stripAnsi ? !0 : u.stripAnsi;
-        A = u.preprocess;
-        w = new Va;
-        E = new Va;
-        !0 === C ? (w.pipe(process.stdout), E.pipe(process.stderr)) : C && (C.stdout && w.pipe(C.stdout), C.stderr && E.pipe(C.stderr));
-        K = B && y;
-        L = B && z;
-        K && (H = new X({rs:w}));
-        L && (I = new X({rs:E}));
-        D = w;
-        $a = E;
-        Fb(t, v, y, D);
-        Fb(q, v, z, $a);
-        return J(G, r, 3);
-      case 3:
-        P = G.c;
-        if (!K) {
-          G.j(4);
-          break;
-        }
-        H.end();
-        return J(G, H.promise, 5);
-      case 5:
-        ab = G.c, Object.assign(P, {stdout:ab});
-      case 4:
-        if (!L) {
-          G.j(6);
-          break;
-        }
-        I.end();
-        return J(G, I.promise, 7);
-      case 7:
-        bb = G.c, Object.assign(P, {stderr:bb});
-      case 6:
-        O = P.code;
-        var R = P.stdout, S = P.stderr;
-        if ("object" == typeof A) {
-          var W = A.stdout;
-          Q = A.stderr;
-        } else {
-          "function" == typeof A && (W = Q = A);
-        }
-        R = R.replace(/\r?\n$/, "");
-        S = S.replace(/\r?\n$/, "");
-        R = F ? R.replace(/\033\[.*?m/g, "") : R;
-        S = F ? S.replace(/\033\[.*?m/g, "") : S;
-        W = W ? W(R) : R;
-        Q = Q ? Q(S) : S;
-        Ub(W, f.stdout, "stdout");
-        Ub(Q, f.stderr, "stderr");
-        if (f.code && O != f.code) {
-          throw G = Error("Fork exited with code " + O + " != " + f.code), G.pa = "code", G;
-        }
-        return G.return(P);
-    }
-  });
-}
-;function Yb(a) {
-  var b = a.input, c = a.error, g = a.expected, f = a.props, k = a.getThrowsConfig, d = a.getTransform, e = a.getResults, h = a.assertResults, m = a.mapActual, n = a.getReadable, p = a.forkConfig;
-  return function(r) {
-    for (var t = [], v = 0; v < arguments.length; ++v) {
-      t[v] = arguments[v];
-    }
-    var q, u, B, C, y, z, F, A;
-    return l.h(function(w) {
-      switch(w.b) {
-        case 1:
-          q = Object.assign({}, {input:b}, f);
-          if (c) {
-            if (!k) {
-              throw Error('No "getThrowsConfig" function is given.');
-            }
-            F = k.call.apply(k, [q].concat(l.f(t)));
-            return J(w, Zb(F, c), 19);
-          }
-          if (d) {
-            return $b(g), J(w, d.call.apply(d, [q].concat(l.f(t))), 17);
-          }
-          if (n) {
-            return $b(g), J(w, n.call.apply(n, [q].concat(l.f(t))), 15);
-          }
-          if (p) {
-            return f.inputs && (p.inputs = ac(f.inputs)), J(w, Xb({forkConfig:p, input:b, props:f, contexts:t}), 12);
-          }
-          if (!e) {
-            throw Error("Nothing was tested.");
-          }
-          return J(w, e.call.apply(e, [q].concat(l.f(t))), 11);
-        case 11:
-          u = w.c;
-          w.j(3);
-          break;
-        case 12:
-          B = w.c;
-          if (!e) {
-            C = B;
-            w.j(13);
-            break;
-          }
-          return J(w, e.call.apply(e, [q].concat(l.f(t))), 14);
-        case 14:
-          C = w.c;
-        case 13:
-          u = C;
-          w.j(3);
-          break;
-        case 15:
-          return y = w.c, J(w, kb(y), 16);
-        case 16:
-          u = w.c;
-          w.j(3);
-          break;
-        case 17:
-          return z = w.c, z.end(b), J(w, kb(z), 18);
-        case 18:
-          u = w.c;
-          w.j(3);
-          break;
-        case 19:
-          return w.return();
-        case 3:
-          if (void 0 !== g) {
-            if (A = m(u), "string" != typeof g) {
-              try {
-                Da(A, g, void 0);
-              } catch (E) {
-                throw w = qb(g, A), E.message = [E.message, w].filter(Boolean).join("\n"), E;
-              }
-            } else {
-              if ("string" != (typeof A).toLowerCase()) {
-                throw Error('The actual result is not an a string. Use "mapActual" function to map to a string result, or add "expected" to "jsonProps".');
-              }
-              try {
-                Ea(A, g);
-              } catch (E) {
-                throw w = ta(g, A), console.log(w), E.property = "expected", E;
-              }
-            }
-          }
-          if (h) {
-            return J(w, h.call(q, u, f), 0);
-          }
-          w.j(0);
+;const vb = a => ub(a).map(({a:b}) => b);
+const wb = async a => {
+  const {forkConfig:b, input:c, props:g = {}, contexts:f = []} = a;
+  a = c ? vb(c) : [];
+  const {l:h, args:e, options:d} = await sb(b, a, f, Object.assign({}, g, {input:c}));
+  if (!h) {
+    throw Error("Please specify a module to fork");
+  }
+  a = Ua(h, e, d);
+  var k = fb(a);
+  a.promise = k;
+  a.spawnCommand = a.spawnargs.join(" ");
+  const {promise:l, stdout:n, stdin:m, stderr:q} = a, {includeAnswers:r = !0, log:p, inputs:t, stderrInputs:u, stripAnsi:w = !0, preprocess:y} = b;
+  a = new Ba;
+  const B = new Ba;
+  !0 === p ? (a.pipe(process.stdout), B.pipe(process.stderr)) : p && (p.stdout && a.pipe(p.stdout), p.stderr && B.pipe(p.stderr));
+  const A = r && t;
+  k = r && u;
+  var x, v;
+  A && (x = new V({rs:a}));
+  k && (v = new V({rs:B}));
+  gb(n, m, t, a);
+  gb(q, m, u, B);
+  a = await l;
+  A && (x.end(), x = await x.promise, Object.assign(a, {stdout:x}));
+  k && (v.end(), v = await v.promise, Object.assign(a, {stderr:v}));
+  var {code:I, stdout:E, stderr:D} = a, C, z;
+  "object" == typeof y ? {stdout:C, stderr:z} = y : "function" == typeof y && (C = z = y);
+  E = E.replace(/\r?\n$/, "");
+  D = D.replace(/\r?\n$/, "");
+  x = w ? E.replace(/\033\[.*?m/g, "") : E;
+  v = w ? D.replace(/\033\[.*?m/g, "") : D;
+  C = C ? C(x) : x;
+  z = z ? z(v) : v;
+  tb(C, g.stdout, "stdout");
+  tb(z, g.stderr, "stderr");
+  if (g.code && I != g.code) {
+    throw z = Error(`Fork exited with code ${I} != ${g.code}`), z.o = "code", z;
+  }
+  return a;
+};
+const Ab = a => {
+  const {input:b, error:c, expected:g, props:f, getThrowsConfig:h, getTransform:e, getResults:d, assertResults:k, mapActual:l, getReadable:n, forkConfig:m} = a;
+  return async(...q) => {
+    var r = Object.assign({}, {input:b}, f);
+    if (c) {
+      if (!h) {
+        throw Error('No "getThrowsConfig" function is given.');
       }
-    });
+      r = h.call(r, ...q);
+      await xb(r, c);
+    } else {
+      if (e) {
+        yb(g), q = await e.call(r, ...q), q.end(b), q = await Oa(q);
+      } else {
+        if (n) {
+          yb(g), q = await n.call(r, ...q), q = await Oa(q);
+        } else {
+          if (m) {
+            f.inputs && (m.inputs = zb(f.inputs));
+            var p = await wb({forkConfig:m, input:b, props:f, contexts:q});
+            q = d ? await d.call(r, ...q) : p;
+          } else {
+            if (d) {
+              q = await d.call(r, ...q);
+            } else {
+              throw Error("Nothing was tested.");
+            }
+          }
+        }
+      }
+      if (void 0 !== g) {
+        if (p = l(q), "string" != typeof g) {
+          try {
+            ja(p, g, void 0);
+          } catch (t) {
+            throw r = Ta(g, p), t.message = [t.message, r].filter(Boolean).join("\n"), t;
+          }
+        } else {
+          if ("string" != (typeof p).toLowerCase()) {
+            throw Error('The actual result is not an a string. Use "mapActual" function to map to a string result, or add "expected" to "jsonProps".');
+          }
+          try {
+            ka(p, g);
+          } catch (t) {
+            throw r = L(g, p), console.log(r), t.property = "expected", t;
+          }
+        }
+      }
+      k && await k.call(r, q, f);
+    }
   };
-}
-function $b(a) {
+}, yb = a => {
   if (void 0 === a) {
     throw Error("No expected output was given.");
   }
-}
-function ac(a) {
-  return a.split("\n").map(function(b) {
-    var c = l.w(b.split(/: +/));
-    b = c.next().value;
-    c = c.next().value;
-    return [new RegExp(b), c];
-  });
-}
-function Zb(a, b) {
-  return l.h(function(c) {
-    return J(c, nb(Object.assign({}, a, {message:b})), 0);
-  });
-}
-;function bc(a, b, c) {
+}, zb = a => a.split("\n").map(b => {
+  const [c, g] = b.split(/: +/);
+  return [new RegExp(c), g];
+}), xb = async(a, b) => {
+  await Ra(Object.assign({}, a, {message:b}));
+};
+function Bb(a, b, c) {
   c = void 0 === c ? null : c;
-  var g = a.startsWith("!"), f = g ? a.replace(/^!/, "") : a;
+  let g;
+  const f = a.startsWith("!");
+  let h = f ? a.replace(/^!/, "") : a;
   try {
-    var k = ua(f);
-  } catch (h) {
-    if ("ENOENT" != h.code) {
-      throw h;
+    g = M(h);
+  } catch (d) {
+    if ("ENOENT" != d.code) {
+      throw d;
     }
-    f = cc(f, c);
-    k = ua(f);
+    h = Cb(h, c);
+    g = M(h);
   }
-  if (k.isFile()) {
-    var d = dc(f, b);
+  let e;
+  if (g.isFile()) {
+    e = Db(h, b);
   } else {
-    if (k.isDirectory()) {
-      var e = wa(f);
-      d = e.reduce(function(h, m) {
-        var n = Ba(f, m);
-        m = m.replace(/\.\w+?$/, "");
-        var p = {};
-        return Object.assign({}, h, (p[m] = bc(n, b, e), p));
+    if (g.isDirectory()) {
+      const d = O(h);
+      e = d.reduce((k, l) => {
+        const n = P(h, l);
+        l = l.replace(/\.\w+?$/, "");
+        return Object.assign({}, k, {[l]:Bb(n, b, d)});
       }, {});
     }
   }
-  return g ? (c = {}, c[a] = d, c) : d;
+  return f ? {[a]:e} : e;
 }
-function cc(a, b) {
-  var c = Aa(a);
-  b = (b || wa(c)).filter(function(g) {
-    return g.startsWith(za(a) + ".");
-  });
+const Cb = (a, b) => {
+  const c = ia(a);
+  b = (b || O(c)).filter(g => g.startsWith(`${ha(a)}.`));
   if (1 < b.length) {
-    throw Error("Could not resolve the result path " + a + ", possible files: " + b.join(", ") + ".");
+    throw Error(`Could not resolve the result path ${a}, possible files: ${b.join(", ")}.`);
   }
   if (b.length) {
-    a = Ba(c, b[0]);
+    a = P(c, b[0]);
   } else {
-    throw Error("Could not resolve the result path " + a + ".");
+    throw Error(`Could not resolve the result path ${a}.`);
   }
   return a;
-}
-function ec(a, b) {
-  return Object.keys(a).reduce(function(c, g) {
-    try {
-      var f = b.includes(g) ? JSON.parse(a[g]) : a[g];
-      c[g] = f;
-      return c;
-    } catch (k) {
-      throw Error('Could not parse JSON property "' + g + '": ' + k.message + ".");
-    }
-  }, {});
-}
-function dc(a, b) {
+}, Eb = (a, b) => Object.keys(a).reduce((c, g) => {
+  try {
+    const f = b.includes(g) ? JSON.parse(a[g]) : a[g];
+    c[g] = f;
+    return c;
+  } catch (f) {
+    throw Error(`Could not parse JSON property "${g}": ${f.message}.`);
+  }
+}, {}), Db = (a, b) => {
   if (!b) {
     throw Error('No configuration is given. A config should at least contain either a "getThrowsConfig", "getResults", "getTransform" or "getReadable" functions.');
   }
-  var c = b.context, g = b.persistentContext, f = b.getResults, k = b.getTransform, d = b.getReadable, e = b.getThrowsConfig, h = void 0 === b.mapActual ? function(r) {
-    return r;
-  } : b.mapActual, m = b.assertResults, n = void 0 === b.jsonProps ? [] : b.jsonProps, p = b.fork;
-  return Ra({path:a, splitRe:b.splitRe, propEndRe:b.propEndRe, propStartRe:b.propStartRe}).reduce(function(r, t) {
-    var v = Object.assign({}, t), q = t.name, u = t.input, B = t.error, C = t.V;
-    t = (delete v.name, delete v.input, delete v.error, delete v.V, v);
-    var y;
-    q in r && (y = 'Repeated use of the test name "' + q + '".');
+  const {context:c, persistentContext:g, getResults:f, getTransform:h, getReadable:e, getThrowsConfig:d, mapActual:k = t => t, assertResults:l, jsonProps:n = [], splitRe:m, fork:q, propEndRe:r, propStartRe:p} = b;
+  return Aa({path:a, splitRe:m, propEndRe:r, propStartRe:p}).reduce((t, u) => {
+    var w = Object.assign({}, u), y = u.name, B = u.input, A = u.error, x = u.m;
+    u = (delete w.name, delete w.input, delete w.error, delete w.m, w);
+    let v, I, E;
+    y in t && (v = `Repeated use of the test name "${y}".`);
     try {
-      var z = ec(t, n), F = Object.assign({}, z);
-      var A = z.expected;
-      var w = (delete F.expected, F);
-    } catch (K) {
-      y = K.message;
+      var D = Eb(u, n), C = Object.assign({}, D);
+      E = D.expected;
+      I = (delete C.expected, C);
+    } catch (Q) {
+      ({message:D} = Q), v = D;
     }
-    var E;
-    y ? E = function() {
-      throw Error(y);
-    } : E = Yb({input:u, error:B, getThrowsConfig:e, getTransform:k, getReadable:d, getResults:f, expected:A, assertResults:m, props:w, mapActual:h, forkConfig:p});
-    r[q] = function(K) {
-      for (var L = [], H = 0; H < arguments.length; ++H) {
-        L[H] = arguments[H];
+    let z;
+    v ? z = () => {
+      throw Error(v);
+    } : z = Ab({input:B, error:A, getThrowsConfig:d, getTransform:h, getReadable:e, getResults:f, expected:E, assertResults:l, props:I, mapActual:k, forkConfig:q});
+    t[y] = async(...Q) => {
+      try {
+        await z(...Q);
+      } catch (za) {
+        process.env.DEBUG && console.log(J(za.stack, "red")), await x(za);
       }
-      var I;
-      return l.h(function(D) {
-        if (1 == D.b) {
-          return D.l = 2, J(D, E.apply(null, l.f(L)), 4);
-        }
-        if (2 != D.b) {
-          D.b = 0, D.l = 0;
-        } else {
-          return I = da(D), process.env.DEBUG && console.log(N(I.stack, "red")), J(D, C(I), 0);
-        }
-      });
     };
-    return r;
+    return t;
   }, Object.assign({}, c ? {context:c} : {}, g ? {persistentContext:g} : {}));
-}
-;DEPACK_EXPORT = bc;
+};
+DEPACK_EXPORT = Bb;
 
 
 module.exports = DEPACK_EXPORT

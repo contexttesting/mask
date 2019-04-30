@@ -1,6 +1,5 @@
 import { equal } from 'zoroaster/assert'
-import makeTestSuite from '../../depack'
-// import makeTestSuite from '../../src'
+import makeTestSuite from '../../src'
 
 export default makeTestSuite('test/result/default', {
   async getResults() {

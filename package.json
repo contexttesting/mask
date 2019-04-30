@@ -12,7 +12,7 @@
     "test-build": "ALAMODE_ENV=test-build yarn test",
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc -o README.md -n _contextTesting",
-    "depack": "GOOGLE_CLOSURE_COMPILER=/Volumes/backup/closure-compiler/target/closure-compiler-1.0-SNAPSHOT.jar depack src/depack.js -l -a -p -o depack --externs externs.js -s",
+    "depack": "GOOGLE_CLOSURE_COMPILER=/Volumes/backup/closure-compiler/target/closure-compiler-1.0-SNAPSHOT.jar depack src/depack.js -l -a -p -o depack --externs externs.js -s -O 2017",
     "b": "alamode src -o build -s",
     "d": "yarn-s d1 externs types",
     "types": "typal types.js -c",
@@ -47,20 +47,18 @@
   },
   "homepage": "https://github.com/contexttesting/mask#readme",
   "devDependencies": {
+    "@zoroaster/deep-equal": "^1.0.1",
+    "@zoroaster/fork": "^1.2.3",
     "alamode": "^2.0.0",
+    "assert-throws": "3.2.2",
+    "catchment": "^3.3.0",
     "documentary": "^1.26.2",
+    "erte": "^1.2.0",
     "eslint-config-artdeco": "1.0.1",
+    "mismatch": "^1.2.0",
     "reloquent": "^1.3.0",
     "temp-context": "^2.1.3",
     "yarn-s": "1.1.0",
     "zoroaster": "^3.13.0"
-  },
-  "dependencies": {
-    "@zoroaster/deep-equal": "^1.0.1",
-    "@zoroaster/fork": "^1.2.3",
-    "assert-throws": "3.2.2",
-    "catchment": "^3.3.0",
-    "erte": "^1.2.0",
-    "mismatch": "^1.2.0"
   }
 }
