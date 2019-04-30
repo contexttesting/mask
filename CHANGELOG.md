@@ -1,3 +1,11 @@
+## 30 April 2019
+
+### [2.0.0](https://github.com/contexttesting/mask/compare/v1.6.0...v2.0.0)
+
+- [build] Compile w/ [_Depack_](https://artdecocode.com/depack/).
+- [deps] Move all dependencies to being dev-dependencies ^ because of _Depack_.
+- [feature] Pass the mask result properties via the `this` and not in arguments.
+
 ## 23 April 2019
 
 ### [1.6.0](https://github.com/contexttesting/mask/compare/v1.5.0...v1.6.0)
