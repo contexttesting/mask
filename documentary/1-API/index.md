@@ -8,14 +8,14 @@ import makeTestSuite from '@zoroaster/mask'
 
 %~%
 
-```## makeTestSuite
+```## makeTestSuite => TestSuite
 [
   ["result", "string"],
   ["config", "MakeTestSuiteConf"]
 ]
 ```
 
-Creates a test suite that can be exported to run with _Zoroaster_ Context-Testing Framework.
+Creates a test suite that can be exported to run with _Zoroaster_ Context-Testing Framework. The simplest form of a mask is to use the `getResults` property, which acts as a template for test cases, which will receive the inputs (e.g., `input`) from the mask result as properties of the `this` context, and the contexts via the arguments. The output will be compared to the `expected` property of the mask.
 
 _For example, given the following function:_
 
@@ -23,7 +23,17 @@ _For example, given the following function:_
 
 _Zoroastser can test it using a mask:_
 
+<table>
+<tr><th>Mask</th><th>Mask Result</th></tr>
+<tr><td>
+
 %EXAMPLE: example/test/mask/default, ../../../src => @zoroaster/mask%
+</td><td>
+
+%EXAMPLE: example/test/result/default.md%
+</td></tr>
+</table>
+
 %FORK node_modules/.bin/zoroaster -a example/test/mask/default.js%
 
 %~%

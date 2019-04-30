@@ -12,7 +12,7 @@ yarn add -D @zoroaster/mask
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`makeTestSuite(result: string, config: MakeTestSuiteConf)`](#maketestsuiteresult-stringconfig-maketestsuiteconf-void)
+- [`makeTestSuite(result: string, config: MakeTestSuiteConf): TestSuite`](#maketestsuiteresult-stringconfig-maketestsuiteconf-testsuite)
 - [Types](#types)
   * [`MaskContext`](#type-maskcontext)
   * [`MaskConfig`](#type-maskconfig)
@@ -35,9 +35,9 @@ import makeTestSuite from '@zoroaster/mask'
 
 <p align="center"><a href="#table-of-contents"><img src=".documentary/section-breaks/1.svg?sanitize=true"></a></p>
 
-## `makeTestSuite(`<br/>&nbsp;&nbsp;`result: string,`<br/>&nbsp;&nbsp;`config: MakeTestSuiteConf,`<br/>`): void`
+## `makeTestSuite(`<br/>&nbsp;&nbsp;`result: string,`<br/>&nbsp;&nbsp;`config: MakeTestSuiteConf,`<br/>`): TestSuite`
 
-Creates a test suite that can be exported to run with _Zoroaster_ Context-Testing Framework.
+Creates a test suite that can be exported to run with _Zoroaster_ Context-Testing Framework. The simplest form of a mask is to use the `getResults` property, which acts as a template for test cases, which will receive the inputs (e.g., `input`) from the mask result as properties of the `this` context, and the contexts via the arguments. The output will be compared to the `expected` property of the mask.
 
 _For example, given the following function:_
 
@@ -58,6 +58,10 @@ export default fn
 ```
 
 _Zoroastser can test it using a mask:_
+
+<table>
+<tr><th>Mask</th><th>Mask Result</th></tr>
+<tr><td>
 
 ```js
 /* yarn example/ */
@@ -82,6 +86,26 @@ export default makeTestSuite('example/test/result', {
   },
 })
 ```
+</td><td>
+
+```markdown
+## runs the test
+hello world
+
+/* expected */
+hello world: this is a test
+/**/
+
+## fails the test
+hello world
+
+/* expected */
+not hello world: this is a test
+/**/
+```
+</td></tr>
+</table>
+
 ```
 example/test/mask/default.js
   ✓  runs the test
