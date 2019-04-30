@@ -12,3 +12,9 @@ export const fork = makeTestSuite('test/requirements/fork/expected', {
   jsonProps: ['stdout', 'expected', 'env'],
   mapActual({ stdout }) { return JSON.parse(stdout) },
 })
+
+export const inputs = makeTestSuite('test/requirements/fork/inputs.md', {
+  fork: {
+    module: 'test/requirements/fork/inputs',
+  },
+})
