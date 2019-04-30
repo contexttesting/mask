@@ -1,5 +1,9 @@
 ## 30 April 2019
 
+### [2.0.2](https://github.com/contexttesting/mask/compare/v2.0.1...v2.0.2)
+
+- [types] Vendor `assert-diff` and `@zoroaster/fork` types.
+
 ### [2.0.1](https://github.com/contexttesting/mask/compare/v2.0.0...v2.0.1)
 
 - [package] Publish types in the `files` field.
