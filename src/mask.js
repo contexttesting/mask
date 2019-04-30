@@ -28,8 +28,6 @@ const getTests = (conf) => {
   const t = splitWithPositions(mm, splitRe).filter(({ match }) => {
     return match
   })
-  /** @type {Object<string,{ start: number, length: number }>} */
-  const positions = {}
 
   const tests = t.map(({ match: test, position, separator }) => {
     const [name, total] = split(test, '\n')
@@ -37,13 +35,18 @@ const getTests = (conf) => {
     const bodyStartsAt = test.indexOf(body)
     const input = i.replace(/\n$/, '')
 
+    const offset = mi.index + bodyStartsAt + position + separator.length
+
     const foundProps = mismatch(
       new RegExp(`(${propStartRe.source} +(.+) +\\*\\/(\n?))([\\s\\S]*?)\n${propEndRe.source}`, 'g'),
       body,
       ['preValue', 'key', 'newLine', 'value'], true,
     )
+    /** @type {!Object<string, { start: number, length: number }>} */
+    const positions = {}
+
     const expected = foundProps.reduce((acc, { 'preValue': preValue, 'key': key, 'newLine': newLine, 'value': value, 'position': p }) => {
-      const fullPosition = position + bodyStartsAt + p + preValue.length + separator.length
+      const fullPosition = offset + p + preValue.length
       positions[key] = { start: fullPosition, length: value.length }
       const val = (!value && newLine) ? newLine : value
       return {
@@ -54,6 +57,7 @@ const getTests = (conf) => {
     return {
       name,
       input,
+      positions,
       ...(preamble ? { 'preamble': preamble } : {}),
       ...expected,
     }
@@ -65,10 +69,11 @@ const getTests = (conf) => {
   /**
    * A function to be called on error in a test.
    * @param {string} name The name of the test.
+   * @param {!Object<string, { start: number, length: number }>} positions Positions of the properties.
    * @param {!Error} error
    * @throws {!Error} An error with a stack trace pointing at the line in the mask file.
    */
-  const onError = async (name, error) => {
+  const onError = async (name, positions, error) => {
     const lineRe = new RegExp(`${splitRe.source}${name}\r?$`)
     const lineNumber = lines.reduce((acc, current, index) => {
       if (acc) return acc // found
@@ -112,8 +117,8 @@ const getTests = (conf) => {
     }
     throw err
   }
-  const testsWithOnError = tests.map(({ name, ...rest }) => {
-    const boundOnError = onError.bind(null, name)
+  const testsWithOnError = tests.map(({ name, positions, ...rest }) => {
+    const boundOnError = onError.bind(null, name, positions)
     return {
       ...rest,
       name,
