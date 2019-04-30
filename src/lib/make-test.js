@@ -6,7 +6,7 @@ import { assertExpected } from '../mask'
 
 /**
  * Create a new test.
- * @param {_contextTesting.MaskConfig} params
+ * @param {!_contextTesting.MaskConfig} params
  * @param {string} params.input
  * @param {string} params.error
  * @param {string} params.expected

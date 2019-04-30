@@ -18,7 +18,7 @@
     </prop>
   </type>
 
-  <type name="MaskConfig" desc="Configuration for making test suites.">
+  <type record name="MaskConfig" desc="Configuration for making test suites.">
     <prop opt name="context" type="function(new: _contextTesting.Context)|Array<function(new: _contextTesting.Context)>|*">
       The single or multiple context constructors or objects to initialise for each test.
     </prop>
@@ -28,10 +28,10 @@
     <prop opt name="getResults" type="function(this:_contextTesting.MaskContext, ..._contextTesting.Context): *|!Promise">
       A possibly async function which returns results of a test. If it outputs a string, it will be compared against the `expected` property of the mask using string comparison. If it outputs an object, its deep equality with `expected` can be tested by adding `'expected'` to the `jsonProps`. Otherwise, the result must be mapped for comparison with `expected` using the `mapActual` method.
     </prop>
-    <prop opt name="getTransform" type="function(this:_contextTesting.MaskContext, ..._contextTesting.Context): stream.Transform|!Promise<!stream.Transform>">
+    <prop opt name="getTransform" type="function(this:_contextTesting.MaskContext, ..._contextTesting.Context): !(stream.Transform|Promise<!stream.Transform>)">
       A possibly async function which returns a _Transform_ stream to be ended with the input specified in the mask's result. Its output will be accumulated and compared against the expected output of the mask.
     </prop>
-    <prop opt name="getReadable" type="function(this:_contextTesting.MaskContext, ..._contextTesting.Context): stream.Readable|Promise<stream.Readable>">
+    <prop opt name="getReadable" type="function(this:_contextTesting.MaskContext, ..._contextTesting.Context): !(stream.Readable|Promise<stream.Readable>)">
       A possibly async function which returns a _Readable_ stream constructed with the input from the mask. Its output will be stored in memory and compared against the expected output of the mask.
     </prop>
     <prop opt name="fork" type="string|_contextTesting.ForkConfig">

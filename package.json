@@ -52,7 +52,7 @@
     "alamode": "^2.0.0",
     "assert-throws": "^3.3.0",
     "catchment": "^3.3.0",
-    "documentary": "^1.26.4",
+    "documentary": "^1.26.5",
     "erte": "^1.2.0",
     "eslint-config-artdeco": "1.0.1",
     "mismatch": "^1.2.0",
