@@ -13,12 +13,12 @@ _contextTesting.MaskContext
 _contextTesting.MaskConfig
 /**
  * The single or multiple context constructors or objects to initialise for each test.
- * @type {(function(new: _contextTesting.Context)|Array<function(new: _contextTesting.Context)>|*)|undefined}
+ * @type {(function(new: _contextTesting.Context)|!Array<function(new: _contextTesting.Context)>|*)|undefined}
  */
 _contextTesting.MaskConfig.prototype.context
 /**
  * The context constructor(s) that will be initialised and destroyed once per test suite, having a persistent state across tests.
- * @type {(function(new: _contextTesting.Context)|Array<function(new: _contextTesting.Context)>|*)|undefined}
+ * @type {(function(new: _contextTesting.Context)|!Array<function(new: _contextTesting.Context)>|*)|undefined}
  */
 _contextTesting.MaskConfig.prototype.persistentContext
 /**
@@ -33,12 +33,12 @@ _contextTesting.MaskConfig.prototype.getResults
 _contextTesting.MaskConfig.prototype.getTransform
 /**
  * A possibly async function which returns a _Readable_ stream constructed with the input from the mask. Its output will be stored in memory and compared against the expected output of the mask.
- * @type {(function(this:_contextTesting.MaskContext, ..._contextTesting.Context): !(stream.Readable|Promise<stream.Readable>))|undefined}
+ * @type {(function(this:_contextTesting.MaskContext, ..._contextTesting.Context): !(stream.Readable|Promise<!stream.Readable>))|undefined}
  */
 _contextTesting.MaskConfig.prototype.getReadable
 /**
  * The path to the module to fork with the mask's input split by whitespace as arguments, output of which will be compared against the `code`, `stdout` and `stderr` properties of the mask. Arguments with whitespace should be wrapped in speech marks, i.e. `'` or `"`. Additionally, `ForkConfig` with `module`, `getArgs`, `options` and `getOptions` properties can be passed for more control of how the fork will be started.
- * @type {(string|_contextTesting.ForkConfig)|undefined}
+ * @type {(string|!_contextTesting.ForkConfig)|undefined}
  */
 _contextTesting.MaskConfig.prototype.fork
 /**
@@ -53,7 +53,7 @@ _contextTesting.MaskConfig.prototype.getThrowsConfig
 _contextTesting.MaskConfig.prototype.mapActual
 /**
  * A possibly async function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask's result (where `jsonProps` are parsed into JS objects) will be passed as arguments.
- * @type {(function(*, Object<string, *>): !Promise|undefined)|undefined}
+ * @type {(function(*, !Object<string, *>): !Promise|undefined)|undefined}
  */
 _contextTesting.MaskConfig.prototype.assertResults
 /**

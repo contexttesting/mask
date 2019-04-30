@@ -1,3 +1,11 @@
+## 1 May 2019
+
+### [2.0.4](https://github.com/contexttesting/mask/compare/v2.0.3...v2.0.4)
+
+- [fix] Update mask properties correctly and account for preamble.
+- [doc] Give titles to link types.
+- [externs] `MaskConfig` is a structural interface now.
+
 ## 30 April 2019
 
 ### [2.0.3](https://github.com/contexttesting/mask/compare/v2.0.2...v2.0.3)
