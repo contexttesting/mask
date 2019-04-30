@@ -113,10 +113,6 @@ const getTests = (conf) => {
     throw err
   }
   const testsWithOnError = tests.map(({ name, ...rest }) => {
-    /**
-     * @type {!Function}
-     * @param {!Error} error An error with a stack trace pointing at the line in the mask file.
-     */
     const boundOnError = onError.bind(null, name)
     return {
       ...rest,
