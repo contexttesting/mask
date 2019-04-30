@@ -16,7 +16,7 @@ function F(a, b, c) {
   let d = a[a.length - 1];
   d && d.c === b && d.g === c ? a[a.length - 1] = {count:d.count + 1, c:b, g:c} : a.push({count:1, c:b, g:c});
 }
-function G(a, b, c, d, f) {
+function H(a, b, c, d, f) {
   let h = c.length, e = d.length, g = b.b;
   f = g - f;
   let k = 0;
@@ -27,7 +27,7 @@ function G(a, b, c, d, f) {
   b.b = g;
   return f;
 }
-function I(a) {
+function J(a) {
   let b = [];
   for (let c = 0; c < a.length; c++) {
     a[c] && b.push(a[c]);
@@ -36,10 +36,10 @@ function I(a) {
 }
 function aa(a, b) {
   var c = new ba;
-  a = I(a.split(""));
-  b = I(b.split(""));
+  a = J(a.split(""));
+  b = J(b.split(""));
   let d = b.length, f = a.length, h = 1, e = d + f, g = [{b:-1, f:[]}];
-  var k = G(c, g[0], b, a, 0);
+  var k = H(c, g[0], b, a, 0);
   if (g[0].b + 1 >= d && k + 1 >= f) {
     return [{value:c.join(b), count:b.length}];
   }
@@ -48,14 +48,14 @@ function aa(a, b) {
       for (k = -1 * h; k <= h; k += 2) {
         var l = g[k - 1];
         let m = g[k + 1];
-        var q = (m ? m.b : 0) - k;
+        var p = (m ? m.b : 0) - k;
         l && (g[k - 1] = void 0);
         let n = l && l.b + 1 < d;
-        q = m && 0 <= q && q < f;
-        if (n || q) {
-          !n || q && l.b < m.b ? (l = {b:m.b, f:m.f.slice(0)}, F(l.f, void 0, !0)) : (l.b++, F(l.f, !0, void 0));
-          q = G(c, l, b, a, k);
-          if (l.b + 1 >= d && q + 1 >= f) {
+        p = m && 0 <= p && p < f;
+        if (n || p) {
+          !n || p && l.b < m.b ? (l = {b:m.b, f:m.f.slice(0)}, F(l.f, void 0, !0)) : (l.b++, F(l.f, !0, void 0));
+          p = H(c, l, b, a, k);
+          if (l.b + 1 >= d && p + 1 >= f) {
             k = ca(c, l.f, b, a);
             break a;
           }
@@ -91,9 +91,9 @@ function ca(a, b, c, d) {
         k.value = a.join(c.slice(e, e + k.count));
       } else {
         let l = c.slice(e, e + k.count);
-        l = l.map(function(q, m) {
+        l = l.map(function(p, m) {
           m = d[g + m];
-          return m.length > q.length ? m : q;
+          return m.length > p.length ? m : p;
         });
         k.value = a.join(l);
       }
@@ -106,19 +106,19 @@ function ca(a, b, c, d) {
   return b;
 }
 ;const da = {black:30, red:31, green:32, yellow:33, blue:34, magenta:35, cyan:36, white:37, grey:90}, ea = {black:40, red:41, green:42, yellow:43, blue:44, magenta:45, cyan:46, white:47};
-function J(a, b) {
+function K(a, b) {
   return (b = da[b]) ? `\x1b[${b}m${a}\x1b[0m` : a;
 }
-function K(a) {
+function L(a) {
   return (a = ea[a]) ? `\x1b[${a}m${" "}\x1b[0m` : " ";
 }
-function L(a, b) {
+function M(a, b) {
   return aa(a, b).map(({c, g:d, value:f}) => {
     const h = f.split(" ");
-    return c ? h.map(e => e.replace(/\n$/mg, "\u23ce\n")).map(e => J(e, "green")).join(K("green")) : d ? h.map(e => e.replace(/\n$/mg, "\u23ce\n")).map(e => J(e, "red")).join(K("red")) : J(f, "grey");
+    return c ? h.map(e => e.replace(/\n$/mg, "\u23ce\n")).map(e => K(e, "green")).join(L("green")) : d ? h.map(e => e.replace(/\n$/mg, "\u23ce\n")).map(e => K(e, "red")).join(L("red")) : K(f, "grey");
   }).join("");
 }
-;const {lstatSync:M, readFileSync:N, readdirSync:P, writeFileSync:fa} = fs;
+;const {lstatSync:N, readFileSync:O, readdirSync:P, writeFileSync:fa} = fs;
 const {basename:ha, dirname:ia, join:Q} = path;
 const {deepStrictEqual:ja, equal:la, strictEqual:ma} = assert;
 function R(a, b, c, d = !1) {
@@ -264,65 +264,66 @@ const ya = a => {
   const {path:b, propStartRe:c = /\/\*/, propEndRe:d = /\/\*\*\//} = a;
   let {splitRe:f} = a;
   f || (f = b.endsWith(".md") ? /^## /gm : /^\/\/ /gm);
-  let h = `${N(b)}`;
-  a = f.exec(h);
-  if (!a) {
+  let h = `${O(b)}`;
+  const e = f.exec(h);
+  if (!e) {
     throw Error(`${b} does not contain tests.`);
   }
-  const e = h.slice(0, a.index).replace(/\n\n$/, "");
-  a = h.slice(a.index);
+  const g = h.slice(0, e.index).replace(/\n\n$/, "");
+  a = h.slice(e.index);
   f.lastIndex = 0;
-  const g = {};
   a = va(a, f).filter(m => {
     ({match:m} = m);
     return m;
   }).map(m => {
-    var {match:n, position:r, separator:p} = m;
-    const [u, t] = wa(n), [w, y] = xa(t, new RegExp(`\n${c.source}`)), B = n.indexOf(y);
-    m = w.replace(/\n$/, "");
-    const A = R(new RegExp(`(${c.source} +(.+) +\\*\\/(\n?))([\\s\\S]*?)\n${d.source}`, "g"), y, ["preValue", "key", "newLine", "value"], !0).reduce((x, v) => {
-      var {preValue:H, key:E, newLine:D, value:C, position:z} = v;
-      g[E] = {start:r + B + z + H.length + p.length, length:C.length};
-      return Object.assign({}, x, {[E]:!C && D ? D : C});
+    var {match:n, position:r, separator:q} = m;
+    const [v, u] = wa(n), [x, y] = xa(u, new RegExp(`\n${c.source}`));
+    var A = n.indexOf(y);
+    m = x.replace(/\n$/, "");
+    const D = e.index + A + r + q.length, t = {};
+    A = R(new RegExp(`(${c.source} +(.+) +\\*\\/(\n?))([\\s\\S]*?)\n${d.source}`, "g"), y, ["preValue", "key", "newLine", "value"], !0).reduce((w, E) => {
+      var {preValue:G, key:B, newLine:C, value:z, position:I} = E;
+      t[B] = {start:D + I + G.length, length:z.length};
+      return Object.assign({}, w, {[B]:!z && C ? C : z});
     }, {});
-    return Object.assign({}, {name:u, input:m}, e ? {preamble:e} : {}, A);
+    return Object.assign({}, {name:v, input:m, l:t}, g ? {preamble:g} : {}, A);
   });
   const k = h.split("\n");
   let l = 0;
-  const q = async(m, n) => {
-    const r = new RegExp(`${f.source}${m}\r?$`), p = k.reduce((t, w, y) => t ? t : r.test(w) ? y + 1 : t, null), u = Error(n.message);
-    u.stack = `Error: ${n.message}\n    at ${m} (${b}:${p}:1)`;
-    if (n.property && n.actual) {
-      const {property:t, actual:w, expected:y} = n;
+  const p = async(m, n, r) => {
+    const q = new RegExp(`${f.source}${m}\r?$`), v = k.reduce((x, y, A) => x ? x : q.test(y) ? A + 1 : x, null), u = Error(r.message);
+    u.stack = `Error: ${r.message}\n    at ${m} (${b}:${v}:1)`;
+    if (r.property && r.actual) {
+      const {property:x, actual:y, expected:A} = r;
       u.handleUpdate = async() => {
-        const B = g[t];
-        if (!B) {
+        const D = n[x];
+        if (!D) {
           return !1;
         }
-        var A = B.start + l, x = h.slice(0, A);
-        A = h.slice(A + B.length);
-        x = `${x}${w}${A}`;
-        console.error('Result does not match property "%s"\n  at %s (%s:%s:1)', t, J(m, "blue"), b, p);
-        A = !1;
-        const v = await ta();
-        "d" == v ? (console.log(J("Actual: ", "blue")), console.log(w), console.log(J("Expected: ", "blue")), console.log(y), A = await ua()) : v && "u" != v || (A = !0);
-        if (!A) {
+        var t = D.start + l, w = h.slice(0, t);
+        t = h.slice(t + D.length);
+        w = `${w}${y}${t}`;
+        console.error('Result does not match property "%s"\n  at %s (%s:%s:1)', x, K(m, "blue"), b, v);
+        t = !1;
+        const E = await ta();
+        "d" == E ? (console.log(K("Actual: ", "blue")), console.log(y), console.log(K("Expected: ", "blue")), console.log(A), t = await ua()) : E && "u" != E || (t = !0);
+        if (!t) {
           return !1;
         }
-        l += w.length - B.length;
-        await fa(b, x);
-        h = `${N(b)}`;
+        l += y.length - D.length;
+        await fa(b, w);
+        h = `${O(b)}`;
         return !0;
       };
     }
     throw u;
   };
   return a.map(m => {
-    var n = Object.assign({}, m);
-    m = m.name;
-    n = (delete n.name, n);
-    const r = q.bind(null, m);
-    return Object.assign({}, n, {name:m, j:r});
+    var n = Object.assign({}, m), r = m.name;
+    m = m.l;
+    n = (delete n.name, delete n.l, n);
+    m = p.bind(null, r, m);
+    return Object.assign({}, n, {name:r, j:m});
   });
 }, xa = (a, b) => {
   const c = a.search(b);
@@ -383,25 +384,25 @@ class V extends za {
     var b = a || {}, c = Object.assign({}, b);
     const d = void 0 === b.binary ? !1 : b.binary, f = void 0 === b.rs ? null : b.rs;
     b = (delete c.binary, delete c.rs, c);
-    const {m:h = U(!0), proxyError:e} = a || {}, g = (k, l) => h(l);
+    const {o:h = U(!0), proxyError:e} = a || {}, g = (k, l) => h(l);
     super(b);
     this.h = [];
-    this.l = new Promise((k, l) => {
+    this.m = new Promise((k, l) => {
       this.on("finish", () => {
-        let q;
-        d ? q = Buffer.concat(this.h) : q = this.h.join("");
-        k(q);
+        let p;
+        d ? p = Buffer.concat(this.h) : p = this.h.join("");
+        k(p);
         this.h = [];
       });
-      this.once("error", q => {
-        if (-1 == q.stack.indexOf("\n")) {
-          g`${q}`;
+      this.once("error", p => {
+        if (-1 == p.stack.indexOf("\n")) {
+          g`${p}`;
         } else {
-          const m = Ha(q.stack);
-          q.stack = m;
-          e && g`${q}`;
+          const m = Ha(p.stack);
+          p.stack = m;
+          e && g`${p}`;
         }
-        l(q);
+        l(p);
       });
       f && Ja(this, f).pipe(this);
     });
@@ -411,12 +412,12 @@ class V extends za {
     c();
   }
   get promise() {
-    return this.l;
+    return this.m;
   }
 }
 const W = async a => {
   var b = void 0 === b ? {} : b;
-  ({promise:a} = new V(Object.assign({}, {rs:a}, b, {m:U(!0)})));
+  ({promise:a} = new V(Object.assign({}, {rs:a}, b, {o:U(!0)})));
   return await a;
 };
 const Ka = async(a, b) => {
@@ -431,7 +432,7 @@ const Ka = async(a, b) => {
       await Ka(a, b);
     } else {
       if (b && a != b) {
-        const c = L(`${a}`, `${b}`);
+        const c = M(`${a}`, `${b}`);
         throw Error(`${c}\n${`${a} != ${b}`}`);
       }
     }
@@ -487,8 +488,8 @@ function Oa(a, b) {
   let c = 0;
   const d = (e, g = void 0) => {
     const k = " ".repeat(2 * c);
-    g = void 0 !== g ? J("+ " + Y(g), "green") : null;
-    e = void 0 !== e ? J("- " + Y(e), "red") : null;
+    g = void 0 !== g ? K("+ " + Y(g), "green") : null;
+    e = void 0 !== e ? K("- " + Y(e), "red") : null;
     const l = [];
     e && l.push(X(k, e));
     g && l.push(X(k, g));
@@ -524,32 +525,32 @@ function Oa(a, b) {
       }
     }
     if (Array.isArray(e) && Array.isArray(g)) {
-      let q;
+      let p;
       k = e.map((m, n) => {
-        q = n;
+        p = n;
         (m = h(m, g[n])) && (m = `${f(`[${n}]`)}\n${m}`);
         return m;
       }).filter(Boolean);
-      l = g.slice(q + 1).map((m, n) => `${f(`[${q + n + 1}]`)}\n${d(void 0, m)}`);
+      l = g.slice(p + 1).map((m, n) => `${f(`[${p + n + 1}]`)}\n${d(void 0, m)}`);
       return [...k, ...l].join("\n");
     }
     if ("object" == typeof e && "object" == typeof g) {
-      const q = [], m = [], n = [];
-      Object.keys(e).forEach(p => {
-        p in g ? n.push(p) : m.push(p);
+      const p = [], m = [], n = [];
+      Object.keys(e).forEach(q => {
+        q in g ? n.push(q) : m.push(q);
       });
-      Object.keys(g).forEach(p => {
-        p in e || q.push(p);
+      Object.keys(g).forEach(q => {
+        q in e || p.push(q);
       });
-      k = m.map(p => d(`${p}${`: ${Y(e[p])}`}`));
-      l = q.map(p => d(void 0, `${p}: ${Y(g[p])}`));
-      const r = n.map(p => {
+      k = m.map(q => d(`${q}${`: ${Y(e[q])}`}`));
+      l = p.map(q => d(void 0, `${q}: ${Y(g[q])}`));
+      const r = n.map(q => {
         c++;
-        const u = h(e[p], g[p]);
-        let t = "";
-        u && (t += f(Array.isArray(e[p]) && Array.isArray(g[p]) ? `${p}.Array` : p), t += "\n" + u);
+        const v = h(e[q], g[q]);
+        let u = "";
+        v && (u += f(Array.isArray(e[q]) && Array.isArray(g[q]) ? `${q}.Array` : q), u += "\n" + v);
         c--;
-        return t;
+        return u;
       }).filter(Boolean);
       return [...k, ...l, ...r].join("\n");
     }
@@ -606,7 +607,7 @@ const Ta = async(a, b, c, d) => {
       try {
         ma(a, b);
       } catch (d) {
-        const f = L(b, a);
+        const f = M(b, a);
         console.log(f);
         throw d;
       }
@@ -632,37 +633,37 @@ const Wa = async a => {
   var k = Ra(a);
   a.promise = k;
   a.spawnCommand = a.spawnargs.join(" ");
-  const {promise:l, stdout:q, stdin:m, stderr:n} = a, {includeAnswers:r = !0, log:p, inputs:u, stderrInputs:t, stripAnsi:w = !0, preprocess:y} = b;
+  const {promise:l, stdout:p, stdin:m, stderr:n} = a, {includeAnswers:r = !0, log:q, inputs:v, stderrInputs:u, stripAnsi:x = !0, preprocess:y} = b;
   a = new T;
-  const B = new T;
-  !0 === p ? (a.pipe(process.stdout), B.pipe(process.stderr)) : p && (p.stdout && a.pipe(p.stdout), p.stderr && B.pipe(p.stderr));
-  const A = r && u;
-  k = r && t;
-  var x, v;
-  A && (x = new V({rs:a}));
-  k && (v = new V({rs:B}));
-  Sa(q, m, u, a);
-  Sa(n, m, t, B);
+  const A = new T;
+  !0 === q ? (a.pipe(process.stdout), A.pipe(process.stderr)) : q && (q.stdout && a.pipe(q.stdout), q.stderr && A.pipe(q.stderr));
+  const D = r && v;
+  k = r && u;
+  var t, w;
+  D && (t = new V({rs:a}));
+  k && (w = new V({rs:A}));
+  Sa(p, m, v, a);
+  Sa(n, m, u, A);
   a = await l;
-  A && (x.end(), x = await x.promise, Object.assign(a, {stdout:x}));
-  k && (v.end(), v = await v.promise, Object.assign(a, {stderr:v}));
-  var {code:H, stdout:E, stderr:D} = a, C, z;
+  D && (t.end(), t = await t.promise, Object.assign(a, {stdout:t}));
+  k && (w.end(), w = await w.promise, Object.assign(a, {stderr:w}));
+  var {code:E, stdout:G, stderr:B} = a, C, z;
   "object" == typeof y ? {stdout:C, stderr:z} = y : "function" == typeof y && (C = z = y);
-  E = E.replace(/\r?\n$/, "");
-  D = D.replace(/\r?\n$/, "");
-  x = w ? E.replace(/\033\[.*?m/g, "") : E;
-  v = w ? D.replace(/\033\[.*?m/g, "") : D;
-  C = C ? C(x) : x;
-  z = z ? z(v) : v;
+  G = G.replace(/\r?\n$/, "");
+  B = B.replace(/\r?\n$/, "");
+  t = x ? G.replace(/\033\[.*?m/g, "") : G;
+  w = x ? B.replace(/\033\[.*?m/g, "") : B;
+  C = C ? C(t) : t;
+  z = z ? z(w) : w;
   Ua(C, d.stdout, "stdout");
   Ua(z, d.stderr, "stderr");
-  if (d.code && H != d.code) {
-    throw z = Error(`Fork exited with code ${H} != ${d.code}`), z.o = "code", z;
+  if (d.code && E != d.code) {
+    throw z = Error(`Fork exited with code ${E} != ${d.code}`), z.s = "code", z;
   }
   return a;
 };
 const $a = a => {
-  const {input:b, error:c, expected:d, props:f, getThrowsConfig:h, getTransform:e, getResults:g, assertResults:k, mapActual:l, getReadable:q, fork:m} = a;
+  const {input:b, error:c, expected:d, props:f, getThrowsConfig:h, getTransform:e, getResults:g, assertResults:k, mapActual:l, getReadable:p, fork:m} = a;
   return async(...n) => {
     var r = Object.assign({}, {input:b}, f);
     if (c) {
@@ -675,13 +676,13 @@ const $a = a => {
       if (e) {
         Ya(d), n = await e.call(r, ...n), n.end(b), n = await W(n);
       } else {
-        if (q) {
-          Ya(d), n = await q.call(r, ...n), n = await W(n);
+        if (p) {
+          Ya(d), n = await p.call(r, ...n), n = await W(n);
         } else {
           if (m) {
             r.inputs && (m.inputs = Za(r.inputs));
-            var p = await Wa({forkConfig:m, input:b, props:f, contexts:n});
-            n = g ? await g.call(r, ...n) : p;
+            var q = await Wa({forkConfig:m, input:b, props:f, contexts:n});
+            n = g ? await g.call(r, ...n) : q;
           } else {
             if (g) {
               n = await g.call(r, ...n);
@@ -692,16 +693,16 @@ const $a = a => {
         }
       }
       if (void 0 !== d) {
-        if (p = l(n), "string" != typeof d) {
-          Pa(p, d);
+        if (q = l(n), "string" != typeof d) {
+          Pa(q, d);
         } else {
-          if ("string" != (typeof p).toLowerCase()) {
+          if ("string" != (typeof q).toLowerCase()) {
             throw Error('The actual result is not an a string. Use "mapActual" function to map to a string result, or add "expected" to "jsonProps".');
           }
           try {
-            la(p, d);
-          } catch (u) {
-            throw r = L(d, p), console.log(r), u.property = "expected", u;
+            la(q, d);
+          } catch (v) {
+            throw r = M(d, q), console.log(r), v.property = "expected", v;
           }
         }
       }
@@ -724,13 +725,13 @@ function ab(a, b, c) {
   const f = a.startsWith("!");
   let h = f ? a.replace(/^!/, "") : a;
   try {
-    d = M(h);
+    d = N(h);
   } catch (g) {
     if ("ENOENT" != g.code) {
       throw g;
     }
     h = bb(h, c);
-    d = M(h);
+    d = N(h);
   }
   let e;
   if (d.isFile()) {
@@ -739,9 +740,9 @@ function ab(a, b, c) {
     if (d.isDirectory()) {
       const g = P(h);
       e = g.reduce((k, l) => {
-        const q = Q(h, l);
+        const p = Q(h, l);
         l = l.replace(/\.\w+?$/, "");
-        return Object.assign({}, k, {[l]:ab(q, b, g)});
+        return Object.assign({}, k, {[l]:ab(p, b, g)});
       }, {});
     }
   }
@@ -771,31 +772,31 @@ const bb = (a, b) => {
   if (!b) {
     throw Error('No configuration is given. A config should at least contain either a "getThrowsConfig", "getResults", "getTransform" or "getReadable" functions.');
   }
-  const {context:c, persistentContext:d, getResults:f, getTransform:h, getReadable:e, getThrowsConfig:g, mapActual:k = u => u, assertResults:l, jsonProps:q = [], splitRe:m, fork:n, propEndRe:r, propStartRe:p} = b;
-  return ya({path:a, splitRe:m, propEndRe:r, propStartRe:p}).reduce((u, t) => {
-    var w = Object.assign({}, t), y = t.name, B = t.input, A = t.error, x = t.j;
-    t = (delete w.name, delete w.input, delete w.error, delete w.j, w);
-    let v, H, E;
-    y in u && (v = `Repeated use of the test name "${y}".`);
+  const {context:c, persistentContext:d, getResults:f, getTransform:h, getReadable:e, getThrowsConfig:g, mapActual:k = v => v, assertResults:l, jsonProps:p = [], splitRe:m, fork:n, propEndRe:r, propStartRe:q} = b;
+  return ya({path:a, splitRe:m, propEndRe:r, propStartRe:q}).reduce((v, u) => {
+    var x = Object.assign({}, u), y = u.name, A = u.input, D = u.error, t = u.j;
+    u = (delete x.name, delete x.input, delete x.error, delete x.j, x);
+    let w, E, G;
+    y in v && (w = `Repeated use of the test name "${y}".`);
     try {
-      var D = db(t, q), C = Object.assign({}, D);
-      E = D.expected;
-      H = (delete C.expected, C);
-    } catch (O) {
-      ({message:D} = O), v = D;
+      var B = db(u, p), C = Object.assign({}, B);
+      G = B.expected;
+      E = (delete C.expected, C);
+    } catch (I) {
+      ({message:B} = I), w = B;
     }
     let z;
-    v ? z = () => {
-      throw Error(v);
-    } : z = $a({input:B, error:A, getThrowsConfig:g, getTransform:h, getReadable:e, getResults:f, expected:E, assertResults:l, props:H, mapActual:k, fork:n});
-    u[y] = async(...O) => {
+    w ? z = () => {
+      throw Error(w);
+    } : z = $a({input:A, error:D, getThrowsConfig:g, getTransform:h, getReadable:e, getResults:f, expected:G, assertResults:l, props:E, mapActual:k, fork:n});
+    v[y] = async(...I) => {
       try {
-        await z(...O);
+        await z(...I);
       } catch (ka) {
-        process.env.DEBUG && console.log(J(ka.stack, "red")), await x(ka);
+        process.env.DEBUG && console.log(K(ka.stack, "red")), await t(ka);
       }
     };
-    return u;
+    return v;
   }, Object.assign({}, c ? {context:c} : {}, d ? {persistentContext:d} : {}));
 };
 DEPACK_EXPORT = ab;
