@@ -32,8 +32,8 @@ export {}
 /**
  * @typedef {Object} _contextTesting.ForkConfig Parameters for forking.
  * @prop {string} module The path to the module to fork.
- * @prop {(function(this: *, !Array<string>, ..._contextTesting.Context): !Array<string>|!Promise<!Array<string>>)} [getArgs] The function to get arguments to pass the fork based on the parsed mask input and contexts. The `this` context is set to the passed properties.
- * @prop {(function(this: *, ..._contextTesting.Context): !child_process.ForkOptions)} [getOptions] The function to get options for the fork, such as `ENV` and `cwd`, based on contexts. The `this` context is set to the passed properties.
+ * @prop {function(this: *, !Array<string>, ..._contextTesting.Context): !(Array<string>|Promise<!Array<string>>)} [getArgs] The function to get arguments to pass the fork based on the parsed mask input and contexts. The `this` context is set to the passed properties.
+ * @prop {function(this: *, ..._contextTesting.Context): !child_process.ForkOptions} [getOptions] The function to get options for the fork, such as `ENV` and `cwd`, based on contexts. The `this` context is set to the passed properties.
  * @prop {!child_process.ForkOptions} [options] Options for the forked processed, such as `ENV` and `cwd`.
  * @prop {!Array<!Array<(!RegExp|string)>>} [inputs] Inputs to push to `stdin` when `stdout` writes data. The inputs are kept on stack, and taken off the stack when the RegExp matches the written data, e.g., `[[/question/, 'answer'], [/question2/, 'answer2']]`.
  * @prop {!Array<!Array<(!RegExp|string)>>} [stderrInputs] Inputs to push to `stdin` when `stderr` writes data (similar to `inputs`), e.g., `[[/question/, 'answer'], [/question2/, 'answer2']]`.
@@ -59,6 +59,9 @@ export {}
 /**
  * @typedef {import('child_process').ForkOptions} child_process.ForkOptions
  */
+/**
+ * @typedef {import('stream').Writable} stream.Writable
+ */
 
 /* typal node_modules/@zoroaster/fork/types/context.xml noSuppress */
 /**
@@ -68,10 +71,6 @@ export {}
  * @typedef {Object} _contextTesting.Context A context made with a constructor.
  * @prop {function(): !Promise|void} [_init] The function to initialise the context.
  * @prop {function(): !Promise|void} [_destroy] The function to destroy the context.
- */
-
-/**
- * @typedef {import('stream').Writable} stream.Writable
  */
 
 
