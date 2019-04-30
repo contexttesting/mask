@@ -29,6 +29,23 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch Requirements",
+      "program": "${workspaceFolder}/node_modules/.bin/zoroaster",
+      "console": "integratedTerminal",
+      "args": [
+        "test/requirements/get-results/default.js",
+        "-a",
+        "-w",
+        "-t",
+        "9999999"
+      ],
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch Example",
       "program": "${workspaceFolder}/example/index.js",
       "env": {

@@ -1,0 +1,38 @@
+ test/requirements/fork/default.js
+   fork
+    [31m✗[0m  fails expected json
+    | Error: [ 'hello', 'actual' ] deepStrictEqual [ 'hello', 'expected' ]
+    | [1]
+    | [31m- expected[0m
+    | [32m+ actual[0m
+    |     at fails expected json (test/requirements/fork/expected.md:1:1)
+    [31m✗[0m  fails w/ map actual json
+    | Error: [ 'hello', 'actual' ] deepStrictEqual [ 'hello', 'expected' ]
+    | [1]
+    | [31m- expected[0m
+    | [32m+ actual[0m
+    |     at fails w/ map actual json (test/requirements/fork/expected.md:8:1)
+[31ma[0m[32mexpe[0m[90mct[0m[31mual[0m[32med[0m
+    [31m✗[0m  fails stderr
+    | Error: 'expected' === 'actual'
+    |     at fails stderr (test/requirements/fork/expected.md:15:1)
+
+[31mtest/requirements/fork/default.js > fork > fails expected json[0m
+  Error: [ 'hello', 'actual' ] deepStrictEqual [ 'hello', 'expected' ]
+  [1]
+  [31m- expected[0m
+  [32m+ actual[0m
+      at fails expected json (test/requirements/fork/expected.md:1:1)
+
+[31mtest/requirements/fork/default.js > fork > fails w/ map actual json[0m
+  Error: [ 'hello', 'actual' ] deepStrictEqual [ 'hello', 'expected' ]
+  [1]
+  [31m- expected[0m
+  [32m+ actual[0m
+      at fails w/ map actual json (test/requirements/fork/expected.md:8:1)
+
+[31mtest/requirements/fork/default.js > fork > fails stderr[0m
+  Error: 'expected' === 'actual'
+      at fails stderr (test/requirements/fork/expected.md:15:1)
+
+🦅  Executed 3 tests: 3 errors.
