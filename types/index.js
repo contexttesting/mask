@@ -35,12 +35,13 @@ export {}
 /**
  * @typedef {import('stream').Readable} stream.Readable
  */
+
 /**
- * @typedef {import('assert-throws').Config} _assertThrows.Config
+ * @typedef {import('./vendor').Config} _assertThrows.Config
  */
 /**
- * @typedef {import('@zoroaster/fork/types').Context} _contextTesting.Context
+ * @typedef {import('./vendor').Context} _contextTesting.Context
  */
 /**
- * @typedef {import('@zoroaster/fork/types').ForkConfig} _contextTesting.ForkConfig
+ * @typedef {import('./vendor').ForkConfig} _contextTesting.ForkConfig
  */
