@@ -2,10 +2,10 @@
 
 %NPM: @zoroaster/mask%
 
-`@zoroaster/mask` is The Code For Zoroaster Mask Testing.
+`@zoroaster/mask` is The Code For _Zoroaster_ Mask Testing.
 
 ```sh
-yarn add -E @zoroaster/mask
+yarn add -D @zoroaster/mask
 ```
 
 ## Table Of Contents
