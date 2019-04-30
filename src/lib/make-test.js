@@ -16,7 +16,7 @@ const makeTest = (params) => {
   const {
     input, error, expected, props,
     getThrowsConfig, getTransform, getResults,
-    assertResults, mapActual, getReadable, forkConfig,
+    assertResults, mapActual, getReadable, fork: forkConfig,
   } = params
   const test = async (...contexts) => {
     const cntx = /** @type {_contextTesting.MaskContext} */ ({ input, ...props })
@@ -37,9 +37,9 @@ const makeTest = (params) => {
       const rs = await getReadable.call(cntx, ...contexts)
       results = await collect(rs)
     } else if (forkConfig) {
-      if (props['inputs']) {
-        forkConfig['inputs'] = getInputsFromProps(props['inputs'])
-      }
+      if (cntx.inputs)
+        forkConfig.inputs = getInputsFromProps(cntx.inputs)
+
       const r = await fork({
         forkConfig,
         input,
@@ -96,6 +96,14 @@ export default makeTest
 /**
  * @suppress {nonStandardJsDocs}
  * @typedef {import('../../types').MaskConfig} _contextTesting.MaskConfig
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('../../types').MaskContext} _contextTesting.MaskContext
+ */
+/**
+ * @suppress {nonStandardJsDocs}
+ * @typedef {import('../../types').MaskForkConfig} _contextTesting.MaskForkConfig
  */
 /**
  * @suppress {nonStandardJsDocs}

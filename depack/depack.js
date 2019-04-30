@@ -948,7 +948,7 @@ const wb = async a => {
   return a;
 };
 const Ab = a => {
-  const {input:b, error:c, expected:g, props:f, getThrowsConfig:h, getTransform:e, getResults:d, assertResults:k, mapActual:l, getReadable:n, forkConfig:m} = a;
+  const {input:b, error:c, expected:g, props:f, getThrowsConfig:h, getTransform:e, getResults:d, assertResults:k, mapActual:l, getReadable:n, fork:m} = a;
   return async(...q) => {
     var r = Object.assign({}, {input:b}, f);
     if (c) {
@@ -965,7 +965,7 @@ const Ab = a => {
           yb(g), q = await n.call(r, ...q), q = await Oa(q);
         } else {
           if (m) {
-            f.inputs && (m.inputs = zb(f.inputs));
+            r.inputs && (m.inputs = zb(r.inputs));
             var p = await wb({forkConfig:m, input:b, props:f, contexts:q});
             q = d ? await d.call(r, ...q) : p;
           } else {
@@ -1077,7 +1077,7 @@ const Cb = (a, b) => {
     let z;
     v ? z = () => {
       throw Error(v);
-    } : z = Ab({input:B, error:A, getThrowsConfig:d, getTransform:h, getReadable:e, getResults:f, expected:E, assertResults:l, props:I, mapActual:k, forkConfig:q});
+    } : z = Ab({input:B, error:A, getThrowsConfig:d, getTransform:h, getReadable:e, getResults:f, expected:E, assertResults:l, props:I, mapActual:k, fork:q});
     t[y] = async(...Q) => {
       try {
         await z(...Q);

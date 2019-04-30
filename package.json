@@ -2,7 +2,7 @@
   "name": "@zoroaster/mask",
   "version": "1.6.0",
   "description": "The Code For Zoroaster Mask Testing.",
-  "main": "build/index.js",
+  "main": "depack/index.js",
   "module": "src/index.js",
   "scripts": {
     "t": "zoroaster -a",
@@ -13,19 +13,18 @@
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc -o README.md -n _contextTesting",
     "depack": "GOOGLE_CLOSURE_COMPILER=/Volumes/backup/closure-compiler/target/closure-compiler-1.0-SNAPSHOT.jar depack src/depack.js -l -a -p -o depack --externs externs.js -s -O 2017",
-    "b": "alamode src -o build -s",
-    "d": "yarn-s d1 externs types",
-    "types": "typal types.js -c",
-    "d1": "typal src/index.js -c",
-    "externs": "typal externs.js -e",
     "build": "yarn-s d b doc",
     "e": "alanode",
-    "example/": "yarn e example/example.js"
+    "example/": "yarn e example/example.js",
+    "d": "yarn-s d1 externs types",
+    "types": "typal types.js -c",
+    "d1": "typal src/index.js -c -t types/index.xml",
+    "externs": "typal externs.js -e"
   },
   "files": [
-    "build",
     "src",
-    "externs.js"
+    "externs.js",
+    "depack"
   ],
   "externs": "externs.js",
   "repository": {

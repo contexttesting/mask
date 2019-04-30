@@ -3,7 +3,7 @@
 var _contextTesting = {}
 /**
  * The `this` context of mask methods which contains the mask's properties extracted from the result file.
- * @typedef {{ input: *, preamble: (string|undefined) }}
+ * @typedef {{ input: *, preamble: (string|undefined), inputs: (string|undefined) }}
  */
 _contextTesting.MaskContext
 /**

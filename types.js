@@ -1,22 +1,19 @@
 export {}
 
-/* documentary types/index.xml */
+/* typal types/index.xml closure noSuppress */
 /**
- * @suppress {nonStandardJsDocs}
  * @typedef {_contextTesting.MaskContext} MaskContext The `this` context of mask methods which contains the mask's properties extracted from the result file.
  */
 /**
- * @suppress {nonStandardJsDocs}
  * @typedef {Object} _contextTesting.MaskContext The `this` context of mask methods which contains the mask's properties extracted from the result file.
  * @prop {*} input The input to the mask, normally as string, but parsed into an object if `jsonProps` contains the `'input'` value.
  * @prop {string} [preamble] The text at the top of the mask result file if present.
+ * @prop {string} [inputs] The synchronous inputs for the fork, each on a new line in form of `question: answer`.
  */
 /**
- * @suppress {nonStandardJsDocs}
  * @typedef {_contextTesting.MaskConfig} MaskConfig Configuration for making test suites.
  */
 /**
- * @suppress {nonStandardJsDocs}
  * @typedef {Object} _contextTesting.MaskConfig Configuration for making test suites.
  * @prop {function(new: _contextTesting.Context)|Array<function(new: _contextTesting.Context)>|*} [context] The single or multiple context constructors or objects to initialise for each test.
  * @prop {function(new: _contextTesting.Context)|Array<function(new: _contextTesting.Context)>|*} [persistentContext] The context constructor(s) that will be initialised and destroyed once per test suite, having a persistent state across tests.
@@ -33,22 +30,17 @@ export {}
  * @prop {!RegExp} [propEndRe="/\/\⁎\⁎\//"] The regex which indicates the end of the property, e.g, in `/⁎ propName ⁎/ some prop value /⁎⁎/` it is the default that detects `/⁎⁎/`. [If copying, replace `⁎` with `*`]. Default `/\/\⁎\⁎\//`.
  */
 /**
- * @suppress {nonStandardJsDocs}
  * @typedef {import('stream').Transform} stream.Transform
  */
 /**
- * @suppress {nonStandardJsDocs}
  * @typedef {import('stream').Readable} stream.Readable
  */
 /**
- * @suppress {nonStandardJsDocs}
  * @typedef {import('assert-throws').Config} _assertThrows.Config
  */
 /**
- * @suppress {nonStandardJsDocs}
- * @typedef {import('@zoroaster/fork').ForkConfig} _contextTesting.ForkConfig
+ * @typedef {import('@zoroaster/fork/types').Context} _contextTesting.Context
  */
 /**
- * @suppress {nonStandardJsDocs}
- * @typedef {import('@zoroaster/fork').Context} _contextTesting.Context
+ * @typedef {import('@zoroaster/fork/types').ForkConfig} _contextTesting.ForkConfig
  */

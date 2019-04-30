@@ -11,7 +11,7 @@ export default {
     ok(res.code)
     return res.stdout
   },
-  async '!notifies of errors in get-results'() {
+  async 'notifies of errors in get-results'() {
     const p = spawn('node_modules/.bin/zoroaster', [
       'test/requirements/get-results/default.js', '-a'], {
       env: process.env,

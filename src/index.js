@@ -132,7 +132,7 @@ const makeATestSuite = (maskPath, conf) => {
     } else {
       test = makeTest({
         input, error, getThrowsConfig, getTransform, getReadable, getResults, expected,
-        assertResults, props, mapActual, forkConfig,
+        assertResults, props, mapActual, fork: forkConfig,
       })
     }
 
@@ -174,9 +174,9 @@ const makeATestSuite = (maskPath, conf) => {
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {import('@zoroaster/fork').ForkConfig} _contextTesting.ForkConfig
+ * @typedef {import('@zoroaster/fork/types').ForkConfig} _contextTesting.ForkCongif
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {import('@zoroaster/fork').Context} _contextTesting.Context
+ * @typedef {import('@zoroaster/fork/types').Context} _contextTesting.Context
  */

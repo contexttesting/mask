@@ -2,8 +2,8 @@
   <import name="Transform" from="stream" link="https://nodejs.org/api/stream.html#stream_class_stream_transform" />
   <import name="Readable" from="stream" link="https://nodejs.org/api/stream.html#stream_class_stream_readable" />
   <import name="Config" from="assert-throws" ns="_assertThrows" link="https://github.com/artdecocode/assert-throws#type-_assertthrowsconfig" />
-  <import name="ForkConfig" from="@zoroaster/fork" ns="_contextTesting" link="https://github.com/contexttesting/fork#type-forkconfig" desc="The configuration of the fork." />
-  <import name="Context" from="@zoroaster/fork" ns="_contextTesting" link="https://github.com/contexttesting/fork#type-forkconfig" desc="A context instance to pass to the tests." />
+  <import name="Context" from="@zoroaster/fork/types" ns="_contextTesting" link="https://github.com/contexttesting/fork#type-forkconfig" desc="A context instance to pass to the tests." />
+  <import name="ForkConfig" from="@zoroaster/fork/types" ns="_contextTesting" link="https://github.com/contexttesting/fork#type-forkconfig" desc="The configuration of the fork." />
 
   <type name="MaskContext" desc="The `this` context of mask methods which contains the mask's properties extracted from the result file.">
     <prop name="input">
