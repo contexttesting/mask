@@ -1,5 +1,9 @@
 ## 30 April 2019
 
+### [2.0.1](https://github.com/contexttesting/mask/compare/v2.0.0...v2.0.1)
+
+- [package] Publish types in the `files` field.
+
 ### [2.0.0](https://github.com/contexttesting/mask/compare/v1.6.0...v2.0.0)
 
 - [build] Compile w/ [_Depack_](https://artdecocode.com/depack/).

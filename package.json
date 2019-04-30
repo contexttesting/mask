@@ -24,7 +24,8 @@
   "files": [
     "src",
     "externs.js",
-    "depack"
+    "depack",
+    "types.js"
   ],
   "externs": "externs.js",
   "repository": {
