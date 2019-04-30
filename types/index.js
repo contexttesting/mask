@@ -1,6 +1,6 @@
 export {}
 
-/* typal types/index.xml closure noSuppress */
+/* typal types/index.xml noSuppress ignore:_assertThrows.Config,_contextTesting.Context,_contextTesting.ForkConfig  */
 /**
  * @typedef {_contextTesting.MaskContext} MaskContext The `this` context of mask methods which contains the mask's properties extracted from the result file.
  */

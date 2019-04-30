@@ -174,7 +174,7 @@ const makeATestSuite = (maskPath, conf) => {
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {import('@zoroaster/fork/types').ForkConfig} _contextTesting.ForkCongif
+ * @typedef {import('@zoroaster/fork/types').ForkConfig} _contextTesting.ForkConfig
  */
 /**
  * @suppress {nonStandardJsDocs}
