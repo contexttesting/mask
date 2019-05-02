@@ -73,6 +73,42 @@
       "skipFiles": [
         "<node_internals>/**/*.js"
       ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch T",
+      "program": "${workspaceFolder}/t/b",
+      "env": {
+        "NODE_DEBUG": "@zoroaster/mask",
+      },
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Z",
+      "program": "${workspaceFolder}/node_modules/.bin/zoroaster",
+      "args": [
+        "t/b.js"
+      ],
+      "console": "integratedTerminal",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Map",
+      "program": "${workspaceFolder}/t/map-vs/map1.js",
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**/*.js"
+      ]
     }
   ]
 }

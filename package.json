@@ -12,7 +12,7 @@
     "test-build": "ALAMODE_ENV=test-build yarn test",
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc -o README.md -n _contextTesting",
-    "depack": "GOOGLE_CLOSURE_COMPILER=/Volumes/backup/closure-compiler/target/closure-compiler-1.0-SNAPSHOT.jar depack src/depack.js -l -a -p -o depack --externs externs.js -s -O 2017",
+    "depack": "GOOGLE_CLOSURE_COMPILER=/Volumes/backup/closure-compiler/target/closure-compiler-1.0-SNAPSHOT.jar depack src/depack.js -l -a -p -o depack --externs externs.js -s -O 2017 -S",
     "build": "yarn-s d b doc",
     "e": "alanode",
     "example/": "yarn e example/example.js",
@@ -22,10 +22,7 @@
     "externs": "typal externs.js -e"
   },
   "files": [
-    "src",
-    "externs.js",
-    "depack",
-    "types"
+    "depack"
   ],
   "externs": "externs.js",
   "repository": {

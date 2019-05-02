@@ -142,7 +142,7 @@ function R(a, b, c, d = !1) {
 function oa(a, b, c) {
   return setTimeout(() => {
     const d = Error(`${a ? a : "Promise"} has timed out after ${b}ms`);
-    d.stack = d.message;
+    d.stack = `Error: ${d.message}`;
     c(d);
   }, b);
 }
@@ -803,4 +803,3 @@ DEPACK_EXPORT = ab;
 
 
 module.exports = DEPACK_EXPORT
-//# sourceMappingURL=depack.js.map
