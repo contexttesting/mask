@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"t/map/map1.js",
+"lineCount":10,
+"mappings":"A;AAAA,MAAMA,IAAMA,KAAM,EAANA,IAAY;AACtB,QAAM,CAAE,KAAAC,CAAF,EAAQ,KAAAC,CAAR,CAAA,GAAkBC,MAAAC,SAAxB;AACA,SAAO,CAAEH,KAAAA,CAAF,EAAQC,KAAAA,CAAR,CAAP;AAFsB,CAAxB;AAKC,MAAM,EAAN,IAAY;AACX,QAAMG,IAAM,MAAML,CAAA,EAAlB;AACAM,SAAAC,IAAA,CAAYF,CAAZ,CAAA;AAFW,CAAZ,CAAD,EAAA;;",
+"sources":["t/map/map.js"],
+"sourcesContent":["const get = async () => {\n  const { hash, port  } = window.location\n  return { hash, port }\n}\n\n(async () => {\n  const res = await get()\n  console.log(res)\n})()"],
+"names":["get","hash","port","window","location","res","console","log"]
+}
