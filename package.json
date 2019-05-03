@@ -21,7 +21,8 @@
     "externs": "typal externs.js -e"
   },
   "files": [
-    "depack"
+    "depack",
+    "types/index.js"
   ],
   "externs": "externs.js",
   "repository": {
