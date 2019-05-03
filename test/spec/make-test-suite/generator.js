@@ -1,4 +1,4 @@
-import { throws, ok, deepEqual } from 'zoroaster/assert'
+import { throws, ok, deepEqual } from '@zoroaster/assert'
 import { inspect } from 'util'
 import Context from '../../context'
 import makeTestSuite from '../../../src'

@@ -1,4 +1,4 @@
-import { ok } from 'zoroaster/assert'
+import { ok } from '@zoroaster/assert'
 import spawn from 'spawncommand'
 
 export default {

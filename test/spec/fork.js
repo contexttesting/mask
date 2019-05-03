@@ -1,4 +1,4 @@
-import { throws } from 'zoroaster/assert'
+import { throws } from '@zoroaster/assert'
 import TempContext from 'temp-context'
 import Context from '../context'
 import makeTestSuite from '../../src'

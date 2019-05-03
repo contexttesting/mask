@@ -1,4 +1,4 @@
-import { equal } from 'zoroaster/assert'
+import { equal } from '@zoroaster/assert'
 import makeTestSuite from '../../src'
 
 export default makeTestSuite('test/result/default', {
