@@ -1,6 +1,6 @@
 {
   "name": "@zoroaster/mask",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "The Code For Zoroaster Mask Testing.",
   "main": "depack/index.js",
   "scripts": {
