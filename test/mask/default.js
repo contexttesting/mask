@@ -3,8 +3,18 @@ import makeTestSuite from '../../src'
 
 export default makeTestSuite('test/result/default', {
   async getResults() {
-    return this.input + ' ok'
+    const { input, ...props } = this
+    const allProps = Object.keys(props).reduce((acc, k) => {
+      return { ...acc, ...props[k] }
+    }, {})
+    let s = Object.keys(allProps).map((k) => {
+      return `${k}:${allProps[k]}`
+    }, '').join(' ')
+    if (s) s = ' ' + s
+    return input + ' ok' + `${s}`
   },
+  jsProps: ['js'],
+  jsonProps: ['json'],
 })
 
 export const regex = makeTestSuite('test/result/regex', {

@@ -25,3 +25,31 @@ export const splitWithPositions = (string, re) => {
   }, [])
   return t
 }
+
+/**
+ * @param {!Object} props
+ * @param {!Array<string>} jsonProps
+ * @param {!Array<string>} jsProps
+ */
+export const parseProps = (props, jsonProps, jsProps) => {
+  const parsedRest = Object.keys(props).reduce((ac, k) => {
+    let val
+    const value = props[k]
+    if (jsonProps.includes(k)) {
+      try {
+        val = JSON.parse(value)
+      } catch (err) {
+        throw new Error(`Could not parse JSON property "${k}": ${err.message}.`)
+      }
+    } else if (jsProps.includes(k)) {
+      try {
+        eval(`val = ${value}`)
+      } catch(err) {
+        throw new Error(`Could not evaluate JS property "${k}": ${err.message}.`)
+      }
+    } else val = value
+    ac[k] = val
+    return ac
+  }, {})
+  return parsedRest
+}

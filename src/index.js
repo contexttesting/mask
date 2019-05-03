@@ -3,6 +3,7 @@ import { readdirSync, lstatSync } from 'fs'
 import { join, dirname, basename } from 'path'
 import getTests from './mask'
 import makeTest from './lib/make-test'
+import { parseProps } from './lib'
 
 /**
  * Make a test suite to test against a mask.
@@ -61,19 +62,6 @@ const resolve = (path, content) => {
 
 // The `expected` property of the mask will be compared against the actual value returned by the `getActual` function. To test for the correct error message, the `error` property will be tested using `assert-throws` configuration returned by `getThrowsConfig` function. Any additional tests can be performed with `customTest` function, which will receive any additional properties extracted from the mask using `customProps` and `jsonProps`. The JSON properties will be parsed into an object.
 
-const parseProps = (props, jsonProps) => {
-  const parsedRest = Object.keys(props).reduce((ac, k) => {
-    try {
-      const val = jsonProps.includes(k) ? JSON.parse(props[k]) : props[k]
-      ac[k] = val
-      return ac
-    } catch (err) {
-      throw new Error(`Could not parse JSON property "${k}": ${err.message}.`)
-    }
-  }, {})
-  return parsedRest
-}
-
 /**
  * @param {string} maskPath Path to the mask.
  */
@@ -91,6 +79,7 @@ const makeATestSuite = (maskPath, conf) => {
     mapActual = a => a,
     assertResults,
     jsonProps = [],
+    jsProps = [],
     splitRe,
     fork: forkConfig,
     propEndRe,
@@ -108,7 +97,8 @@ const makeATestSuite = (maskPath, conf) => {
     if (name in acc)
       setupError = `Repeated use of the test name "${name}".`
     try {
-      ({ 'expected': expected, ...props } = parseProps(rest, jsonProps))
+      ({ 'expected': expected, ...props }
+        = parseProps(rest, jsonProps, jsProps))
     } catch ({ message }) {
       setupError = message
     }
