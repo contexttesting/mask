@@ -1,3 +1,9 @@
+## 3 May 2019
+
+### [2.1.0](https://github.com/contexttesting/mask/compare/v2.0.4...v2.1.0)
+
+- [package] Remove source maps from depack build and `src` directory from files to reduce size.
+
 ## 1 May 2019
 
 ### [2.0.4](https://github.com/contexttesting/mask/compare/v2.0.3...v2.0.4)
