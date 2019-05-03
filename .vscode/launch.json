@@ -4,23 +4,20 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
     {
       "type": "node",
       "request": "launch",
       "name": "Launch Zoroaster",
       "program": "${workspaceFolder}/node_modules/.bin/zoroaster",
       "env": {
-        "NODE_DEBUG": "@zoroaster/mask",
-        "ZOROASTER_INTERACTIVE": "1",
+        "ALAMODE_ENV": "test-build",
       },
       "console": "integratedTerminal",
       "args": [
         "test/spec",
         "test/mask",
-        "-a",
-        "-w",
-        "-t",
-        "9999999"
+        "-a", "-w", "-t", "9999999"
       ],
       "skipFiles": [
         "<node_internals>/**/*.js"

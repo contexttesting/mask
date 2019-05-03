@@ -43,7 +43,7 @@ export const parseProps = (props, jsonProps, jsProps) => {
       }
     } else if (jsProps.includes(k)) {
       try {
-        eval(`val = ${value}`)
+        val = eval(`(${value})`)
       } catch(err) {
         throw new Error(`Could not evaluate JS property "${k}": ${err.message}.`)
       }
