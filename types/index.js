@@ -27,10 +27,10 @@ export {}
 
 /* typal node_modules/@zoroaster/fork/types/index.xml noSuppress */
 /**
- * @typedef {_contextTesting.ForkConfig} ForkConfig Parameters for forking.
+ * @typedef {_contextTesting.ForkConfig} ForkConfig `@record` Parameters for forking.
  */
 /**
- * @typedef {Object} _contextTesting.ForkConfig Parameters for forking.
+ * @typedef {Object} _contextTesting.ForkConfig `@record` Parameters for forking.
  * @prop {string} module The path to the module to fork.
  * @prop {function(this: *, !Array<string>, ..._contextTesting.Context): !(Array<string>|Promise<!Array<string>>)} [getArgs] The function to get arguments to pass the fork based on the parsed mask input and contexts. The `this` context is set to the passed properties.
  * @prop {function(this: *, ..._contextTesting.Context): !child_process.ForkOptions} [getOptions] The function to get options for the fork, such as `ENV` and `cwd`, based on contexts. The `this` context is set to the passed properties.
@@ -90,10 +90,10 @@ export {}
  * @prop {string} [inputs] The synchronous inputs for the fork, each on a new line in form of `question: answer`.
  */
 /**
- * @typedef {_contextTesting.MaskConfig} MaskConfig Configuration for making test suites.
+ * @typedef {_contextTesting.MaskConfig} MaskConfig `@record` Configuration for making test suites.
  */
 /**
- * @typedef {Object} _contextTesting.MaskConfig Configuration for making test suites.
+ * @typedef {Object} _contextTesting.MaskConfig `@record` Configuration for making test suites.
  * @prop {function(new: _contextTesting.Context)|!Array<function(new: _contextTesting.Context)>|*} [context] The single or multiple context constructors or objects to initialise for each test.
  * @prop {function(new: _contextTesting.Context)|!Array<function(new: _contextTesting.Context)>|*} [persistentContext] The context constructor(s) that will be initialised and destroyed once per test suite, having a persistent state across tests.
  * @prop {function(this:_contextTesting.MaskContext, ..._contextTesting.Context): *|!Promise} [getResults] A possibly async function which returns results of a test. If it outputs a string, it will be compared against the `expected` property of the mask using string comparison. If it outputs an object, its deep equality with `expected` can be tested by adding `'expected'` to the `jsonProps`. Otherwise, the result must be mapped for comparison with `expected` using the `mapActual` method.
@@ -104,6 +104,7 @@ export {}
  * @prop {function(*): string} [mapActual] The function to get a value to test against `expected` mask property from results returned by `getResults`.
  * @prop {function(*, !Object<string, *>): !Promise|undefined} [assertResults] A possibly async function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask's result (where `jsonProps` are parsed into JS objects) will be passed as arguments.
  * @prop {!Array<string>} [jsonProps] The properties of the mask to parse as _JSON_ values.
+ * @prop {!Array<string>} [jsProps] The properties of the mask to parse into JavaScript objects. For example, a property can be written as `{ config: true }` and will be evaluated into an object.
  * @prop {!RegExp} [splitRe] A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files. Default `/^\/\/ /gm` or `/^## /gm`.
  * @prop {!RegExp} [propStartRe="\/\‎⁎"] The regex to detect the start of the property, e.g., in `/⁎ propName ⁎/` it is the default regex that detects `/⁎`. There's no option to define the end of the regex after the name. [If copying, replace `⁎` with `*`]. Default `\/\‎⁎`.
  * @prop {!RegExp} [propEndRe="/\/\⁎\⁎\//"] The regex which indicates the end of the property, e.g, in `/⁎ propName ⁎/ some prop value /⁎⁎/` it is the default that detects `/⁎⁎/`. [If copying, replace `⁎` with `*`]. Default `/\/\⁎\⁎\//`.

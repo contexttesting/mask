@@ -49,6 +49,9 @@
     <prop opt name="jsonProps" type="!Array<string>">
       The properties of the mask to parse as _JSON_ values.
     </prop>
+    <prop opt name="jsProps" type="!Array<string>">
+      The properties of the mask to parse into JavaScript objects. For example, a property can be written as `{ config: true }` and will be evaluated into an object.
+    </prop>
     <prop opt name="splitRe" type="!RegExp">
       A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files. Default `/^\/\/ /gm` or `/^## /gm`.
     </prop>

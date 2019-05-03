@@ -62,6 +62,11 @@ _contextTesting.MaskConfig.prototype.assertResults
  */
 _contextTesting.MaskConfig.prototype.jsonProps
 /**
+ * The properties of the mask to parse into JavaScript objects. For example, a property can be written as `{ config: true }` and will be evaluated into an object.
+ * @type {(!Array<string>)|undefined}
+ */
+_contextTesting.MaskConfig.prototype.jsProps
+/**
  * A regular expression used to detect the beginning of a new test in a mask result file. The default is `/^\/\/ /gm` for results from all files, and `/^## /gm` for results from `.md` files. Default `/^\/\/ /gm` or `/^## /gm`.
  * @type {(!RegExp)|undefined}
  */

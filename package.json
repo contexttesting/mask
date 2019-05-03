@@ -17,7 +17,7 @@
     "example/": "yarn e example/example.js",
     "d": "yarn-s d1 externs types",
     "types": "typal types/index.js -c",
-    "d1": "typal src/index.js -c -t types/index.xml",
+    "d1": "typal depack/index.js -c -t types/index.xml",
     "externs": "typal externs.js -e"
   },
   "files": [
