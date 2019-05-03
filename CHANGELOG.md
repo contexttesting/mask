@@ -1,5 +1,9 @@
 ## 3 May 2019
 
+### [2.2.0](https://github.com/contexttesting/mask/compare/v2.1.1...v2.2.0)
+
+- [feature] Allow to pass `jsProps`.
+
 ### [2.1.1](https://github.com/contexttesting/mask/compare/v2.1.0...v2.1.1)
 
 - [fix] Put back types.
