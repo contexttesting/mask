@@ -8,23 +8,24 @@
     "test": "yarn t test/spec test/mask",
     "spec": "yarn t test/spec",
     "mask": "yarn t test/mask",
-    "test-build": "ALAMODE_ENV=test-build yarn test",
+    "test-compile": "ALAMODE_ENV=test-compile yarn test",
     "lint": "eslint .",
     "doc": "NODE_DEBUG=doc doc -o README.md -n _contextTesting",
-    "depack": "GOOGLE_CLOSURE_COMPILER=/Volumes/backup/closure-compiler/target/closure-compiler-1.0-SNAPSHOT.jar depack src/depack.js -l -a -p -o depack --externs externs.js -s -O 2017 -S",
+    "compile": "depack-dev src/depack.js -a -p -o compile -s -O 2018 -S",
     "build": "yarn-s d b doc",
     "e": "alanode",
     "example/": "yarn e example/example.js",
     "d": "yarn-s d1 externs types",
-    "types": "typal types/index.js -c",
-    "d1": "typal depack/index.js -c -t types/index.xml",
-    "externs": "typal externs.js -e"
+    "types": "typal types/index.js -u",
+    "d1": "typal compile/index.js -u -t types/index.xml",
+    "externs": "typal types/externs.js -e"
   },
   "files": [
-    "depack",
-    "types/index.js"
+    "compile",
+    "types/index.js",
+    "types/externs.js"
   ],
-  "externs": "externs.js",
+  "externs": "types/externs.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/contexttesting/mask.git"
@@ -46,16 +47,16 @@
   "devDependencies": {
     "@zoroaster/deep-equal": "^1.0.1",
     "@zoroaster/fork": "^1.3.2",
-    "alamode": "^2.1.1",
+    "alamode": "^3.0.0",
     "assert-throws": "^3.3.0",
     "catchment": "^3.3.0",
-    "documentary": "^1.26.5",
+    "documentary": "^1.32.2",
     "erte": "^1.2.0",
     "eslint-config-artdeco": "1.0.1",
     "mismatch": "^1.2.0",
-    "reloquent": "^1.3.1",
+    "reloquent": "^1.3.2",
     "temp-context": "^2.1.3",
     "yarn-s": "1.1.0",
-    "zoroaster": "^4.1.0-alpha"
+    "zoroaster": "^4.1.2"
   }
 }

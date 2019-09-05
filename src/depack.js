@@ -1,3 +1,4 @@
+import '../types/externs'
 import _makeTestSuite from './'
 
-DEPACK_EXPORT = _makeTestSuite
+module.exports = _makeTestSuite
