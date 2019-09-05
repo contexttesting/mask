@@ -64,10 +64,10 @@
   dependencies:
     differently "^1.0.0"
 
-"@zoroaster/fork@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@zoroaster/fork/-/fork-1.3.2.tgz#594827dd459002eddef2df098fae7f157d4830c8"
-  integrity sha512-Ulsb0hAxtfB3XmZzB4JlX/AbYIx000RZkoH0h7d4Hp82UaFc/x4K4E8ZI+4TCoXwr+Az8uXycQl4dtjqrSVZjw==
+"@zoroaster/fork@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@zoroaster/fork/-/fork-1.3.3.tgz#36f3e660926af885951a3248cf55b465e163aaa4"
+  integrity sha512-kW5bnoYoUWgpl+6RRm6k2OPNX3WxI2otYhbsunBVEr4AEi4ykSoL/vpPfpXrpx0BcKIShrJ8wdhUkV9YBrWAbw==
   dependencies:
     "@zoroaster/deep-equal" "^1.0.1"
     catchment "^3.3.0"
@@ -211,6 +211,11 @@ typal@^1.22.1:
   version "1.22.1"
   resolved "https://registry.yarnpkg.com/typal/-/typal-1.22.1.tgz#d7d861b87c7b1e4eb164547a8eb5c3f3863fb6e9"
   integrity sha512-0gvvH2reH3rFh8lmVatMZI1SjLR8/LHwDpugs51vPDJnd41ANo59cBMsGl7IbQh2ThkOwvOPfbT+JLzz1Wpshg==
+
+typal@^1.22.3:
+  version "1.22.3"
+  resolved "https://registry.yarnpkg.com/typal/-/typal-1.22.3.tgz#e5b3a38778ecff7d96ff6205d7b8a34f9b728f94"
+  integrity sha512-4ZYAmGH7r906rHJGDvlsYGqHWYYC7sS1FJLYakUt/tJDyz5nvFakF26Kvl+1S5YL4yLvCcFcBbSz0J+RXrKu0Q==
 
 yarn-s@1.1.0:
   version "1.1.0"

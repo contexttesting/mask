@@ -1,6 +1,7 @@
 const mask = require('./depack')
 
 /**
+ * Creates a new test suite based on the config. The test suite should be exported from JS files, either as default, or named exports.
  * @param {string} path The path to the result file.
  * @param {_contextTesting.MaskConfig} config Configuration for making test suites.
  * @param {function(new: _contextTesting.Context)|!Array<function(new: _contextTesting.Context)>|*} [config.context] The single or multiple context constructors or objects to initialise for each test.

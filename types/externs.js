@@ -85,4 +85,4 @@ _contextTesting.MaskConfig.prototype.mapActual = function(result) {}
  * A possibly async function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask's result (where `jsonProps` are parsed into JS objects) will be passed as arguments.
  * @type {(function(*,!Object<string, *>): !Promise|undefined)|undefined}
  */
-_contextTesting.MaskConfig.prototype.assertResults = function(actual, expected) {}
+_contextTesting.MaskConfig.prototype.assertResults = function(actual, actual) {}
