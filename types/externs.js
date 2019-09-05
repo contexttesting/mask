@@ -58,24 +58,24 @@ _contextTesting.MaskConfig.prototype.propStartRe
 _contextTesting.MaskConfig.prototype.propEndRe
 /**
  * A possibly async function which returns results of a test. If it outputs a string, it will be compared against the `expected` property of the mask using string comparison. If it outputs an object, its deep equality with `expected` can be tested by adding `'expected'` to the `jsonProps`. Otherwise, the result must be mapped for comparison with `expected` using the `mapActual` method.
- * @type {(function(_contextTesting.MaskContext,_contextTesting.Context): *|!Promise)|undefined}
+ * @type {(function(this: _contextTesting.MaskContext,..._contextTesting.Context): *|!Promise)|undefined}
  */
-_contextTesting.MaskConfig.prototype.getResults = function(this, ...args) {}
+_contextTesting.MaskConfig.prototype.getResults = function(...args) {}
 /**
  * A possibly async function which returns a _Transform_ stream to be ended with the input specified in the mask's result. Its output will be accumulated and compared against the expected output of the mask.
- * @type {(function(_contextTesting.MaskContext,_contextTesting.Context): !(stream.Transform|Promise<!stream.Transform>))|undefined}
+ * @type {(function(this: _contextTesting.MaskContext,..._contextTesting.Context): !(stream.Transform|Promise<!stream.Transform>))|undefined}
  */
-_contextTesting.MaskConfig.prototype.getTransform = function(this, ...args) {}
+_contextTesting.MaskConfig.prototype.getTransform = function(...args) {}
 /**
  * A possibly async function which returns a _Readable_ stream constructed with the input from the mask. Its output will be stored in memory and compared against the expected output of the mask.
- * @type {(function(_contextTesting.MaskContext,_contextTesting.Context): !(stream.Readable|Promise<!stream.Readable>))|undefined}
+ * @type {(function(this: _contextTesting.MaskContext,..._contextTesting.Context): !(stream.Readable|Promise<!stream.Readable>))|undefined}
  */
-_contextTesting.MaskConfig.prototype.getReadable = function(this, ...args) {}
+_contextTesting.MaskConfig.prototype.getReadable = function(...args) {}
 /**
  * A function which should return a configuration for [`assert-throws`](https://github.com/artdecocode/assert-throws), including `fn` and `args`, when testing an error.
- * @type {(function(_contextTesting.MaskContext,_contextTesting.Context): _assertThrows.Config)|undefined}
+ * @type {(function(this: _contextTesting.MaskContext,..._contextTesting.Context): _assertThrows.Config)|undefined}
  */
-_contextTesting.MaskConfig.prototype.getThrowsConfig = function(this, ...args) {}
+_contextTesting.MaskConfig.prototype.getThrowsConfig = function(...args) {}
 /**
  * The function to get a value to test against `expected` mask property from results returned by `getResults`.
  * @type {(function(*): string)|undefined}
