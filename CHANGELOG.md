@@ -1,3 +1,11 @@
+## 30 January 2020
+
+### [2.4.0](https://github.com/contexttesting/mask/compare/v2.3.0...v2.4.0)
+
+- [feature] Pass multiple paths.
+- [license] Update to Affero.
+- [doc] Add `typedefs.json`.
+
 ## 5 September 2019
 
 ### [2.3.0](https://github.com/contexttesting/mask/compare/v2.2.0...v2.3.0)
