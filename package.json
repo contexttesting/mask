@@ -11,7 +11,7 @@
     "test-compile": "ALAMODE_ENV=test-compile yarn test",
     "lint": "eslint .",
     "doc": "doc -o README.md -n _contextTesting -d -a",
-    "compile": "depack src/depack.js -c -a -p -o compile -s -S",
+    "lib": "depack src/depack.js -c -a -p -o compile -s -S",
     "build": "yarn-s d b doc",
     "e": "alanode",
     "example/": "yarn e example/example.js",
@@ -30,6 +30,7 @@
     "type": "git",
     "url": "git://github.com/contexttesting/mask.git"
   },
+  "typedefs": "typedefs.json",
   "keywords": [
     "mask",
     "spec",
@@ -46,12 +47,12 @@
   "homepage": "https://www.contexttesting.com",
   "devDependencies": {
     "@zoroaster/deep-equal": "^1.0.1",
-    "@zoroaster/fork": "^1.3.3",
+    "@zoroaster/fork": "^1.4.0",
     "alamode": "^3.3.1",
     "assert-throws": "^3.3.0",
     "catchment": "^3.3.0",
     "depack": "^1.1.0",
-    "documentary": "^1.35.9",
+    "documentary": "^1.35.10",
     "erte": "^1.2.0",
     "eslint-config-artdeco": "1.0.1",
     "mismatch": "^1.2.0",

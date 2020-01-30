@@ -90,6 +90,6 @@ _contextTesting.MaskConfig.prototype.assertResults = function(actual, expected) 
 /* typal types/api.xml */
 /**
  * Creates a new test suite based on the config. The test suite should be exported from JS files, either as default, or named exports.
- * @typedef {function(string,_contextTesting.MaskConfig)}
+ * @typedef {function(string,_contextTesting.MaskConfig): _contextTesting.TestSuite}
  */
 _contextTesting.makeTestSuite

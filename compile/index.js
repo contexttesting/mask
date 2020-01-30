@@ -18,6 +18,7 @@ const mask = require('./depack')
  * @param {(this: _contextTesting.MaskContext, ...args: _contextTesting.Context[]) => _assertThrows.Config} [config.getThrowsConfig] A function which should return a configuration for [`assert-throws`](https://github.com/artdecocode/assert-throws), including `fn` and `args`, when testing an error.
  * @param {(result: *) => string} [config.mapActual] The function to get a value to test against `expected` mask property from results returned by `getResults`.
  * @param {(actual: *, expected: !Object<string, *>) => (!Promise|undefined)} [config.assertResults] A possibly async function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask's result (where `jsonProps` are parsed into JS objects) will be passed as arguments.
+ * @return {_contextTesting.TestSuite}
  */
 function makeTestSuite(path, config) {
   return mask(path, config)

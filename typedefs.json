@@ -1,0 +1,29 @@
+{
+  "_contextTesting.MaskContext": {
+    "link": "https://github.com/contexttesting/mask#type-maskcontext",
+    "description": "The `this` context of mask methods which contains the mask's properties extracted from the result file."
+  },
+  "_contextTesting.MaskConfig": {
+    "link": "https://github.com/contexttesting/mask#type-maskconfig",
+    "description": "Configuration for making test suites."
+  },
+  "_contextTesting.ForkConfig": {
+    "link": "https://github.com/contexttesting/mask#type-forkconfig",
+    "description": "Parameters for forking."
+  },
+  "_contextTesting.Preprocessor": {
+    "link": "https://github.com/contexttesting/mask#type-preprocessor",
+    "description": "The function which processes fork's outputs before returning them for asserts."
+  },
+  "_contextTesting.ForkPreprocessor": {
+    "link": "https://github.com/contexttesting/mask#type-forkpreprocessor",
+    "description": "An object with `stdout` and `stderr` preprocessors."
+  },
+  "undefinedmakeTestSuite": {
+    "link": "https://github.com/contexttesting/mask#maketestsuiteresult-stringconfig-maketestsuiteconf-testsuite"
+  },
+  "_contextTesting.makeTestSuite": {
+    "link": "https://github.com/contexttesting/mask#maketestsuitepath-stringconfig-maskconfig-testsuite",
+    "description": "Creates a new test suite based on the config. The test suite should be exported from JS files, either as default, or named exports."
+  }
+}

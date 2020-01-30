@@ -1,5 +1,5 @@
 <types ns="_contextTesting">
-  <method name="makeTestSuite">
+  <method name="makeTestSuite" return="_contextTesting.TestSuite">
     <arg string name="path">
       The path to the mask result file or directory.
     </arg>

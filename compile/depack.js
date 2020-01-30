@@ -118,9 +118,9 @@ function K(a, b) {
     return d ? h.map(c => c.replace(/\n$/mg, "\u23ce\n")).map(c => I(c, "green")).join(J("green")) : g ? h.map(c => c.replace(/\n$/mg, "\u23ce\n")).map(c => I(c, "red")).join(J("red")) : I(f, "grey");
   }).join("");
 }
-;const {lstatSync:L, readFileSync:M, readdirSync:N, writeFileSync:fa} = fs;
-const {basename:ha, dirname:ja, join:O} = path;
-const {deepStrictEqual:ka, equal:la, strictEqual:ma} = assert;
+;const L = fs.lstatSync, M = fs.readFileSync, N = fs.readdirSync, fa = fs.writeFileSync;
+const ha = path.basename, ja = path.dirname, O = path.join;
+const ka = assert.deepStrictEqual, la = assert.equal, ma = assert.strictEqual;
 function P(a, b, d, g = !1) {
   const f = [];
   b.replace(a, (h, ...c) => {
@@ -138,7 +138,7 @@ function P(a, b, d, g = !1) {
   });
   return f;
 }
-;const {createInterface:na} = readline;
+;const na = readline.createInterface;
 function oa(a, b, d) {
   return setTimeout(() => {
     const g = Error(`${a ? a : "Promise"} has timed out after ${b}ms`);
@@ -245,13 +245,12 @@ async function ua() {
   });
   d = [{position:0, separator:""}, ...d];
   return d.reduce((g, {position:f, separator:h}, c, e) => {
-    var {length:k} = h;
+    var k = h.length;
     c = e[c + 1];
     if (!c) {
       return k = a.slice(f + k), g.push({position:f, separator:h, match:k}), g;
     }
-    ({position:c} = c);
-    k = a.slice(f + k, c);
+    k = a.slice(f + k, c.position);
     g.push({position:f, separator:h, match:k});
     return g;
   }, []);
@@ -344,7 +343,7 @@ const za = a => {
   const b = a.indexOf("\n");
   return [a.substr(0, b), a.substr(b + 1)];
 };
-const {PassThrough:R, Writable:Aa} = stream;
+const R = stream.PassThrough, Aa = stream.Writable;
 const S = (a, b = 0, d = !1) => {
   if (0 === b && !d) {
     return a;
@@ -355,7 +354,7 @@ const S = (a, b = 0, d = !1) => {
   ({callee:{caller:a}} = a);
   return a;
 };
-const {homedir:Ca} = os;
+const Ca = os.homedir;
 const Da = /\s+at.*(?:\(|\s)(.*)\)?/, Ea = /^(?:(?:(?:node|(?:internal\/[\w/]*|.*node_modules\/(?:IGNORED_MODULES)\/.*)?\w+)\.js:\d+:\d+)|native)/, Fa = Ca(), Ga = a => {
   const {pretty:b = !1, ignoredModules:d = ["pirates"]} = {}, g = d.join("|"), f = new RegExp(Ea.source.replace("IGNORED_MODULES", g));
   return a.replace(/\\/g, "/").split("\n").filter(h => {
@@ -565,7 +564,7 @@ function Oa(a, b) {
     throw a = Na(b, a), d.message = [d.message, a].filter(Boolean).join("\n"), d;
   }
 }
-;const {fork:Pa} = child_process;
+;const Pa = child_process.fork;
 const Qa = async a => {
   const [b, d, g] = await Promise.all([new Promise((f, h) => {
     a.on("error", h).on("exit", c => {
@@ -592,11 +591,14 @@ const Sa = async(a, b = [], d = [], g = {}) => {
   if ("string" == typeof a) {
     return {i:a, args:b, options:f};
   }
-  const {module:h, getArgs:c, options:e, getOptions:k} = a;
-  a = c ? await c.call(g, b, ...d) : b;
-  b = f;
-  e ? b = {...f, ...e} : k && (d = await k.call(g, ...d), b = {...f, ...d});
-  return {i:h, args:a, options:b};
+  const h = a.module;
+  var c = a.getArgs;
+  const e = a.options;
+  a = a.getOptions;
+  b = c ? await c.call(g, b, ...d) : b;
+  c = f;
+  e ? c = {...f, ...e} : a && (d = await a.call(g, ...d), c = {...f, ...d});
+  return {i:h, args:b, options:c};
 }, Ta = (a, b, d) => {
   try {
     if ("string" == typeof b) {
@@ -661,7 +663,7 @@ const Wa = async a => {
   }
 };
 const $a = a => {
-  const {input:b, error:d, expected:g, props:f, getThrowsConfig:h, getTransform:c, getResults:e, assertResults:k, mapActual:l, getReadable:q, fork:m} = a;
+  const b = a.input, d = a.error, g = a.expected, f = a.props, h = a.getThrowsConfig, c = a.getTransform, e = a.getResults, k = a.assertResults, l = a.mapActual, q = a.getReadable, m = a.fork;
   return async(...n) => {
     var r = {input:b, ...f};
     if (d) {

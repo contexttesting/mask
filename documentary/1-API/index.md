@@ -8,12 +8,9 @@ import makeTestSuite from '@zoroaster/mask'
 
 %~%
 
-```## makeTestSuite => TestSuite
-[
-  ["result", "string"],
-  ["config", "MakeTestSuiteConf"]
-]
-```
+<include-typedefs>@zoroaster/fork</include-typedefs>
+
+<typedef name="makeTestSuite">types/api.xml</typedef>
 
 Creates a test suite that can be exported to run with _Zoroaster_ Context-Testing Framework. The simplest form of a mask is to use the `getResults` property, which acts as a template for test cases, which will receive the inputs (e.g., `input`) from the mask result as properties of the `this` context, and the contexts via the arguments. The output will be compared to the `expected` property of the mask.
 
@@ -21,7 +18,7 @@ _For example, given the following function:_
 
 %EXAMPLE: example/src%
 
-_Zoroastser can test it using a mask:_
+_Zoroaster can test it using a mask:_
 
 <table>
 <tr><th>Mask</th><th>Mask Result</th></tr>
@@ -34,7 +31,9 @@ _Zoroastser can test it using a mask:_
 </td></tr>
 </table>
 
-%FORK node_modules/.bin/zoroaster -a example/test/mask/default.js%
+<fork>
+  node_modules/.bin/zoroaster -a example/test/mask/default.js
+</fork>
 
 %~%
 
@@ -42,6 +41,6 @@ _Zoroastser can test it using a mask:_
 
 The following types are used to define the configuration of the mask.
 
-%TYPEDEF types/index.xml%
+<typedef>types/index.xml</typedef>
 
 %~%

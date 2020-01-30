@@ -72,10 +72,10 @@
   dependencies:
     differently "^1.0.0"
 
-"@zoroaster/fork@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@zoroaster/fork/-/fork-1.3.3.tgz#36f3e660926af885951a3248cf55b465e163aaa4"
-  integrity sha512-kW5bnoYoUWgpl+6RRm6k2OPNX3WxI2otYhbsunBVEr4AEi4ykSoL/vpPfpXrpx0BcKIShrJ8wdhUkV9YBrWAbw==
+"@zoroaster/fork@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@zoroaster/fork/-/fork-1.4.0.tgz#10bf7b8defcafe563c2158a2a988f5a0d47b3c08"
+  integrity sha512-JOFXCa95gYdotxDzt0VJ/yRXT4i9Ai4MpPJhmLb8Qz79B3FQA29NSNyC02UmXQ+saSKojNbfNpqg9vwSW4KnoQ==
   dependencies:
     "@zoroaster/deep-equal" "^1.0.1"
     catchment "^3.3.0"
@@ -89,7 +89,7 @@
   resolved "https://registry.yarnpkg.com/@zoroaster/mask/-/mask-2.3.0.tgz#57d169417e09e481efafccbffdd93cef919ec5e6"
   integrity sha512-fufal06pS/SYhOKHCmoFQ+PjhQwsCwMr2h0D2xeiVaXstaWHJVEiLg4+BU/KCmOOzLXLKikf81ca4zFXip7ScQ==
 
-alamode@^3.0.0, alamode@^3.3.0, alamode@^3.3.1:
+alamode@^3.0.0, alamode@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/alamode/-/alamode-3.3.1.tgz#b244ac06560bcc4c3b48bb6ea79adb399dbfa9b7"
   integrity sha512-689o0l4C4aaf+7pboTTpLAXQecztn0eqvqISRPWOJEKC+Xe8XGGZxsMTtkc+ZPYYEe+WY7VjdKoK0GZUDNqwOg==
@@ -125,14 +125,14 @@ differently@^1.0.0:
   dependencies:
     erte "^1.2.0"
 
-documentary@^1.35.9:
-  version "1.35.9"
-  resolved "https://registry.yarnpkg.com/documentary/-/documentary-1.35.9.tgz#f0003b04c4a54325198e1189f81ba88aad87e21a"
-  integrity sha512-NnZvzx+429RfwgehvpSNvTXFEOR3bnrPW09TZpPxwa2QnPOdRybxoKDrluP6QoGDQslOKXrWkzSXO/lesqPsWw==
+documentary@^1.35.10:
+  version "1.35.10"
+  resolved "https://registry.yarnpkg.com/documentary/-/documentary-1.35.10.tgz#4c1391882f1bfdc9e3dbfc1536f0b4bbe7dfe530"
+  integrity sha512-XTHj5XYTgiWsw9IVc/37zpjsgztm9OmW3B1a3tmQmoFDswr4CoA7VpoxRCTn4LAtCFp6fSTFclSo5d2uQedWhQ==
   dependencies:
-    alamode "^3.3.0"
+    alamode "^3.3.1"
     preact "8.5.3"
-    typal "^1.24.19"
+    typal "^1.26.0"
 
 erotic@^2.1.0, erotic@^2.1.1:
   version "2.1.1"
@@ -211,7 +211,7 @@ temp-context@^2.1.3:
     makepromise "^3.0.3"
     pedantry "^2.3.1"
 
-typal@^1.24.19, typal@^1.26.0:
+typal@^1.26.0:
   version "1.26.0"
   resolved "https://registry.yarnpkg.com/typal/-/typal-1.26.0.tgz#72d0a3cb11795fd29397cdbc1aa7cff14e696406"
   integrity sha512-zmONxk2RvezXI0AKOa74yw9Ac5OvHNItlhThbcUtmi+MErbyi8uHh7mwf8bG2E1mB6MEJ1FQtwf0NBVPe4TVUg==
