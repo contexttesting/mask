@@ -23,7 +23,8 @@
   "files": [
     "compile",
     "types/index.js",
-    "types/externs.js"
+    "types/externs.js",
+    "typedefs.json"
   ],
   "externs": "types/externs.js",
   "repository": {

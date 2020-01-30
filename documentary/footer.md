@@ -2,8 +2,10 @@
 
 - [ ] Add a new item to the todo list. -->
 
-## Copyright
+## Copyright & License
 
-<ContextTestingFooter />
+GNU Affero General Public License v3.0
+
+<context-testing-footer />
 
 %~ -1%

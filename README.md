@@ -21,7 +21,7 @@ yarn add -D @zoroaster/mask
   * [`Preprocessor`](#type-preprocessor)
   * [`ForkPreprocessor`](#type-forkpreprocessor)
 - [Enabling JSDoc](#enabling-jsdoc)
-- [Copyright](#copyright)
+- [Copyright & License](#copyright--license)
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/0.svg?sanitize=true">
@@ -218,7 +218,9 @@ The JSDoc for contexts can be enabled by specifying types for the params to the 
   <img src="/.documentary/section-breaks/5.svg?sanitize=true">
 </a></p>
 
-## Copyright
+## Copyright & License
+
+GNU Affero General Public License v3.0
 
 <table>
   <tr>
