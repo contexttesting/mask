@@ -41,12 +41,12 @@ import makeTestSuite from '@zoroaster/mask'
 
 
 ## <code><ins>makeTestSuite</ins>(</code><sub><br/>&nbsp;&nbsp;`path: string,`<br/>&nbsp;&nbsp;`config: MaskConfig,`<br/></sub><code>): <i>TestSuite</i></code>
-Creates a new test suite based on the config. The test suite should be exported from JS files, either as default, or named exports.
+Creates a new test suite based on the config. The test suite should be exported from JS files, either as a default, or named export.
 
  - <kbd><strong>path*</strong></kbd> <em>`string`</em>: The path to the mask result file or directory.
  - <kbd><strong>config*</strong></kbd> <em><code><a href="#type-maskconfig" title="Configuration for making test suites.">MaskConfig</a></code></em>: Configuration for making test suites.
 
-Creates a test suite that can be exported to run with _Zoroaster_ Context-Testing Framework. The simplest form of a mask is to use the `getResults` property, which acts as a template for test cases, which will receive the inputs (e.g., `input`) from the mask result as properties of the `this` context, and the contexts via the arguments. The output will be compared to the `expected` property of the mask.
+The exported test suite will be run with _Zoroaster_ Context-Testing Framework. The simplest form of a mask is to use the `getResults` property, which acts as a template for test cases, which will receive the inputs (e.g., `input`) from the mask result as properties of the `this` context, and the contexts via the arguments. The output will be compared to the `expected` property of the mask.
 
 _For example, given the following function:_
 
@@ -212,7 +212,7 @@ __<a name="type-forkpreprocessor">`ForkPreprocessor`</a>__: An object with `stdo
 
 The JSDoc for contexts can be enabled by specifying types for the params to the functions.
 
-![Zoroaster Mask JSDoc Contexts](doc/context.gif)
+![Zoroaster Mask JSDoc Contexts](doc/mask.gif)
 
 <p align="center"><a href="#table-of-contents">
   <img src="/.documentary/section-breaks/5.svg?sanitize=true">

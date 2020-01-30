@@ -24,6 +24,6 @@
   },
   "_contextTesting.makeTestSuite": {
     "link": "https://github.com/contexttesting/mask#maketestsuitepath-stringconfig-maskconfig-testsuite",
-    "description": "Creates a new test suite based on the config. The test suite should be exported from JS files, either as default, or named exports."
+    "description": "Creates a new test suite based on the config. The test suite should be exported from JS files, either as a default, or named export."
   }
 }

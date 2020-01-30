@@ -12,7 +12,7 @@ import makeTestSuite from '@zoroaster/mask'
 
 <typedef name="makeTestSuite">types/api.xml</typedef>
 
-Creates a test suite that can be exported to run with _Zoroaster_ Context-Testing Framework. The simplest form of a mask is to use the `getResults` property, which acts as a template for test cases, which will receive the inputs (e.g., `input`) from the mask result as properties of the `this` context, and the contexts via the arguments. The output will be compared to the `expected` property of the mask.
+The exported test suite will be run with _Zoroaster_ Context-Testing Framework. The simplest form of a mask is to use the `getResults` property, which acts as a template for test cases, which will receive the inputs (e.g., `input`) from the mask result as properties of the `this` context, and the contexts via the arguments. The output will be compared to the `expected` property of the mask.
 
 _For example, given the following function:_
 

@@ -6,6 +6,6 @@
     <arg type="_contextTesting.MaskConfig" name="config">
       Configuration for making test suites.
     </arg>
-    Creates a new test suite based on the config. The test suite should be exported from JS files, either as default, or named exports.
+    Creates a new test suite based on the config. The test suite should be exported from JS files, either as a default, or named export.
   </method>
 </types>
