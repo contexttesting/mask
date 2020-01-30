@@ -10,14 +10,14 @@
     "mask": "yarn t test/mask",
     "test-compile": "ALAMODE_ENV=test-compile yarn test",
     "lint": "eslint .",
-    "doc": "NODE_DEBUG=doc doc -o README.md -n _contextTesting",
-    "compile": "depack-dev src/depack.js -c -a -p -o compile -s -O 2018 -S",
+    "doc": "doc -o README.md -n _contextTesting -d -a",
+    "compile": "depack src/depack.js -c -a -p -o compile -s -S",
     "build": "yarn-s d b doc",
     "e": "alanode",
     "example/": "yarn e example/example.js",
-    "d": "yarn-s d1 externs types",
-    "types": "typal types/index.js -u",
-    "d1": "typal compile/index.js -u -t types/index.xml",
+    "d": "yarn-s template d1 externs",
+    "template": "typal compile/template.js -T compile/index.js -u -t types",
+    "d1": "typal compile/index.js -u -t types",
     "externs": "typal types/externs.js -e"
   },
   "files": [
@@ -39,25 +39,26 @@
     "testing"
   ],
   "author": "Anton <anton@adc.sh>",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/contexttesting/mask/issues"
   },
-  "homepage": "https://github.com/contexttesting/mask#readme",
+  "homepage": "https://www.contexttesting.com",
   "devDependencies": {
     "@zoroaster/deep-equal": "^1.0.1",
     "@zoroaster/fork": "^1.3.3",
-    "alamode": "^3.0.0",
+    "alamode": "^3.3.1",
     "assert-throws": "^3.3.0",
     "catchment": "^3.3.0",
-    "documentary": "^1.32.2",
+    "depack": "^1.1.0",
+    "documentary": "^1.35.9",
     "erte": "^1.2.0",
     "eslint-config-artdeco": "1.0.1",
     "mismatch": "^1.2.0",
     "reloquent": "^1.3.2",
     "temp-context": "^2.1.3",
-    "typal": "^1.22.3",
-    "yarn-s": "1.1.0",
+    "typal": "^1.26.0",
+    "yarn-s": "1.2.2",
     "zoroaster": "^4.1.2"
   }
 }

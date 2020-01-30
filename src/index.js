@@ -6,11 +6,9 @@ import makeTest from './lib/make-test'
 import { parseProps } from './lib'
 
 /**
- * Make a test suite to test against a mask.
- * @param {string} path Path to the mask file or directory of files.
- * @param {!_contextTesting.MaskConfig} conf Configuration for making test suites.
+ * @type {_contextTesting.makeTestSuite}
  */
-export default function makeTestSuite(path, conf, _content = null) {
+function makeTestSuite(path, conf, _content = null) {
   let pathStat
   const isFocused = path.startsWith('!')
   let realPath = isFocused ? path.replace(/^!/, '') : path
@@ -40,6 +38,9 @@ export default function makeTestSuite(path, conf, _content = null) {
   if (isFocused) return { [path]: ts }
   return ts
 }
+
+export default makeTestSuite
+
 const replaceFilename = (filename) => {
   return filename.replace(/\.\w+?$/, '')
 }
@@ -131,29 +132,9 @@ const makeATestSuite = (maskPath, conf) => {
 
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {import('../types').MaskConfig} _contextTesting.MaskConfig
+ * @typedef {import('..').MaskConfig} _contextTesting.MaskConfig
  */
 /**
  * @suppress {nonStandardJsDocs}
- * @typedef {import('../types').MaskContext} _contextTesting.MaskContext
- */
-/**
- * @suppress {nonStandardJsDocs}
- * @typedef {import('stream').Transform} stream.Transform
- */
-/**
- * @suppress {nonStandardJsDocs}
- * @typedef {import('stream').Readable} stream.Readable
- */
-/**
- * @suppress {nonStandardJsDocs}
- * @typedef {import('assert-throws').Config} _assertThrows.Config
- */
-/**
- * @suppress {nonStandardJsDocs}
- * @typedef {import('@zoroaster/fork/types').ForkConfig} _contextTesting.ForkConfig
- */
-/**
- * @suppress {nonStandardJsDocs}
- * @typedef {import('@zoroaster/fork/types').Context} _contextTesting.Context
+ * @typedef {import('..')} _contextTesting.makeTestSuite
  */

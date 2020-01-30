@@ -3,7 +3,7 @@
  * @externs
  */
 
-/* typal types/index.xml */
+/* typal types/index.xml no-embed */
 /** @const */
 var _contextTesting = {}
 /**
@@ -85,4 +85,11 @@ _contextTesting.MaskConfig.prototype.mapActual = function(result) {}
  * A possibly async function containing any addition assertions on the results. The results from `getResults` and a map of expected values extracted from the mask's result (where `jsonProps` are parsed into JS objects) will be passed as arguments.
  * @type {(function(*,!Object<string, *>): !Promise|undefined)|undefined}
  */
-_contextTesting.MaskConfig.prototype.assertResults = function(actual, actual) {}
+_contextTesting.MaskConfig.prototype.assertResults = function(actual, expected) {}
+
+/* typal types/api.xml */
+/**
+ * Creates a new test suite based on the config. The test suite should be exported from JS files, either as default, or named exports.
+ * @typedef {function(string,_contextTesting.MaskConfig)}
+ */
+_contextTesting.makeTestSuite
