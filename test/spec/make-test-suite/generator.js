@@ -16,6 +16,16 @@ const T = {
       .split('\n').map(a => a.trimRight()).join('\n')
     return s
   },
+  async 'can create a test suite from multiple files'({ f }) {
+    const ts = makeTestSuite([f`test-suite/custom.js`, f`test-suite/default.js`], {
+      getResults(input) {
+        return input + ' - ok'
+      },
+    })
+    const s = inspect(ts)
+      .split('\n').map(a => a.trimRight()).join('\n')
+    return s
+  },
   async 'creates a test suite from nested directories'({ f }) {
     const ts = makeTestSuite(f`recursive`, {
       getResults() {},

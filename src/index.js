@@ -9,6 +9,15 @@ import { parseProps } from './lib'
  * @type {_contextTesting.makeTestSuite}
  */
 function makeTestSuite(path, conf, _content = null) {
+  if (Array.isArray(path)) {
+    const ts = path.reduce((acc, p) => {
+      const nn = basename(replaceFilename(p))
+      const its = makeTestSuite(p, conf, _content)
+      Object.assign(acc, { [nn]: its })
+      return acc
+    }, {})
+    return ts
+  }
   let pathStat
   const isFocused = path.startsWith('!')
   let realPath = isFocused ? path.replace(/^!/, '') : path

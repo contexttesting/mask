@@ -1,8 +1,8 @@
 const mask = require('./depack')
 
 /**
- * Creates a new test suite based on the config. The test suite should be exported from JS files, either as default, or named exports.
- * @param {string} path The path to the mask result file or directory.
+ * Creates a new test suite based on the config. The test suite should be exported from JS files, either as a default, or named export.
+ * @param {(string|!Array<string>)} path The path to the mask result file or directory. Can also pass an array of paths.
  * @param {_contextTesting.MaskConfig} config Configuration for making test suites.
  * @param {function(new: _contextTesting.Context)|!Array<function(new: _contextTesting.Context)>|*} [config.context] The single or multiple context constructors or objects to initialise for each test.
  * @param {function(new: _contextTesting.Context)|!Array<function(new: _contextTesting.Context)>|*} [config.persistentContext] The context constructor(s) that will be initialised and destroyed once per test suite, having a persistent state across tests.
@@ -85,10 +85,10 @@ module.exports = makeTestSuite
  * @prop {(this: Object, ...contexts: _contextTesting.Context[]) => !child_process.ForkOptions} [getOptions] The function to get options for the fork, such as `ENV` and `cwd`, based on contexts. The `this` context is set to the passed properties.
  * @typedef {_contextTesting.Preprocessor} Preprocessor The function which processes fork's outputs before returning them for asserts.
  * @typedef {function(string): string} _contextTesting.Preprocessor The function which processes fork's outputs before returning them for asserts.
- * @typedef {_contextTesting.ForkPreprocessor} ForkPreprocessor An object with `stdout` and `stderr` preprocessors.
- * @typedef {Object} _contextTesting.ForkPreprocessor An object with `stdout` and `stderr` preprocessors.
- * @prop {_contextTesting.Preprocessor} [stdout] How to process `stdout` before asserts.
- * @prop {_contextTesting.Preprocessor} [stderr] How to process `stderr` before asserts.
+ * @typedef {_contextTesting.ForkPreprocessor} ForkPreprocessor `＠record` An object with `stdout` and `stderr` preprocessors.
+ * @typedef {Object} _contextTesting.ForkPreprocessor `＠record` An object with `stdout` and `stderr` preprocessors.
+ * @prop {(stdout: string) => string} [stdout] How to process `stdout` before asserts.
+ * @prop {(stdout: string) => string} [stderr] How to process `stderr` before asserts, for example, you can strip `\r` symbols with `clearr` package.
  */
 /* typal-embed node_modules/@zoroaster/fork/types/context.xml namespace */
 /**

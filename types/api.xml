@@ -1,11 +1,13 @@
 <types ns="_contextTesting">
   <method name="makeTestSuite" return="_contextTesting.TestSuite">
-    <arg string name="path">
-      The path to the mask result file or directory.
+    <arg type="(string|!Array<string>)" name="path">
+      The path to the mask result file or directory. Can also pass an array of paths.
     </arg>
     <arg type="_contextTesting.MaskConfig" name="config">
       Configuration for making test suites.
     </arg>
     Creates a new test suite based on the config. The test suite should be exported from JS files, either as a default, or named export.
   </method>
+  <type type="!Object" name="TestSuite" desc="Generated test suite">
+  </type>
 </types>
