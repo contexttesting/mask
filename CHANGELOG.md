@@ -1,3 +1,10 @@
+## 4 February 2020
+
+### [2.4.1](https://github.com/contexttesting/mask/compare/v2.4.0...v2.4.1)
+
+- [fix] Upgrade for EOLs.
+- [tests] Update tests to be robust against node versions.
+
 ## 30 January 2020
 
 ### [2.4.0](https://github.com/contexttesting/mask/compare/v2.3.0...v2.4.0)
