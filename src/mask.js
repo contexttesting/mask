@@ -154,7 +154,7 @@ const splitWithRe = (s, re) => {
 const split = (s, del) => {
   const nl = s.indexOf(del)
   const first = s.substr(0, nl)
-  const second = s.substr(nl + 1)
+  const second = s.substr(nl + del.length)
   return [first, second]
 }
 

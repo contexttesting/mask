@@ -27,7 +27,7 @@ function D(a, b, d, g, f) {
   b.b = e;
   return f;
 }
-function H(a) {
+function F(a) {
   let b = [];
   for (let d = 0; d < a.length; d++) {
     a[d] && b.push(a[d]);
@@ -36,8 +36,8 @@ function H(a) {
 }
 function aa(a, b) {
   var d = new ba;
-  a = H(a.split(""));
-  b = H(b.split(""));
+  a = F(a.split(""));
+  b = F(b.split(""));
   let g = b.length, f = a.length, h = 1, c = g + f, e = [{b:-1, f:[]}];
   var k = D(d, e[0], b, a, 0);
   if (e[0].b + 1 >= g && k + 1 >= f) {
@@ -294,9 +294,9 @@ const Aa = a => {
     const [n, t] = ya(m), [x, v] = za(t, new RegExp(`\\r?\\n${d.source}`)), z = m.indexOf(v);
     m = x.replace(/\r?\n$/, "");
     const w = c.index + z + r + p.length, y = {};
-    r = R(new RegExp(`(${d.source} +(.+) +\\*\\/(\\r?\\n?))([\\s\\S]*?)\\r?\\n${g.source}`, "g"), v, ["preValue", "key", "newLine", "value"], !0).reduce((u, {preValue:A, key:B, newLine:F, value:E, position:G}) => {
-      y[B] = {start:w + G + A.length, length:E.length};
-      return {...u, [B]:!E && F ? F : E};
+    r = R(new RegExp(`(${d.source} +(.+) +\\*\\/(\\r?\\n?))([\\s\\S]*?)\\r?\\n${g.source}`, "g"), v, ["preValue", "key", "newLine", "value"], !0).reduce((u, {preValue:A, key:B, newLine:G, value:E, position:H}) => {
+      y[B] = {start:w + H + A.length, length:E.length};
+      return {...u, [B]:!E && G ? G : E};
     }, {});
     return {name:n, input:m, s:y, ...e ? {preamble:e} : {}, ...r};
   });
@@ -343,7 +343,7 @@ const Aa = a => {
   return [a.substr(0, d), a.substr(d + 1)];
 }, ya = a => {
   const b = a.indexOf(S);
-  return [a.substr(0, b), a.substr(b + 1)];
+  return [a.substr(0, b), a.substr(b + S.length)];
 }, Ba = (a, b, d = console.log) => {
   try {
     ja(a, b);
@@ -776,20 +776,20 @@ const eb = (a, b) => {
   }
   const {context:d, persistentContext:g, getResults:f, getTransform:h, getReadable:c, getThrowsConfig:e, mapActual:k = v => v, assertResults:l, jsonProps:q = [], jsProps:m = [], splitRe:r, fork:p, propEndRe:n, propStartRe:t, i:x} = b;
   return Aa({path:a, splitRe:r, propEndRe:n, propStartRe:t}).reduce((v, {name:z, input:w, error:y, o:u, ...A}) => {
-    let B, F, E;
+    let B, G, E;
     z in v && (B = `Repeated use of the test name "${z}".`);
     try {
-      ({expected:E, ...F} = wa(A, q, m));
+      ({expected:E, ...G} = wa(A, q, m));
     } catch ({message:P}) {
       B = P;
     }
-    let G;
-    B ? G = () => {
+    let H;
+    B ? H = () => {
       throw Error(B);
-    } : G = db({input:w, error:y, getThrowsConfig:e, getTransform:h, getReadable:c, getResults:f, expected:E, assertResults:l, props:F, mapActual:k, fork:p, i:x});
+    } : H = db({input:w, error:y, getThrowsConfig:e, getTransform:h, getReadable:c, getResults:f, expected:E, assertResults:l, props:G, mapActual:k, fork:p, i:x});
     v[z] = async(...P) => {
       try {
-        await G(...P);
+        await H(...P);
       } catch (la) {
         process.env.DEBUG && console.log(I(la.stack, "red")), await u(la);
       }
