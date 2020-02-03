@@ -4,6 +4,22 @@ import { fork } from 'child_process'
 import Context from '../context'
 import makeTestSuite from '../../src'
 
+// /**
+//  * Generate a test suite.
+//  * @param {Object<string, (...t: T)>} tests
+//  * @param {...T} contexts
+//  * @template T
+//  */
+// const generate = (tests, ...contexts) => {
+//   return {}
+// }
+
+// generate({
+//   'hello'(t) {
+//     t
+//   },
+// }, Context)
+
 /** @type {Object.<string, (c: Context)>} */
 const T = {
   context: Context,

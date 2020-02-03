@@ -67,10 +67,19 @@ const T = {
       jsonProps: ['stdout'],
       context: { arg: t },
     })
+    const v = process.version.split('.')[0].replace('v', '')
+    let message
+    if (v < 10) {
+      message = /'FAIL' === 'TEST'/
+    } else if (v < 12) {
+      message = /-.+?'FAIL'\r?\n.+?\+.+?'TEST'/
+    } else {
+      message = /'FAIL' !== 'TEST'/
+    }
     await throws({
       fn: runTest,
       args: [ts, 'forks a module'],
-      message: /'FAIL' === 'TEST'/,
+      message,
     })
   },
 }
