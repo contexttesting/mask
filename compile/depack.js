@@ -291,7 +291,7 @@ const Aa = a => {
   a = h.slice(c.index);
   f.lastIndex = 0;
   a = va(a, f).filter(({match:m}) => m).map(({match:m, position:r, separator:p}) => {
-    const [n, t] = ya(m), [x, v] = za(t, new RegExp(`\n${d.source}`)), z = m.indexOf(v);
+    const [n, t] = ya(m), [x, v] = za(t, new RegExp(`\\r?\\n${d.source}`)), z = m.indexOf(v);
     m = x.replace(/\r?\n$/, "");
     const w = c.index + z + r + p.length, y = {};
     r = R(new RegExp(`(${d.source} +(.+) +\\*\\/(\\r?\\n?))([\\s\\S]*?)\\r?\\n${g.source}`, "g"), v, ["preValue", "key", "newLine", "value"], !0).reduce((u, {preValue:A, key:B, newLine:F, value:E, position:G}) => {

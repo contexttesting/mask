@@ -32,7 +32,7 @@ const getTests = (conf) => {
 
   const tests = t.map(({ match: test, position, separator }) => {
     const [name, total] = split(test, EOL)
-    const [i, body] = splitWithRe(total, new RegExp(`\n${propStartRe.source}`))
+    const [i, body] = splitWithRe(total, new RegExp(`\\r?\\n${propStartRe.source}`))
     const bodyStartsAt = test.indexOf(body)
     const input = i.replace(/\r?\n$/, '')
 
