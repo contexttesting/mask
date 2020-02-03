@@ -24,7 +24,25 @@ const T = {
       process.stdin.push('\n')
     }, 10)
     await u
-    debugger
+    return snapshot()
+  },
+  async'can update empty text'({ fixture, runTest }, { add, snapshot }, { snapshotExtension }) {
+    snapshotExtension('md')
+    const p = await add(fixture`updates/empty.md`)
+    const ts = makeTestSuite(p, {
+      getResults() {
+        return this.input + ': updated'
+      },
+    })
+    const e = await throws({
+      fn: runTest,
+      args: [ts, 'fail empty'],
+    })
+    const u = e.handleUpdate()
+    setTimeout(() => {
+      process.stdin.push('\n')
+    }, 10)
+    await u
     return snapshot()
   },
 }

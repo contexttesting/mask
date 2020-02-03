@@ -92,7 +92,10 @@ const getTests = (conf) => {
         const position = positions[property]
         if (!position) return false
         const start = position.start + lengthDifference
-        const b = resultFile.slice(0, start)
+        let b = resultFile.slice(0, start)
+        if (position.length == 0) {
+          b += EOL
+        }
         const a = resultFile.slice(start + position.length)
         const newFile = `${b}${actual}${a}`
         console.error('Result does not match property "%s"', property)

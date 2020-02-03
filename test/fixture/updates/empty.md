@@ -1,6 +1,5 @@
-## fail
+## fail empty
 hello world
 
 /* expected */
-hello world
 /**/
