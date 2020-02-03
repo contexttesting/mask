@@ -1,20 +1,30 @@
 import { throws, ok, deepEqual } from '@zoroaster/assert'
+import Zoroaster from 'zoroaster'
 import { inspect } from 'util'
 import Context from '../../context'
 import makeTestSuite from '../../../src'
 
+class Service extends Zoroaster {
+  static serialise(ts) {
+    const d = Object.entries(ts).reduce((acc, [key, value]) => {
+      const v = typeof value == 'function' ? inspect(value) : Service.serialise(value)
+      acc[key] = v
+      return acc
+    }, {})
+    return d
+  }
+}
+
 /** @type {Object.<string, (c: Context)>} */
 const T = {
-  context: Context,
+  context: [Context, Service],
   async 'can create a test suite from a directory'({ f }) {
     const ts = makeTestSuite(f`test-suite`, {
       getResults(input) {
         return input + ' - ok'
       },
     })
-    const s = inspect(ts)
-      .split('\n').map(a => a.trimRight()).join('\n')
-    return s
+    return ts
   },
   async 'can create a test suite from multiple files'({ f }) {
     const ts = makeTestSuite([f`test-suite/custom.js`, f`test-suite/default.js`], {
@@ -22,17 +32,13 @@ const T = {
         return input + ' - ok'
       },
     })
-    const s = inspect(ts)
-      .split('\n').map(a => a.trimRight()).join('\n')
-    return s
+    return ts
   },
   async 'creates a test suite from nested directories'({ f }) {
     const ts = makeTestSuite(f`recursive`, {
       getResults() {},
     })
-    const s = inspect(ts)
-      .split('\n').map(a => a.trimRight()).join('\n')
-    return s
+    return ts
   },
   async 'resolves result file extension'({ f }) {
     const ts = makeTestSuite(f`result/index`, {

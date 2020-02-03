@@ -1,3 +1,0 @@
-{ bin: { index: { 'a test': [AsyncFunction] } },
-  components: { 'get-tag-name': { 'a test 2': [AsyncFunction] } },
-  index: { 'a test 3': [AsyncFunction] } }
