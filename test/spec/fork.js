@@ -50,7 +50,7 @@ const T = {
     })
     await runTest(ts, 'forks a module')
   },
-  async 'fails a fork with options'({ runTest, fixture }) {
+  async 'fails a fork with options'({ runTest, fixture, version: v }) {
     const t = '--test'
     const ts = makeTestSuite(fixture`result/fork-options.md`, {
       fork: {
@@ -67,7 +67,6 @@ const T = {
       jsonProps: ['stdout'],
       context: { arg: t },
     })
-    const v = process.version.split('.')[0].replace('v', '')
     let message
     if (v < 10) {
       message = /'FAIL' === 'TEST'/

@@ -1,47 +1,47 @@
  test/requirements/fork/default.js
    fork
-    [31m✗[0m  fails expected json
+    ✗  fails expected json
     | Error: [ 'hello', 'actual' ] deepStrictEqual [ 'hello', 'expected' ]
     | [1]
-    | [31m- expected[0m
-    | [32m+ actual[0m
+    | - expected
+    | + actual
     |     at fails expected json (test/requirements/fork/expected.md:1:1)
-    [31m✗[0m  fails w/ map actual json
+    ✗  fails w/ map actual json
     | Error: [ 'hello', 'actual' ] deepStrictEqual [ 'hello', 'expected' ]
     | [1]
-    | [31m- expected[0m
-    | [32m+ actual[0m
+    | - expected
+    | + actual
     |     at fails w/ map actual json (test/requirements/fork/expected.md:8:1)
-[31ma[0m[32mexpe[0m[90mct[0m[31mual[0m[32med[0m
-    [31m✗[0m  fails stderr
+aexpectualed
+    ✗  fails stderr
     | Error: 'expected' === 'actual'
     |     at fails stderr (test/requirements/fork/expected.md:15:1)
    inputs
-[90mHello: Actual
-[0m[31mH[0m[32mAnsw[0m[90me[0m[31mllo[0m[32mr[0m[90m [0m[31mExpe[0m[32mis:[0m[42m [0m[32mA[0m[90mct[0m[31med[0m[32mual[0m
-    [31m✗[0m  fails on incorrect answer
+Hello: Actual
+HAnswellor Expeis: Actedual
+    ✗  fails on incorrect answer
     | Error: 'Hello: Actual\nAnswer is: Actual' === 'Hello: Actual\nHello Expected'
     |     at fails on incorrect answer (test/requirements/fork/inputs.md:1:1)
 
-[31mtest/requirements/fork/default.js > fork > fails expected json[0m
+test/requirements/fork/default.js > fork > fails expected json
   Error: [ 'hello', 'actual' ] deepStrictEqual [ 'hello', 'expected' ]
   [1]
-  [31m- expected[0m
-  [32m+ actual[0m
+  - expected
+  + actual
       at fails expected json (test/requirements/fork/expected.md:1:1)
 
-[31mtest/requirements/fork/default.js > fork > fails w/ map actual json[0m
+test/requirements/fork/default.js > fork > fails w/ map actual json
   Error: [ 'hello', 'actual' ] deepStrictEqual [ 'hello', 'expected' ]
   [1]
-  [31m- expected[0m
-  [32m+ actual[0m
+  - expected
+  + actual
       at fails w/ map actual json (test/requirements/fork/expected.md:8:1)
 
-[31mtest/requirements/fork/default.js > fork > fails stderr[0m
+test/requirements/fork/default.js > fork > fails stderr
   Error: 'expected' === 'actual'
       at fails stderr (test/requirements/fork/expected.md:15:1)
 
-[31mtest/requirements/fork/default.js > inputs > fails on incorrect answer[0m
+test/requirements/fork/default.js > inputs > fails on incorrect answer
   Error: 'Hello: Actual\nAnswer is: Actual' === 'Hello: Actual\nHello Expected'
       at fails on incorrect answer (test/requirements/fork/inputs.md:1:1)
 

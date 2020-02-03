@@ -1,0 +1,92 @@
+ test/requirements/fork/default.js
+   fork
+    ✗  fails expected json
+    | Error: Input A expected to strictly deep-equal input B:
+    | + expected - actual
+
+    |   [
+    |     'hello',
+    | -   'actual'
+    | +   'expected'
+    |   ]
+    | [1]
+    | - expected
+    | + actual
+    |     at fails expected json (test/requirements/fork/expected.md:1:1)
+    ✗  fails w/ map actual json
+    | Error: Input A expected to strictly deep-equal input B:
+    | + expected - actual
+
+    |   [
+    |     'hello',
+    | -   'actual'
+    | +   'expected'
+    |   ]
+    | [1]
+    | - expected
+    | + actual
+    |     at fails w/ map actual json (test/requirements/fork/expected.md:8:1)
+aexpectualed
+    ✗  fails stderr
+    | Error: Input A expected to strictly equal input B:
+    | + expected - actual
+
+    | - 'expected'
+    | + 'actual'
+    |     at fails stderr (test/requirements/fork/expected.md:15:1)
+   inputs
+Hello: Actual
+HAnswellor Expeis: Actedual
+    ✗  fails on incorrect answer
+    | Error: Input A expected to strictly equal input B:
+    | + expected - actual
+
+    | - 'Hello: Actual\nAnswer is: Actual'
+    | + 'Hello: Actual\nHello Expected'
+    |     at fails on incorrect answer (test/requirements/fork/inputs.md:1:1)
+
+test/requirements/fork/default.js > fork > fails expected json
+  Error: Input A expected to strictly deep-equal input B:
+  + expected - actual
+
+    [
+      'hello',
+  -   'actual'
+  +   'expected'
+    ]
+  [1]
+  - expected
+  + actual
+      at fails expected json (test/requirements/fork/expected.md:1:1)
+
+test/requirements/fork/default.js > fork > fails w/ map actual json
+  Error: Input A expected to strictly deep-equal input B:
+  + expected - actual
+
+    [
+      'hello',
+  -   'actual'
+  +   'expected'
+    ]
+  [1]
+  - expected
+  + actual
+      at fails w/ map actual json (test/requirements/fork/expected.md:8:1)
+
+test/requirements/fork/default.js > fork > fails stderr
+  Error: Input A expected to strictly equal input B:
+  + expected - actual
+
+  - 'expected'
+  + 'actual'
+      at fails stderr (test/requirements/fork/expected.md:15:1)
+
+test/requirements/fork/default.js > inputs > fails on incorrect answer
+  Error: Input A expected to strictly equal input B:
+  + expected - actual
+
+  - 'Hello: Actual\nAnswer is: Actual'
+  + 'Hello: Actual\nHello Expected'
+      at fails on incorrect answer (test/requirements/fork/inputs.md:1:1)
+
+🦅  Executed 4 tests: 4 errors.

@@ -180,7 +180,7 @@ const errors = {
 /** @type {Object.<string, (c: Context)>} */
 const assertResults = {
   context: Context,
-  async 'asserts on results'({ fixture, runTest }) {
+  async 'asserts on results'({ fixture, runTest, version }) {
     const t = 'pass'
     let called = 0
 
@@ -222,10 +222,14 @@ const assertResults = {
     equal(called, 2)
     await runTest(ts, 'json pass')
     equal(called, 3)
+    let message
+    if (version < 12) message =
+      /\[ '!hello', '!world' ] deepEqual \[ 'hello - pass', 'world - pass' ]/
+    else message = /'!hello'[\s\S]+?'!world'[\s\S]+?should loosely deep-equal[\s\S]+?'hello - pass'[\s\S]+?'world - pass'/
     await throws({
       fn: runTest,
       args: [ts, 'json fail'],
-      message: /\[ '!hello', '!world' ] deepEqual \[ 'hello - pass', 'world - pass' ]/,
+      message,
     })
     equal(called, 4)
   },

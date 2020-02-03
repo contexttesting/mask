@@ -4,6 +4,10 @@ import { join } from 'path'
  * A testing context for the package.
  */
 export default class Context {
+  get version() {
+    const v = process.version.split('.')[0].replace('v', '')
+    return v
+  }
   /**
    * Initialise contexts for a test and run it.
    * @param {TestSuite} ts A test suite to run.
