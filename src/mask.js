@@ -4,6 +4,7 @@ import mismatch from 'mismatch'
 import { readFileSync, writeFileSync } from 'fs'
 import { askSingle, confirm } from 'reloquent'
 import { splitWithPositions } from './lib'
+import { EOL } from 'os'
 
 /**
  * A function to construct tests from a mask file.
@@ -22,7 +23,7 @@ const getTests = (conf) => {
   let resultFile = `${readFileSync(path)}`
   const mi = splitRe.exec(resultFile)
   if (!mi) throw new Error(`${path} does not contain tests.`)
-  const preamble = resultFile.slice(0, mi.index).replace(/\n\n$/, '')
+  const preamble = resultFile.slice(0, mi.index).replace(/\r?\n\r?\n$/, '')
   const mm = resultFile.slice(mi.index)
   splitRe.lastIndex = 0
   const t = splitWithPositions(mm, splitRe).filter(({ match }) => {
@@ -30,15 +31,15 @@ const getTests = (conf) => {
   })
 
   const tests = t.map(({ match: test, position, separator }) => {
-    const [name, total] = split(test, '\n')
+    const [name, total] = split(test, EOL)
     const [i, body] = splitWithRe(total, new RegExp(`\n${propStartRe.source}`))
     const bodyStartsAt = test.indexOf(body)
-    const input = i.replace(/\n$/, '')
+    const input = i.replace(/\r?\n$/, '')
 
     const offset = mi.index + bodyStartsAt + position + separator.length
 
     const foundProps = mismatch(
-      new RegExp(`(${propStartRe.source} +(.+) +\\*\\/(\n?))([\\s\\S]*?)\n${propEndRe.source}`, 'g'),
+      new RegExp(`(${propStartRe.source} +(.+) +\\*\\/(\\r?\\n?))([\\s\\S]*?)\\r?\\n${propEndRe.source}`, 'g'),
       body,
       ['preValue', 'key', 'newLine', 'value'], true,
     )
@@ -63,7 +64,7 @@ const getTests = (conf) => {
     }
   })
 
-  const lines = resultFile.split('\n')
+  const lines = resultFile.split(EOL)
   let lengthDifference = 0
 
   /**
@@ -94,7 +95,8 @@ const getTests = (conf) => {
         const b = resultFile.slice(0, start)
         const a = resultFile.slice(start + position.length)
         const newFile = `${b}${actual}${a}`
-        console.error('Result does not match property "%s"\n  at %s (%s:%s:1)', property, c(name, 'blue'), path, lineNumber)
+        console.error('Result does not match property "%s"', property)
+        console.error('  at %s (%s:%s:1)', c(name, 'blue'), path, lineNumber)
         let shouldUpdate = false
         const answer = await askSingle('Show more (d), skip (s), or update (u): [u]')
         if (answer == 'd') {
@@ -129,7 +131,7 @@ const getTests = (conf) => {
 }
 
 const makeStack = (message, name, path, lineNumber) => {
-  return `Error: ${message}\n    at ${name} (${path}:${lineNumber}:1)`
+  return `Error: ${message}${EOL}    at ${name} (${path}:${lineNumber}:1)`
 }
 
 /**
@@ -159,12 +161,13 @@ const split = (s, del) => {
 /**
  * Asserts that the strings are equal, and prints a color message if they're not.
  */
-export const assertExpected = (result, expected) => {
+// eslint-disable-next-line no-console
+export const assertExpected = (result, expected, log = console.log) => {
   try {
     equal(result, expected)
   } catch (err) {
     const e = erte(expected, result)
-    console.log(e) // eslint-disable-line no-console
+    log(e)
     err['property'] = 'expected'
     throw err
   }

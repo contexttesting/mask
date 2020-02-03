@@ -12,7 +12,7 @@ yarn add -D @zoroaster/mask
 
 - [Table Of Contents](#table-of-contents)
 - [API](#api)
-- [`makeTestSuite(path: string, config: MaskConfig): TestSuite`](#maketestsuitepath-stringconfig-maskconfig-testsuite)
+- [`makeTestSuite(path: (string|!Array<string>), config: MaskConfig): TestSuite`](#maketestsuitepath-stringarraystringconfig-maskconfig-testsuite)
 - [Types](#types)
   * [`MaskContext`](#type-maskcontext)
   * [`MaskConfig`](#type-maskconfig)
@@ -40,10 +40,10 @@ import makeTestSuite from '@zoroaster/mask'
 </a></p>
 
 
-## <code><ins>makeTestSuite</ins>(</code><sub><br/>&nbsp;&nbsp;`path: string,`<br/>&nbsp;&nbsp;`config: MaskConfig,`<br/></sub><code>): <i>TestSuite</i></code>
+## <code><ins>makeTestSuite</ins>(</code><sub><br/>&nbsp;&nbsp;`path: (string|!Array<string>),`<br/>&nbsp;&nbsp;`config: MaskConfig,`<br/></sub><code>): <i>TestSuite</i></code>
 Creates a new test suite based on the config. The test suite should be exported from JS files, either as a default, or named export.
 
- - <kbd><strong>path*</strong></kbd> <em>`string`</em>: The path to the mask result file or directory.
+ - <kbd><strong>path*</strong></kbd> <em><code>(string \| !Array&lt;string&gt;)</code></em>: The path to the mask result file or directory. Can also pass an array of paths.
  - <kbd><strong>config*</strong></kbd> <em><code><a href="#type-maskconfig" title="Configuration for making test suites.">MaskConfig</a></code></em>: Configuration for making test suites.
 
 The exported test suite will be run with _Zoroaster_ Context-Testing Framework. The simplest form of a mask is to use the `getResults` property, which acts as a template for test cases, which will receive the inputs (e.g., `input`) from the mask result as properties of the `this` context, and the contexts via the arguments. The output will be compared to the `expected` property of the mask.
@@ -233,8 +233,7 @@ GNU Affero General Public License v3.0
     <th>© <a href="https://www.artd.eco">Art Deco™</a> for <a href="https://www.contexttesting.com">ContextTesting</a> 2020</th>
     <th>
       <a href="https://www.contexttesting.com">
-        <img src="https://avatars1.githubusercontent.com/u/44418436?s=100&amp;v=4" width="100"
-          alt="ContextTesting">
+        <img src="https://avatars1.githubusercontent.com/u/44418436?s=100" width="100" alt="ContextTesting">
       </a>
     </th>
   </tr>

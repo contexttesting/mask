@@ -94,6 +94,7 @@ const makeATestSuite = (maskPath, conf) => {
     fork: forkConfig,
     propEndRe,
     propStartRe,
+    debugLog,
   } = c
   const tests = getTests({
     path: maskPath, splitRe, propEndRe, propStartRe })
@@ -119,7 +120,7 @@ const makeATestSuite = (maskPath, conf) => {
     } else {
       test = makeTest({
         input, error, getThrowsConfig, getTransform, getReadable, getResults, expected,
-        assertResults, props, mapActual, fork: forkConfig,
+        assertResults, props, mapActual, fork: forkConfig, debugLog,
       })
     }
 

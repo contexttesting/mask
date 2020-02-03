@@ -1,3 +1,4 @@
+import { EOL } from 'os'
 import { collect } from 'catchment'
 import throws from 'assert-throws'
 import deepEqual from '@zoroaster/deep-equal'
@@ -17,6 +18,7 @@ const makeTest = (params) => {
     input, error, expected, props,
     getThrowsConfig, getTransform, getResults,
     assertResults, mapActual, getReadable, fork: forkConfig,
+    debugLog,
   } = params
   const test = async (...contexts) => {
     const cntx = /** @type {_contextTesting.MaskContext} */ ({ input, ...props })
@@ -61,7 +63,7 @@ const makeTest = (params) => {
       } else if ((typeof actual).toLowerCase() != 'string') {
         throw new Error('The actual result is not an a string. Use "mapActual" function to map to a string result, or add "expected" to "jsonProps".')
       } else {
-        assertExpected(actual, expected)
+        assertExpected(actual, expected, debugLog)
       }
     }
     if (assertResults) {
@@ -76,7 +78,7 @@ const assertHasExpected = (expected) => {
 }
 
 const getInputsFromProps = (s) => {
-  const res = s.split('\n').map(i => {
+  const res = s.split(EOL).map(i => {
     const [q, a] = i.split(/: +/)
     const re = new RegExp(q)
     return [re, a]
