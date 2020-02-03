@@ -1,5 +1,9 @@
 ## 4 February 2020
 
+### [2.4.3](https://github.com/contexttesting/mask/compare/v2.4.2...v2.4.3)
+
+- [fix] Fix extra whitespace in win input.
+
 ### [2.4.2](https://github.com/contexttesting/mask/compare/v2.4.1...v2.4.2)
 
 - [fix] Try fix \r.
