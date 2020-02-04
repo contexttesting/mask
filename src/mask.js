@@ -16,7 +16,7 @@ import { EOL } from 'os'
  */
 const getTests = (conf) => {
   const { path, propStartRe = /\/\*/, propEndRe = /\/\*\*\// } = conf
-  let { splitRe } = conf
+  let { splitRe, jsonProps } = conf
   if (!splitRe) {
     splitRe = path.endsWith('.md') ?  /^## /gm : /^\/\/ /gm
   }
@@ -97,7 +97,8 @@ const getTests = (conf) => {
           b += EOL
         }
         const a = resultFile.slice(start + position.length)
-        const newFile = `${b}${actual}${a}`
+        const act = jsonProps.includes(property) ? JSON.stringify(actual, null, 2) : actual
+        const newFile = `${b}${act}${a}`
         console.error('Result does not match property "%s"', property)
         console.error('  at %s (%s:%s:1)', c(name, 'blue'), path, lineNumber)
         let shouldUpdate = false
@@ -112,7 +113,7 @@ const getTests = (conf) => {
           shouldUpdate = true
         }
         if (!shouldUpdate) return false
-        lengthDifference += actual.length - position.length
+        lengthDifference += act.length - position.length
         await writeFileSync(path, newFile)
         resultFile = `${readFileSync(path)}`
 

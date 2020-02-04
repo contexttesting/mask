@@ -97,7 +97,7 @@ const makeATestSuite = (maskPath, conf) => {
     debugLog,
   } = c
   const tests = getTests({
-    path: maskPath, splitRe, propEndRe, propStartRe })
+    path: maskPath, splitRe, propEndRe, propStartRe, jsonProps })
 
   const t = tests.reduce((acc, {
     name, input, 'error': error, onError, ...rest

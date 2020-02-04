@@ -45,6 +45,36 @@ const T = {
     await u
     return snapshot()
   },
+  async'can update json'({ fixture, runTest }, { add, snapshot }, { snapshotExtension }) {
+    snapshotExtension('md')
+    const p = await add(fixture`updates/json.md`)
+    const ts = makeTestSuite(p, {
+      getResults() {
+        return { updated: true }
+      },
+      jsonProps: ['expected'],
+    })
+    const e = await throws({
+      fn: runTest,
+      args: [ts, 'fail json'],
+    })
+    const u = e.handleUpdate()
+    setTimeout(() => {
+      process.stdin.push('\n')
+    }, 10)
+    await u
+
+    const e2 = await throws({
+      fn: runTest,
+      args: [ts, 'fail json2'],
+    })
+    const u2 = e2.handleUpdate()
+    setTimeout(() => {
+      process.stdin.push('\n')
+    }, 10)
+    await u2
+    return snapshot()
+  },
 }
 
 export default T

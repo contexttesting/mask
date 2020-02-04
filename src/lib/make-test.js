@@ -59,7 +59,12 @@ const makeTest = (params) => {
     if (expected !== undefined) {
       const actual = mapActual(results)
       if (typeof expected != 'string') { // already parsed
-        deepEqual(actual, expected)
+        try {
+          deepEqual(actual, expected)
+        } catch (err) {
+          err['property'] = 'expected'
+          throw err
+        }
       } else if ((typeof actual).toLowerCase() != 'string') {
         throw new Error('The actual result is not an a string. Use "mapActual" function to map to a string result, or add "expected" to "jsonProps".')
       } else {
