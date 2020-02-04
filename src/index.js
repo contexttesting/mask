@@ -100,15 +100,16 @@ const makeATestSuite = (maskPath, conf) => {
     path: maskPath, splitRe, propEndRe, propStartRe, jsonProps })
 
   const t = tests.reduce((acc, {
-    name, input, 'error': error, onError, ...rest
+    name, 'error': error, onError, ...rest
   }) => {
     let setupError
     let props
     let expected
+    let input
     if (name in acc)
       setupError = `Repeated use of the test name "${name}".`
     try {
-      ({ 'expected': expected, ...props }
+      ({ 'expected': expected, 'input': input, ...props }
         = parseProps(rest, jsonProps, jsProps))
     } catch ({ message }) {
       setupError = message

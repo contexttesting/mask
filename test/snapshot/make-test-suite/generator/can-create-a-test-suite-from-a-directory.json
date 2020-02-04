@@ -15,5 +15,8 @@
     "empty expected": "[AsyncFunction]",
     "empty expected fail": "[AsyncFunction]",
     "test properties": "[AsyncFunction]"
+  },
+  "jsprops": {
+    "input": "[AsyncFunction]"
   }
 }

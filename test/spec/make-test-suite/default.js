@@ -132,6 +132,18 @@ prop: {"key":"value"}`
       message: 'OK',
     })
   },
+  async 'parse input as js prop'({ f, runTest }) {
+    const ts = makeTestSuite(f`test-suite/jsprops`, {
+      getResults() {
+        return Object.entries(this.input).reduce((acc, [key, val]) => {
+          acc[key] = val + '+pass'
+          return acc
+        }, {})
+      },
+      jsProps: ['input', 'expected'],
+    })
+    await runTest(ts, 'input')
+  },
 }
 
 /** @type {Object.<string, (c: Context)>} */

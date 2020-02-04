@@ -66,7 +66,7 @@ const makeTest = (params) => {
           throw err
         }
       } else if ((typeof actual).toLowerCase() != 'string') {
-        throw new Error('The actual result is not an a string. Use "mapActual" function to map to a string result, or add "expected" to "jsonProps".')
+        throw new Error('The actual result is not an a string. Use "mapActual" function to map to a string result, or add "expected" to "jsonProps" or "jsProps".')
       } else {
         assertExpected(actual, expected, debugLog)
       }
