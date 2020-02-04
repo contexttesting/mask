@@ -1,7 +1,10 @@
 ## 4 February 2020
 
-### [2.4.3](https://github.com/contexttesting/mask/compare/v2.4.2...v2.4.3)
+### [2.5.0](https://github.com/contexttesting/mask/compare/v2.4.2...v2.5.0)
 
+- [feature] Read input as JS/JSON.
+- [feature] Updates JSON properties.
+- [fix] Updates empty expected.
 - [fix] Fix extra whitespace in win input.
 
 ### [2.4.2](https://github.com/contexttesting/mask/compare/v2.4.1...v2.4.2)
