@@ -6,7 +6,7 @@ import { EOL } from 'os'
  */
 export default class Context {
   get version() {
-    return Context.version()
+    return Context.version
   }
   static get version() {
     const v = process.version.split('.')[0].replace('v', '')
