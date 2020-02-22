@@ -178,17 +178,10 @@ preact@8.5.3:
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.5.3.tgz#78c2a5562fcecb1fed1d0055fa4ac1e27bde17c1"
   integrity sha512-O3kKP+1YdgqHOFsZF2a9JVdtqD+RPzCQc3rP+Ualf7V6rmRDchZ9MJbiGTT7LuyqFKZqlHSOyO/oMFmI2lVTsw==
 
-promto@^1.1.2:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/promto/-/promto-1.2.0.tgz#fab897b6435a1386cf20eba0c133cdd878c6706a"
-  integrity sha512-vAsViAolRK4QGKtESdOmvQRDNZuw90MI1Ha9PnFXyGI/1BRZ7t3CESacBMzPUG5dXDUPgbjOxe9B3mZAl540OA==
-
-reloquent@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/reloquent/-/reloquent-1.3.2.tgz#66996e8c65acf5e427490fa5f68eaf7948943a62"
-  integrity sha512-l0upTSJW73CriMZXAMvg1ZCGNSj7WXh0+EgBIsNmv50dEzBt7AfzbIafgCC7d37YHXbYhFuSEByvM0Hr5I8yxQ==
-  dependencies:
-    promto "^1.1.2"
+reloquent@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/reloquent/-/reloquent-1.4.0.tgz#70244fcd262407f8776407d03333333405b86599"
+  integrity sha512-gWHNKQcBAztOegXx9aZvOtI2HwahMNDd1BMxV/1T1fK80+b7Lm6uDCHwr7BjXFXvzRWkD/tlSoK7G41yntUwCQ==
 
 spawncommand@^2.2.0:
   version "2.2.0"

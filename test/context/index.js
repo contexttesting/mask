@@ -1,5 +1,6 @@
 import { join } from 'path'
 import { EOL } from 'os'
+import { Readable } from 'stream'
 
 /**
  * A testing context for the package.
@@ -15,6 +16,15 @@ export default class Context {
   preprocess(s) {
     if (process.platform != 'win32') return s
     return s.replace(/([^\r])\n/g, `$1${EOL}`)
+  }
+  makeStdin(answer = '\n') {
+    const stdin = new Readable({
+      read() {
+        this.push(answer)
+        this.push(null)
+      }
+    })
+    return stdin
   }
   /**
    * Initialise contexts for a test and run it.
