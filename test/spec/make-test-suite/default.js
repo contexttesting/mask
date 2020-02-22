@@ -117,7 +117,7 @@ prop: {"key":"value"}`
     })
     await runTest(ts, 'test properties')
   },
-  async 'assertResults can be async '({ f, runTest }) {
+  async'assertResults can be async'({ f, runTest }) {
     const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults() {
         return `input: hello world
