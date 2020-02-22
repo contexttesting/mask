@@ -84,15 +84,15 @@
     mismatch "^1.2.0"
     spawncommand "^2.2.0"
 
-"@zoroaster/mask@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@zoroaster/mask/-/mask-2.4.0.tgz#9c5400928f6bb88aeef0971325aa6558a87ce435"
-  integrity sha512-vJ71/qOb7H3YMa0hF7hAapbB/Vk1BlXKRkIsNSuCLBK4fe2wHsj06eVFNCjRz5KpgAyvAXLHrdYAGbGdwzwacw==
+"@zoroaster/mask@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@zoroaster/mask/-/mask-2.5.0.tgz#de128987743d71376485ba9b34977d49e18cde92"
+  integrity sha512-GuEHgVneq0MkSHBcF7YgTAuk42/pWJnvMPvbOsUXmq3m2FcSe1v788Bfw896RzZ7p6LWq11xnq48YOkhcy5jLA==
 
-alamode@^3.3.2, alamode@^3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/alamode/-/alamode-3.3.3.tgz#914bdac548157f58afa8479610f2562143046627"
-  integrity sha512-V8tqaU+8BjWPOmBiM9UzM7sjfNgpT9AKLTQ1/FAoCNUt2jqDFKq0ftI5zVJeIj4Nsm1AYYqnMQSxDeGx6JvSIg==
+alamode@^3.3.3, alamode@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/alamode/-/alamode-3.5.0.tgz#c0928b365d892c643335c9b2651ad10e32b47151"
+  integrity sha512-kuhhCIqHMwiMGSKqE+F//SLgxffkhtT0QFp+8XahzYVwvsxwg9gbtCGriKawEBxeHpU9v3s0jp9qpYzlDUdKFg==
 
 assert-throws@^3.3.0:
   version "3.3.0"
@@ -125,12 +125,12 @@ differently@^1.0.0:
   dependencies:
     erte "^1.2.0"
 
-documentary@^1.35.12:
-  version "1.35.12"
-  resolved "https://registry.yarnpkg.com/documentary/-/documentary-1.35.12.tgz#3324f1c940de216f074077c160c97906e052e6ec"
-  integrity sha512-krPr4ck9cSTBmODkNAnNCY2cfhVH+7a2F9dFFw97Aii7YA1AUrffabMLWfhU/fMxPGZAd7to88EM5UkwC0otpA==
+documentary@^1.37.0:
+  version "1.37.0"
+  resolved "https://registry.yarnpkg.com/documentary/-/documentary-1.37.0.tgz#901039214974d6e77c41ea2680ecfec14d82442f"
+  integrity sha512-6ENYPKOY4AW/qPjZdTyQMtDow73IuYGrFBj+PtoUvWB4XRok7OvoqZeDROoLK1158uJEjJCoLOkcjaKnOPdXhQ==
   dependencies:
-    alamode "^3.3.3"
+    alamode "^3.5.0"
     preact "8.5.3"
     typal "^1.26.2"
 
@@ -221,11 +221,11 @@ yarn-s@1.2.3:
   resolved "https://registry.yarnpkg.com/yarn-s/-/yarn-s-1.2.3.tgz#ec8fac3bca62c4c970b7e88eef98a5f01c421dab"
   integrity sha512-XNV6KYcT6LCLlogwbArTrn8wlqYVnlR+MqAZULxNVaShw7qrBx5PjsNSIMbKFIRxPKdjisv7O8oBg9mWY63Tvw==
 
-zoroaster@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-4.2.0.tgz#f532b78307c487b62a00856b4b5afe560360c4a4"
-  integrity sha512-xlgjS7dXoh/ajc+jEcqx4iTax3rm3pk7XRJ2yWtT+PBzGmH3TgF6KMjrp5NcAp4CgDX9DsC82G6+v60j9m7mxQ==
+zoroaster@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/zoroaster/-/zoroaster-4.3.0.tgz#fd234d249471cb3100fc71e92d6d275ed3059c11"
+  integrity sha512-OGZuacxTM6TT8n/wCcDTO7p8mAioBxztTofXqh6ck2tJ3UNFdlKN1UYwU2V6go+v4/tH8jZE1jf+sIMFrH4RkA==
   dependencies:
     "@zoroaster/assert" "^1.0.2"
-    "@zoroaster/mask" "^2.4.0"
-    alamode "^3.3.2"
+    "@zoroaster/mask" "^2.5.0"
+    alamode "^3.3.3"

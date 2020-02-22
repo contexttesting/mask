@@ -1,6 +1,7 @@
 # @zoroaster/mask
 
 [![npm version](https://badge.fury.io/js/%40zoroaster%2Fmask.svg)](https://www.npmjs.com/package/@zoroaster/mask)
+[![Build status](https://ci.appveyor.com/api/projects/status/90qqedm89729w9lm?svg=true)](https://ci.appveyor.com/project/zavr-1/mask)
 
 `@zoroaster/mask` is The Code For _Zoroaster_ Mask Testing.
 

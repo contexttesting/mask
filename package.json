@@ -8,7 +8,7 @@
     "test": "yarn t test/spec test/mask",
     "spec": "yarn t test/spec",
     "mask": "yarn t test/mask",
-    "test-compile": "ALAMODE_ENV=test-compile yarn test",
+    "test-compile": "yarn test -e test-compile",
     "lint": "eslint .",
     "doc": "doc -o README.md -n _contextTesting -d -a",
     "lib": "depack src/depack.js -c -a -p -o compile -s -S",
@@ -49,11 +49,11 @@
   "devDependencies": {
     "@zoroaster/deep-equal": "^1.0.1",
     "@zoroaster/fork": "^1.4.0",
-    "alamode": "^3.3.3",
+    "alamode": "^3.5.0",
     "assert-throws": "^3.3.0",
     "catchment": "^3.3.0",
     "depack": "^1.1.1",
-    "documentary": "^1.35.12",
+    "documentary": "^1.37.0",
     "erte": "^1.2.0",
     "eslint-config-artdeco": "1.0.1",
     "mismatch": "^1.2.0",
@@ -61,6 +61,6 @@
     "temp-context": "^2.1.3",
     "typal": "^1.26.2",
     "yarn-s": "1.2.3",
-    "zoroaster": "^4.2.0"
+    "zoroaster": "^4.3.0"
   }
 }
