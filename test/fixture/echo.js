@@ -1,1 +1,1 @@
-console.log(`${process.argv[2]}: pass`)
+process.stdout.write(`${process.argv[2]}: pass`)

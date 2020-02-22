@@ -6,12 +6,20 @@ import makeTestSuite from '../../src'
 /** @type {Object.<string, (c: Context)>} */
 const T = {
   context: Context,
-  async 'tests a fork'({ runTest, fixture }) {
-    const ts = makeTestSuite(fixture`result/fork.md`, {
-      fork: fixture`fork`,
+  async'tests a fork (pass)'({ runTest, fixture, preprocess }) {
+    const ts = makeTestSuite(fixture`result/fork`, {
+      fork: {
+        module: fixture`fork`,
+        preprocess,
+      },
     })
     await runTest(ts, 'forks a module')
     await runTest(ts, 'forks a module with string arguments')
+  },
+  async 'tests a fork (fail)'({ runTest, fixture }) {
+    const ts = makeTestSuite(fixture`result/fork`, {
+      fork: fixture`fork`,
+    })
     await throws({
       fn: runTest,
       args: [ts, 'fails on stdout'],
@@ -28,7 +36,7 @@ const T = {
       message: /Fork exited with code 127 != 1/,
     })
   },
-  async 'tests a fork with properties'({ runTest, fixture }) {
+  async 'tests a fork with properties'({ runTest, fixture, preprocess }) {
     const t = '--test'
     const e = 'TEST'
     const ts = makeTestSuite(fixture`result/fork-options.md`, {
@@ -44,6 +52,7 @@ const T = {
             },
           }
         },
+        preprocess,
       },
       jsonProps: ['stdout'],
       context: { arg: t, FORK_ENV: e },
@@ -108,11 +117,12 @@ export const ThisContext = {
   },
 }
 
-const FORK_INPUT = Context.fixture`result/fork-input.md`
+const FORK_INPUT = Context.fixture`result/fork-input`
 
+/** @type {Object.<string, (c: Context, r: string )>} */
 export const inputs = {
   context: [Context, FORK_INPUT],
-  async 'passes inputs to stdin'({ runTest, fixture }, result) {
+  async'passes inputs to stdin'({ runTest, fixture }, result) {
     const ts = makeTestSuite(result, {
       fork: {
         module: fixture`fork/inputs`,
@@ -120,9 +130,7 @@ export const inputs = {
           [/Answer 1/, 'input1'],
           [/Answer 2/, 'input2'],
         ],
-      },
-      mapActual({ stdout }) {
-        return stdout.trim()
+        normaliseOutputs: true,
       },
     })
     await runTest(ts, 'writes inputs')
@@ -136,9 +144,8 @@ export const inputs = {
           [/Answer 2/, 'input2'],
         ],
         includeAnswers: false,
-      },
-      mapActual({ stdout }) {
-        return stdout.trim()
+        normaliseOutputs: true,
+        preprocess(s) { return s.trim() },
       },
     })
     await runTest(ts, 'writes inputs without answers')
@@ -150,9 +157,8 @@ export const inputs = {
         stderrInputs: [
           [/Answer 1/, 'input1'],
         ],
-      },
-      mapActual({ stderr }) {
-        return stderr.trim()
+        normaliseOutputs: true,
+        preprocess(s) { return s.trim() },
       },
     })
     await runTest(ts, 'writes inputs on stderr')
@@ -161,12 +167,11 @@ export const inputs = {
     const ts = makeTestSuite(result, {
       fork: {
         module: fixture`fork/inputs`,
-      },
-      mapActual({ stdout }) {
-        return stdout.trim()
+        normaliseOutputs: true,
+        preprocess(s) { return s.trim() },
       },
     })
-    await runTest(ts, '!writes inputs from props')
+    await runTest(ts, 'writes inputs from props')
   },
 }
 

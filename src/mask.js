@@ -20,7 +20,7 @@ const getTests = (conf) => {
   if (!splitRe) {
     splitRe = path.endsWith('.md') ?  /^## /gm : /^\/\/ /gm
   }
-  let resultFile = `${readFileSync(path)}`
+  let resultFile = readFileSync(path, 'utf8')
   const mi = splitRe.exec(resultFile)
   if (!mi) throw new Error(`${path} does not contain tests.`)
   const preamble = resultFile.slice(0, mi.index).replace(/\r?\n\r?\n$/, '')
@@ -39,7 +39,7 @@ const getTests = (conf) => {
     const offset = mi.index + bodyStartsAt + position + separator.length
 
     const foundProps = mismatch(
-      new RegExp(`(${propStartRe.source} +(.+) +\\*\\/(\\r?\\n?))([\\s\\S]*?)\\r?\\n${propEndRe.source}`, 'g'),
+      new RegExp(`(${propStartRe.source} +(.+) +\\*\\/(\\r?\\n)?)([\\s\\S]*?)\\r?\\n${propEndRe.source}`, 'g'),
       body,
       ['preValue', 'key', 'newLine', 'value'], true,
     )
@@ -87,7 +87,9 @@ const getTests = (conf) => {
     err.stack = stack
     if (error['property'] && error['actual']) {
       const { 'property': property, 'actual': actual, 'expected': expected } = error
-      const handleUpdate = async () => {
+      const handleUpdate = async ({
+        stdin,
+      }) => {
         // update in interactive mode
         const position = positions[property]
         if (!position) return false
@@ -102,7 +104,10 @@ const getTests = (conf) => {
         console.error('Result does not match property "%s"', property)
         console.error('  at %s (%s:%s:1)', c(name, 'blue'), path, lineNumber)
         let shouldUpdate = false
-        const answer = await askSingle('Show more (d), skip (s), or update (u): [u]')
+        const answer = await askSingle({
+          text: 'Show more (d), skip (s), or update (u): [u]',
+          input: stdin,
+        })
         if (answer == 'd') {
           console.log(c('Actual: ', 'blue'))
           console.log(actual)
@@ -114,8 +119,10 @@ const getTests = (conf) => {
         }
         if (!shouldUpdate) return false
         lengthDifference += act.length - position.length
-        await writeFileSync(path, newFile)
-        resultFile = `${readFileSync(path)}`
+        writeFileSync(path, newFile)
+        console.log('updated file', path)
+
+        resultFile = newFile
 
         return true
       }

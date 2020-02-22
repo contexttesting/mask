@@ -1,4 +1,5 @@
 import { equal } from '@zoroaster/assert'
+import { EOL } from 'os'
 import makeTestSuite from '../../src'
 
 export default makeTestSuite('test/result/default', {
@@ -19,12 +20,12 @@ export default makeTestSuite('test/result/default', {
 
 export const regex = makeTestSuite('test/result/regex', {
   async getResults() {
-    const res = this.input + `\nfunction ${this.functionName}() {}`
+    const res = this.input + `${EOL}function ${this.functionName}() {}`
     equal(res, `/**
  * JsDoc in mask testing.
  * @param {string} param The param.
  */
-function helloWorld() {}`)
+function helloWorld() {}`.replace(/\r?\n/g, EOL))
     return res
   },
   propStartRe: /\/\*@/,

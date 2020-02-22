@@ -1,5 +1,6 @@
 import { throws, ok, deepEqual } from '@zoroaster/assert'
 import Zoroaster from 'zoroaster'
+import { join } from 'path'
 import { inspect } from 'util'
 import Context from '../../context'
 import makeTestSuite from '../../../src'
@@ -61,17 +62,17 @@ const T = {
 /** @type {Object.<string, (c: Context)>} */
 export const focus = {
   context: Context,
-  async 'generates a focused test suite from dir'({ f }) {
+  async'generates a focused test suite from dir'({ f }) {
     const ts = makeTestSuite('!' + f`test-suite`, {
       getResults() {},
     })
-    deepEqual(Object.keys(ts), ['!test/fixture/test-suite'])
+    deepEqual(Object.keys(ts), [join('!test', 'fixture', 'test-suite')])
   },
-  async 'generates a focused test suite from file'({ f }) {
+  async'generates a focused test suite from file'({ f }) {
     const ts = makeTestSuite('!' + f`result/index`, {
       getResults() {},
     })
-    deepEqual(Object.keys(ts), ['!test/fixture/result/index'])
+    deepEqual(Object.keys(ts), [join('!test', 'fixture', 'result', 'index')])
   },
 }
 

@@ -1,14 +1,19 @@
 import { throws } from '@zoroaster/assert'
 import Context from '../context'
 import TempContext from 'temp-context'
-import S from 'zoroaster'
+import Zoroaster from 'zoroaster'
+import { readFileSync } from 'fs'
 import makeTestSuite from '../../src'
 
-/** @type {Object.<string, (c: Context, t: TempContext, z: S)>} */
+/** @type {Object.<string, (c: Context, t: TempContext, z: Zoroaster)>} */
 const T = {
-  context: [Context, TempContext, S],
-  async'can update text'({ fixture, runTest }, { add, snapshot }, { snapshotExtension }) {
-    snapshotExtension('md')
+  context: [Context, TempContext, class extends Zoroaster {
+    static get snapshotExtension() {
+      return 'md'
+    }
+  }],
+  async'can update text'({ fixture, runTest, preprocess, makeStdin }, 
+    { add, snapshot }) {
     const p = await add(fixture`updates/text.md`)
     const ts = makeTestSuite(p, {
       getResults() {
@@ -19,15 +24,14 @@ const T = {
       fn: runTest,
       args: [ts, 'fail'],
     })
-    const u = e.handleUpdate()
-    setTimeout(() => {
-      process.stdin.push('\n')
-    }, 10)
-    await u
-    return snapshot()
+    await e.handleUpdate({
+      stdin: makeStdin(),
+    })
+    const s = await snapshot()
+    return preprocess(s)
   },
-  async'can update empty text'({ fixture, runTest }, { add, snapshot }, { snapshotExtension }) {
-    snapshotExtension('md')
+  async'can update empty text'({ fixture, runTest, preprocess, makeStdin }, 
+    { add, snapshot }) {
     const p = await add(fixture`updates/empty.md`)
     const ts = makeTestSuite(p, {
       getResults() {
@@ -38,15 +42,20 @@ const T = {
       fn: runTest,
       args: [ts, 'fail empty'],
     })
-    const u = e.handleUpdate()
-    setTimeout(() => {
-      process.stdin.push('\n')
-    }, 10)
-    await u
-    return snapshot()
+    await e.handleUpdate({ stdin: makeStdin() })
+    const s = await snapshot()
+    const D = preprocess(s)
+    // console.log(D
+    //   .replace(/\r\n/g, '\\R\\N\r\n')
+    //   .replace(/([^\r])\n/g, '$1\\N\n')
+    // )
+    // console.log('\n======\n')
+    // console.log(readFileSync('test\\snapshot\\updates\\can-update-empty-text.md', 'utf8').replace(/\r\n/g, '\\R\\N\r\n'))
+    
+    return D
   },
-  async'can update json'({ fixture, runTest }, { add, snapshot }, { snapshotExtension }) {
-    snapshotExtension('md')
+  async'can update json'({ fixture, runTest, preprocess, makeStdin }, 
+    { add, snapshot }) {
     const p = await add(fixture`updates/json.md`)
     const ts = makeTestSuite(p, {
       getResults() {
@@ -54,26 +63,26 @@ const T = {
       },
       jsonProps: ['expected'],
     })
+    // I
     const e = await throws({
       fn: runTest,
       args: [ts, 'fail json'],
     })
-    const u = e.handleUpdate()
-    setTimeout(() => {
-      process.stdin.push('\n')
-    }, 10)
-    await u
-
+    await e.handleUpdate({
+      stdin: makeStdin(),
+    })
+    // II
     const e2 = await throws({
       fn: runTest,
       args: [ts, 'fail json2'],
     })
-    const u2 = e2.handleUpdate()
-    setTimeout(() => {
-      process.stdin.push('\n')
-    }, 10)
-    await u2
-    return snapshot()
+    
+    await e2.handleUpdate({
+      stdin: makeStdin(),
+    })
+
+    const s = await snapshot()
+    return preprocess(s)
   },
 }
 

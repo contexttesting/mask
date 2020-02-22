@@ -102,7 +102,7 @@ const T = {
     })
     await runTest(ts, 'streams result with argument')
   },
-  async 'gets an async readable stream'({ f, runTest }) {
+  async'gets an async readable stream'({ f, runTest }) {
     const ts = makeTestSuite(f`result/stream-arg`, {
       async getReadable({ test }) {
         const input = this.input
@@ -119,7 +119,7 @@ const T = {
     })
     await runTest(ts, 'streams result with argument')
   },
-  async 'tests a readable fork'({ f, runTest }) {
+  async'tests a readable fork'({ f, runTest }) {
     const ts = makeTestSuite(f`result/stream-arg`, {
       getReadable() {
         const proc = fork(f`echo`, [this.input], {

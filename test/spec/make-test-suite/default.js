@@ -1,6 +1,7 @@
 import throws from 'assert-throws'
 import { equal, deepEqual } from 'assert'
 import { Readable, Transform } from 'stream'
+import { EOL } from 'os'
 import Context from '../../context'
 import makeTestSuite from '../../../src'
 
@@ -68,7 +69,7 @@ const expectedAndError = {
       message: /'fail' == ''/,
     })
   },
-  async 'passes this context to readable'({ f, runTest }) {
+  async'passes this context to readable'({ f, runTest }) {
     const ts = makeTestSuite(f`test-suite/default.js`, {
       getReadable() {
         const { input, ...props } = this
@@ -76,7 +77,7 @@ const expectedAndError = {
           read() {
             this.push(`input: ${input}`)
             Object.keys(props).forEach((k) => {
-              this.push(`\n${k}: ${JSON.stringify(props[k])}`)
+              this.push(`${EOL}${k}: ${JSON.stringify(props[k])}`)
             })
             this.push(null)
           },
@@ -86,7 +87,7 @@ const expectedAndError = {
     })
     await runTest(ts, 'test properties')
   },
-  async 'passes this context to getTransform'({ f, runTest }) {
+  async'passes this context to getTransform'({ f, runTest }) {
     const ts = makeTestSuite(f`test-suite/default.js`, {
       getTransform() {
         const { input, ...props } = this
@@ -94,7 +95,7 @@ const expectedAndError = {
           transform(data, enc, next) {
             this.push(`input: ${input}`)
             Object.keys(props).forEach((k) => {
-              this.push(`\n${k}: ${JSON.stringify(props[k])}`)
+              this.push(`${EOL}${k}: ${JSON.stringify(props[k])}`)
             })
             next()
           },
@@ -104,11 +105,11 @@ const expectedAndError = {
     })
     await runTest(ts, 'test properties')
   },
-  async 'passes this context to assertResults'({ f, runTest }) {
+  async'passes this context to assertResults'({ f, runTest }) {
     const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults() {
         return `input: hello world
-prop: {"key":"value"}`
+prop: {"key":"value"}`.replace(/\r?\n/g, EOL)
       },
       assertResults() {
         equal(this.input, 'hello world')
@@ -116,11 +117,11 @@ prop: {"key":"value"}`
     })
     await runTest(ts, 'test properties')
   },
-  async 'assertResults can be async '({ f, runTest }) {
+  async'assertResults can be async'({ f, runTest }) {
     const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults() {
         return `input: hello world
-prop: {"key":"value"}`
+prop: {"key":"value"}`.replace(/\r?\n/g, EOL)
       },
       async assertResults() {
         throw new Error('OK')

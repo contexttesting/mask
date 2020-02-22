@@ -10,5 +10,4 @@ this is a test input
 
 /* expected */
 this is a test input: pass
-
 /**/
