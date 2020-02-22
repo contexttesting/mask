@@ -19,9 +19,6 @@
     "link": "https://github.com/contexttesting/mask#type-forkpreprocessor",
     "description": "An object with `stdout` and `stderr` preprocessors."
   },
-  "undefinedmakeTestSuite": {
-    "link": "https://github.com/contexttesting/mask#maketestsuiteresult-stringconfig-maketestsuiteconf-testsuite"
-  },
   "_contextTesting.makeTestSuite": {
     "link": "https://github.com/contexttesting/mask#maketestsuitepath-stringarraystringconfig-maskconfig-testsuite",
     "description": "Creates a new test suite based on the config. The test suite should be exported from JS files, either as a default, or named export."

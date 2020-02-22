@@ -1,3 +1,11 @@
+## 22 February 2020
+
+### [2.6.0](https://github.com/contexttesting/mask/compare/v2.5.1...v2.6.0)
+
+- [feature] Support normalising outputs in forks.
+- [fix] Fix `\r\n` parsing.
+- [ci] Add _Appveyor_.
+
 ## 4 February 2020
 
 ### [2.5.0](https://github.com/contexttesting/mask/compare/v2.4.2...v2.5.0)

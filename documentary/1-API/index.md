@@ -31,8 +31,11 @@ _Zoroaster can test it using a mask:_
 </td></tr>
 </table>
 
+
+<!-- %_FORK node_modules/zoroaster/depack/bin/zoroaster.js -a example/test/mask/default.js% -->
+
 <fork>
-  node_modules/.bin/zoroaster -a example/test/mask/default.js
+  node_modules/zoroaster/depack/bin/zoroaster.js -a example/test/mask/default.js
 </fork>
 
 %~%
