@@ -120,9 +120,9 @@ export const ThisContext = {
 const FORK_INPUT = Context.fixture`result/fork-input`
 
 /** @type {Object.<string, (c: Context, r: string )>} */
-export const $inputs = {
+export const inputs = {
   context: [Context, FORK_INPUT],
-  async'!passes inputs to stdin'({ runTest, fixture, preprocess }, result) {
+  async'passes inputs to stdin'({ runTest, fixture }, result) {
     const ts = makeTestSuite(result, {
       fork: {
         module: fixture`fork/inputs`,
@@ -130,15 +130,12 @@ export const $inputs = {
           [/Answer 1/, 'input1'],
           [/Answer 2/, 'input2'],
         ],
-        preprocess,
-      },
-      mapActual({ stdout }) {
-        return stdout.trim()
+        normaliseOutputs: true,
       },
     })
     await runTest(ts, 'writes inputs')
   },
-  async 'passes inputs to stdin without logging answers'({ runTest, fixture, preprocess }, result) {
+  async 'passes inputs to stdin without logging answers'({ runTest, fixture }, result) {
     const ts = makeTestSuite(result, {
       fork: {
         module: fixture`fork/inputs`,
@@ -147,40 +144,34 @@ export const $inputs = {
           [/Answer 2/, 'input2'],
         ],
         includeAnswers: false,
-        preprocess,
-      },
-      mapActual({ stdout }) {
-        return stdout.trim()
+        normaliseOutputs: true,
+        preprocess(s) { return s.trim() },
       },
     })
     await runTest(ts, 'writes inputs without answers')
   },
-  async 'passes inputs to stdin on stderr'({ runTest, fixture, preprocess }, result) {
+  async 'passes inputs to stdin on stderr'({ runTest, fixture }, result) {
     const ts = makeTestSuite(result, {
       fork: {
         module: fixture`fork/inputs-stderr`,
         stderrInputs: [
           [/Answer 1/, 'input1'],
         ],
-        preprocess,
-      },
-      mapActual({ stderr }) {
-        return stderr.trim()
+        normaliseOutputs: true,
+        preprocess(s) { return s.trim() },
       },
     })
     await runTest(ts, 'writes inputs on stderr')
   },
-  async 'passes inputs from the mask property'({ runTest, fixture, preprocess }, result) {
+  async 'passes inputs from the mask property'({ runTest, fixture }, result) {
     const ts = makeTestSuite(result, {
       fork: {
         module: fixture`fork/inputs`,
-        preprocess,
-      },
-      mapActual({ stdout }) {
-        return stdout.trim()
+        normaliseOutputs: true,
+        preprocess(s) { return s.trim() },
       },
     })
-    await runTest(ts, '!writes inputs from props')
+    await runTest(ts, 'writes inputs from props')
   },
 }
 

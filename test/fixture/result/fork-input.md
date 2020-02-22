@@ -1,7 +1,7 @@
 ## writes inputs
 test
 
-/* expected */
+/* stdout */
 Answer 1: input1
 Answer 2: input2
 /**/
@@ -9,7 +9,7 @@ Answer 2: input2
 ## writes inputs without answers
 test
 
-/* expected */
+/* stdout */
 Answer 1: Answer 2:
 /**/
 
@@ -25,11 +25,11 @@ test
 input1
 /**/
 
-/* expected */
+/* stderr */
 Answer 1: input1
 /**/
 
-## !writes inputs from props
+## writes inputs from props
 test
 
 /* inputs */
@@ -37,7 +37,7 @@ Answer 1: input1
 Answer 2: input2
 /**/
 
-/* expected */
+/* stdout */
 Answer 1: input1
 Answer 2: input2
 /**/
