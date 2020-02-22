@@ -2,6 +2,7 @@ import { throws } from '@zoroaster/assert'
 import Context from '../context'
 import TempContext from 'temp-context'
 import Zoroaster from 'zoroaster'
+import { readFileSync } from 'fs'
 import makeTestSuite from '../../src'
 
 /** @type {Object.<string, (c: Context, t: TempContext, z: Zoroaster)>} */
@@ -29,7 +30,7 @@ const T = {
     const s = await snapshot()
     return preprocess(s)
   },
-  async'can update empty text'({ fixture, runTest, preprocess, makeStdin }, 
+  async'!can update empty text'({ fixture, runTest, preprocess, makeStdin }, 
     { add, snapshot }) {
     const p = await add(fixture`updates/empty.md`)
     const ts = makeTestSuite(p, {
@@ -41,15 +42,18 @@ const T = {
       fn: runTest,
       args: [ts, 'fail empty'],
     })
-    const u = await e.handleUpdate({
-      stdin: makeStdin(),
-    })
+    await e.handleUpdate({ stdin: makeStdin() })
     const s = await snapshot()
-    return preprocess(s)
+    const D = preprocess(s)
+    console.log(D.replace(/\r\n/g, '\\R\\N\r\n'))
+    console.log('\n======\n')
+    console.log(readFileSync('test\\snapshot\\updates\\can-update-empty-text.md', 'utf8').replace(/\r\n/g, '\\R\\N\r\n'))
+    
+    return D
   },
   async'can update json'({ fixture, runTest, preprocess, makeStdin }, 
     { add, snapshot }) {
-    const p = await add(fixture`updates/json.md`)
+    const p = await add(fixture`updates/json`)
     const ts = makeTestSuite(p, {
       getResults() {
         return { updated: true }
