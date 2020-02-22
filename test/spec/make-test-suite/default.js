@@ -109,7 +109,7 @@ const expectedAndError = {
     const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults() {
         return `input: hello world
-prop: {"key":"value"}`.replace(/\r?\n/, EOL)
+prop: {"key":"value"}`.replace(/\r?\n/g, EOL)
       },
       assertResults() {
         equal(this.input, 'hello world')
@@ -121,7 +121,7 @@ prop: {"key":"value"}`.replace(/\r?\n/, EOL)
     const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults() {
         return `input: hello world
-prop: {"key":"value"}`.replace(/\r?\n/, EOL)
+prop: {"key":"value"}`.replace(/\r?\n/g, EOL)
       },
       async assertResults() {
         throw new Error('OK')

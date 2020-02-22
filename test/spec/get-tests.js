@@ -23,7 +23,7 @@ ${v}
         const n = `# ${name}
 ${input}${EOL}${EOL}${p}`
         return n
-      }).join(`${EOL}${EOL}`).replace(/\r?\n/, EOL)
+      }).join(`${EOL}${EOL}`).replace(/\r?\n/g, EOL)
     }
   }],
   async 'can make a mask'({ fixture }) {
