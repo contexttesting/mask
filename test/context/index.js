@@ -1,4 +1,5 @@
 import { join } from 'path'
+import { EOL } from 'os'
 
 /**
  * A testing context for the package.
@@ -7,6 +8,10 @@ export default class Context {
   get version() {
     const v = process.version.split('.')[0].replace('v', '')
     return v
+  }
+  preprocess(s) {
+    if (process.platform != 'win32') return s
+    return s.replace(/([^\r])\n/g, `$1${EOL}`)
   }
   /**
    * Initialise contexts for a test and run it.

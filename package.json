@@ -48,8 +48,8 @@
   "homepage": "https://www.contexttesting.com",
   "devDependencies": {
     "@zoroaster/deep-equal": "^1.0.1",
-    "@zoroaster/fork": "^1.4.0",
-    "alamode": "^3.5.0",
+    "@zoroaster/fork": "^1.5.0",
+    "alamode": "^3.5.1",
     "assert-throws": "^3.3.0",
     "catchment": "^3.3.0",
     "depack": "^1.1.1",

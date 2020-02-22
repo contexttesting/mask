@@ -72,10 +72,10 @@
   dependencies:
     differently "^1.0.0"
 
-"@zoroaster/fork@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@zoroaster/fork/-/fork-1.4.0.tgz#10bf7b8defcafe563c2158a2a988f5a0d47b3c08"
-  integrity sha512-JOFXCa95gYdotxDzt0VJ/yRXT4i9Ai4MpPJhmLb8Qz79B3FQA29NSNyC02UmXQ+saSKojNbfNpqg9vwSW4KnoQ==
+"@zoroaster/fork@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@zoroaster/fork/-/fork-1.5.0.tgz#75171464898bd5699df1987066e1b92c454b0d1d"
+  integrity sha512-ZRoHLd+kWrgCQ00zMDkk6/m7clfaWFDn1CwbbvRTrbc1T8jBBiVT1yKeq4mykoSWMsz6KsNNt/YGnTcLHxWaJA==
   dependencies:
     "@zoroaster/deep-equal" "^1.0.1"
     catchment "^3.3.0"
@@ -89,10 +89,10 @@
   resolved "https://registry.yarnpkg.com/@zoroaster/mask/-/mask-2.5.0.tgz#de128987743d71376485ba9b34977d49e18cde92"
   integrity sha512-GuEHgVneq0MkSHBcF7YgTAuk42/pWJnvMPvbOsUXmq3m2FcSe1v788Bfw896RzZ7p6LWq11xnq48YOkhcy5jLA==
 
-alamode@^3.3.3, alamode@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/alamode/-/alamode-3.5.0.tgz#c0928b365d892c643335c9b2651ad10e32b47151"
-  integrity sha512-kuhhCIqHMwiMGSKqE+F//SLgxffkhtT0QFp+8XahzYVwvsxwg9gbtCGriKawEBxeHpU9v3s0jp9qpYzlDUdKFg==
+alamode@^3.3.3, alamode@^3.5.0, alamode@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/alamode/-/alamode-3.5.1.tgz#658713a324a2863c6faea6bdbdf4d94e2aebbb5c"
+  integrity sha512-S0fe1hIeIvDNoCSuDilXJTidI2eSvILfv4Xg3l8tml4+RGpQ2LooskF9YzLFmOYhdz07ymtOUVGOPJoTXqiyww==
 
 assert-throws@^3.3.0:
   version "3.3.0"
