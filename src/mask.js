@@ -20,7 +20,7 @@ const getTests = (conf) => {
   if (!splitRe) {
     splitRe = path.endsWith('.md') ?  /^## /gm : /^\/\/ /gm
   }
-  let resultFile = `${readFileSync(path)}`
+  let resultFile = readFileSync(path, 'utf8')
   const mi = splitRe.exec(resultFile)
   if (!mi) throw new Error(`${path} does not contain tests.`)
   const preamble = resultFile.slice(0, mi.index).replace(/\r?\n\r?\n$/, '')
@@ -39,7 +39,7 @@ const getTests = (conf) => {
     const offset = mi.index + bodyStartsAt + position + separator.length
 
     const foundProps = mismatch(
-      new RegExp(`(${propStartRe.source} +(.+) +\\*\\/(\\r?\\n?))([\\s\\S]*?)\\r?\\n${propEndRe.source}`, 'g'),
+      new RegExp(`(${propStartRe.source} +(.+) +\\*\\/(\\r?\\n)?)([\\s\\S]*?)\\r?\\n${propEndRe.source}`, 'g'),
       body,
       ['preValue', 'key', 'newLine', 'value'], true,
     )
