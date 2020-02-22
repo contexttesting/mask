@@ -30,7 +30,7 @@ const T = {
     const s = await snapshot()
     return preprocess(s)
   },
-  async'!can update empty text'({ fixture, runTest, preprocess, makeStdin }, 
+  async'can update empty text'({ fixture, runTest, preprocess, makeStdin }, 
     { add, snapshot }) {
     const p = await add(fixture`updates/empty.md`)
     const ts = makeTestSuite(p, {
@@ -45,15 +45,18 @@ const T = {
     await e.handleUpdate({ stdin: makeStdin() })
     const s = await snapshot()
     const D = preprocess(s)
-    console.log(D.replace(/\r\n/g, '\\R\\N\r\n'))
-    console.log('\n======\n')
-    console.log(readFileSync('test\\snapshot\\updates\\can-update-empty-text.md', 'utf8').replace(/\r\n/g, '\\R\\N\r\n'))
+    // console.log(D
+    //   .replace(/\r\n/g, '\\R\\N\r\n')
+    //   .replace(/([^\r])\n/g, '$1\\N\n')
+    // )
+    // console.log('\n======\n')
+    // console.log(readFileSync('test\\snapshot\\updates\\can-update-empty-text.md', 'utf8').replace(/\r\n/g, '\\R\\N\r\n'))
     
     return D
   },
   async'can update json'({ fixture, runTest, preprocess, makeStdin }, 
     { add, snapshot }) {
-    const p = await add(fixture`updates/json`)
+    const p = await add(fixture`updates/json.md`)
     const ts = makeTestSuite(p, {
       getResults() {
         return { updated: true }

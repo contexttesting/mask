@@ -15,7 +15,7 @@ export default class Context {
   }
   preprocess(s) {
     if (process.platform != 'win32') return s
-    return s.replace(/([^\r])\n/g, `$1${EOL}`)
+    return s.replace(/\r\n/g, '\n').replace(/\n/g, EOL)
   }
   makeStdin(answer = '\n') {
     const stdin = new Readable({
