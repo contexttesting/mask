@@ -105,11 +105,11 @@ const expectedAndError = {
     })
     await runTest(ts, 'test properties')
   },
-  async 'passes this context to assertResults'({ f, runTest }) {
+  async'passes this context to assertResults'({ f, runTest }) {
     const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults() {
         return `input: hello world
-prop: {"key":"value"}`
+prop: {"key":"value"}`.replace(/\r?\n/, EOL)
       },
       assertResults() {
         equal(this.input, 'hello world')
@@ -121,7 +121,7 @@ prop: {"key":"value"}`
     const ts = makeTestSuite(f`test-suite/default.js`, {
       getResults() {
         return `input: hello world
-prop: {"key":"value"}`
+prop: {"key":"value"}`.replace(/\r?\n/, EOL)
       },
       async assertResults() {
         throw new Error('OK')
