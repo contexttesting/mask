@@ -309,7 +309,7 @@ const Aa = a => {
     A.stack = `Error: ${m.message}${S}    at ${r} (${b}:${w}:1)`;
     if (m.property && m.actual) {
       const {property:x, actual:B, expected:v} = m;
-      A.handleUpdate = async({stdin:z}) => {
+      A.handleUpdate = async({stdin:z} = {}) => {
         const t = n[x];
         if (!t) {
           return !1;

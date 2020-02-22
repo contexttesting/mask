@@ -1,5 +1,11 @@
 ## 22 February 2020
 
+### [2.6.1](https://github.com/contexttesting/mask/compare/v2.6.0...v2.6.1)
+
+- [fix] Handle update with default stdin.
+
+## 22 February 2020
+
 ### [2.6.0](https://github.com/contexttesting/mask/compare/v2.5.1...v2.6.0)
 
 - [feature] Support normalising outputs in forks.

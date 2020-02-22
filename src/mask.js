@@ -89,7 +89,7 @@ const getTests = (conf) => {
       const { 'property': property, 'actual': actual, 'expected': expected } = error
       const handleUpdate = async ({
         stdin,
-      }) => {
+      } = {}) => {
         // update in interactive mode
         const position = positions[property]
         if (!position) return false
